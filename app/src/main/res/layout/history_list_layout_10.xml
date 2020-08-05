@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:layout_editor_absoluteY="25dp">
+
+    <TextView
+        android:id="@+id/history_text"
+        android:layout_width="395dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="4dp"
+        android:text="driverID"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/cities" />
+
+    <TextView
+        android:id="@+id/trip_date"
+        android:layout_width="119dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="8dp"
+        android:text="driverID"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/history_time"
+        app:layout_constraintVertical_bias="0.333"
+        tools:text="@tools:sample/cities" />
+
+    <TextView
+        android:id="@+id/history_time"
+        android:layout_width="119dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="8dp"
+        android:text="Trip date and time"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/history_text"
+        tools:text="@tools:sample/cities" />
+
+    <TextView
+        android:id="@+id/trip_id"
+        android:layout_width="98dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text="driverID"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/history_time"
+        app:layout_constraintTop_toBottomOf="@+id/history_text"
+        tools:ignore="MissingConstraints"
+        tools:text="@tools:sample/cities" />
+
+    <TextView
+        android:id="@+id/driver_id"
+        android:layout_width="123dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="driverID"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/trip_id"
+        app:layout_constraintTop_toBottomOf="@+id/history_text"
+        tools:ignore="MissingConstraints"
+        tools:text="@tools:sample/cities" />
+
+    <TextView
+        android:id="@+id/trip_total_cost"
+        android:layout_width="123dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="driverID"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/driver_id"
+        tools:ignore="MissingConstraints"
+        tools:text="@tools:sample/cities" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="580dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trip_total_cost"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/payment_method"
+        android:layout_width="121dp"
+        android:layout_height="20dp"
+        android:text="TextView"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/trip_total_cost"
+        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintStart_toEndOf="@+id/trip_date"
+        app:layout_constraintTop_toBottomOf="@+id/trip_id"
+        app:layout_constraintVertical_bias="0.545" />
+
+</android.support.constraint.ConstraintLayout>

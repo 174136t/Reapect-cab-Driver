@@ -1,0 +1,85 @@
+{
+  "project_info": {
+    "project_number": "221259002980",
+    "firebase_url": "https://respect-cab-dev.firebaseio.com",
+    "project_id": "respect-cab-dev",
+    "storage_bucket": "respect-cab-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221259002980:android:9985ceebbb12e0863cdb71",
+        "android_client_info": {
+          "package_name": "com.nexeyo.taxipassengerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "221259002980-21qn5g234u1skkjcnqnrjb1lgnjc8qhn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nexeyo.taxipassengerapp",
+            "certificate_hash": "ec06bcf4139a7d7c2e8ae29096f507a659549142"
+          }
+        },
+        {
+          "client_id": "221259002980-3f8knch2jsju8pite8uo1d00atag8l34.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhjS5DN73K_o9Rgu3G-I1wdr5l3Ie9rGw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "221259002980-3f8knch2jsju8pite8uo1d00atag8l34.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221259002980:android:42a7b723c9673a9c3cdb71",
+        "android_client_info": {
+          "package_name": "com.nexeyotest.respectcab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "221259002980-7sc3d2kfki43ipbugf631qhjmlemk9di.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nexeyotest.respectcab",
+            "certificate_hash": "ec06bcf4139a7d7c2e8ae29096f507a659549142"
+          }
+        },
+        {
+          "client_id": "221259002980-3f8knch2jsju8pite8uo1d00atag8l34.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhjS5DN73K_o9Rgu3G-I1wdr5l3Ie9rGw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "221259002980-3f8knch2jsju8pite8uo1d00atag8l34.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

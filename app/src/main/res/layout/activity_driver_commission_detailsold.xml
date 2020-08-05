@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:theme="@style/AppTheme.NoActionBar">
+
+
+    <TextView
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/colorPrimary"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="     Commission for trips Details"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <TableRow
+        android:id="@+id/date_row"
+        android:layout_width="@dimen/_400sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_below="@+id/editText"
+        android:layout_marginTop="3dp"
+        android:layout_weight="1"
+
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="front"
+        android:orientation="vertical"
+        tools:ignore="OnClick">
+
+        <TextView
+            android:id="@+id/trip_date_f"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_28sdp"
+            android:layout_column="0"
+            android:layout_margin="@dimen/_1sdp"
+            android:text=" Trip ID "
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/trip_id_f"
+            android:layout_width="@dimen/_110sdp"
+            android:layout_height="@dimen/_28sdp"
+            android:layout_column="1"
+            android:layout_margin="@dimen/_1sdp"
+            android:gravity="end"
+            android:text="Earning "
+            android:textAlignment="textEnd"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/trip_cost_f"
+            android:layout_width="153dp"
+            android:layout_height="@dimen/_28sdp"
+            android:layout_column="2"
+            android:layout_margin="@dimen/_1sdp"
+            android:gravity="end"
+            android:text="commission"
+            android:textAlignment="textEnd"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </TableRow>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/driver_commission_details_list"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_550sdp"
+        android:layout_above="@+id/button_back"
+        android:layout_below="@+id/date_row"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="@dimen/_1sdp"
+        tools:listitem="@layout/recycler_view_item" />
+
+    <Button
+        android:id="@+id/button_back"
+        android:layout_width="@dimen/_310sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="14dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="12dp"
+        android:text="Back" />
+
+
+</RelativeLayout>
