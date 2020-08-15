@@ -4,10 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+//import android.support.annotation.NonNull;
+//import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.widget.LinearLayoutManager;
+//import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableRow;
@@ -22,7 +22,12 @@ import com.google.firebase.database.Query;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class PaymentHistoryActivity extends AppCompatActivity{
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class PaymentHistoryActivity extends AppCompatActivity {
 
     RecyclerView mRecyclerView;
     LinearLayoutManager mLayoutManager;

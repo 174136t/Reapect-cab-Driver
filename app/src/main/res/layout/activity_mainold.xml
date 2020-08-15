@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
@@ -9,14 +9,42 @@
     android:background="@drawable/background"
     tools:context="com.nexeyotest.respectcab.MainActivity"
     tools:openDrawer="start">
+<!--    <FrameLayout-->
+<!--        android:id="@+id/driverStatusLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:background="@color/colorPrimary"-->
+<!--        android:orientation="horizontal">-->
 
+<!--        <TextView-->
+<!--            android:id="@+id/driverStatusTextView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginStart="15dp"-->
+<!--            android:gravity="center"-->
+<!--            android:text="@string/offline"-->
+<!--            android:textColor="@color/colorIcons"-->
+<!--            android:textSize="22sp"-->
+<!--            android:layout_marginLeft="15dp" />-->
+
+<!--        <android.support.v7.widget.SwitchCompat-->
+<!--            android:id="@+id/driverStatusSwitch"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_gravity="end"-->
+<!--            android:layout_marginEnd="15dp"-->
+<!--            android:checked="false"-->
+<!--            android:theme="@style/SCBSwitch"-->
+<!--            android:layout_marginRight="15dp" />-->
+
+<!--    </FrameLayout>-->
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -26,7 +54,7 @@
             app:popupTheme="@style/AlertDialog.AppCompat.Light" />
 
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/relativeLayout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -70,6 +98,46 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/driverStatusTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_below="@+id/driver_mobile"
+                android:gravity="center"
+                android:text="@string/offline"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="22sp"
+
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="165dp"
+                android:layout_marginLeft="150dp"
+
+                android:layout_marginEnd="@dimen/_160sdp"
+                android:layout_marginRight="@dimen/_150sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/driver_mobile"
+
+                tools:ignore="MissingConstraints" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/driverStatusSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+
+                android:checked="false"
+                android:theme="@style/SCBSwitch"
+                tools:ignore="MissingConstraints"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_toRightOf="@+id/driverStatusTextView"
+                app:layout_constraintStart_toEndOf="@+id/driverStatusTextView"
+                app:layout_constraintTop_toBottomOf="@+id/driver_mobile"
+                android:layout_marginRight="75dp"
+               />
 
             <TextView
                 android:id="@+id/driver_id_main"
@@ -162,7 +230,7 @@
                 android:layout_marginLeft="@dimen/_115sdp"
                 android:layout_marginEnd="@dimen/_130sdp"
                 android:layout_marginRight="@dimen/_130sdp"
-                android:src="@mipmap/ic_user_profile"
+                app:srcCompat="@mipmap/ic_user_profile"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -253,7 +321,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.459"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/driver_mobile"
+                app:layout_constraintTop_toBottomOf="@+id/driverStatusTextView"
                 tools:ignore="MissingConstraints" />
 
             <Button
@@ -282,7 +350,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingConstraints" />
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/vehicle_list3"
                 android:layout_width="@dimen/_6sdp"
                 android:layout_height="@dimen/_60sdp"
@@ -300,7 +368,7 @@
                 tools:listitem="@layout/recycler_view_item" />
 
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/vehicle_type_list3"
                 android:layout_width="439dp"
                 android:layout_height="282dp"
@@ -317,7 +385,7 @@
                 tools:layout_editor_absoluteX="0dp"
                 tools:listitem="@layout/recycler_view_item" />
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/customer_email_rv"
                 android:layout_width="37dp"
                 android:layout_height="40dp"
@@ -328,9 +396,9 @@
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteY="79dp">
 
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -400,11 +468,11 @@
 <!--                app:layout_constraintTop_toBottomOf="@+id/switch1"-->
 <!--                app:layout_constraintVertical_bias="0.0" />-->
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
-    <android.support.design.widget.NavigationView
+    <com.google.android.material.navigation.NavigationView
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_gravity="start"
@@ -412,6 +480,6 @@
     app:headerLayout="@layout/nav_header_main2"
     app:menu="@menu/drawer_menu">
 
-</android.support.design.widget.NavigationView>
+</com.google.android.material.navigation.NavigationView>
 
-</android.support.v4.widget.DrawerLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

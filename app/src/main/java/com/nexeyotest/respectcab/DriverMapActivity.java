@@ -17,19 +17,26 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
-import android.support.v4.app.ActivityCompat;
+//import android.support.annotation.NonNull;
+//import android.support.annotation.Nullable;
+//import android.support.design.widget.NavigationView;
+//import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+//import androidx.core.widget.DrawerLayout;
+//import android.support.v7.app.ActionBarDrawerToggle;
+//import android.support.v7.app.AlertDialog;
+//import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -43,6 +50,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.nexeyo.respectcab.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -77,7 +86,7 @@ import javax.mail.Session;
 
 import static javax.mail.internet.InternetAddress.parse;
 
-public class DriverMapActivity<callStateListener> extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener, OnNavigationItemSelectedListener{
+public class DriverMapActivity<callStateListener, firebaseHelper> extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener, NavigationView.OnNavigationItemSelectedListener {
 
     private GoogleMap mMap;
     private DatabaseReference mDatabase;
@@ -239,6 +248,7 @@ public class DriverMapActivity<callStateListener> extends AppCompatActivity impl
     String status_waiting = "null";
 
     DatabaseReference mRef;
+     FirebaseHelper firebaseHelper = new FirebaseHelper("0000");
 
 
     @Override
@@ -1033,7 +1043,11 @@ public class DriverMapActivity<callStateListener> extends AppCompatActivity impl
                                         Toast.makeText(DriverMapActivity.this, "Inserted", Toast.LENGTH_SHORT).show();
 
                                         disconnectDriver();
-
+                                        // deleting current hiring drivers data
+                                        SharedPreferences mPrefs = getSharedPreferences("IDvalue",0);
+                                        str = mPrefs.getInt("DriverIDValue", 0);
+                                        firebaseHelper = new FirebaseHelper(str.toString());
+                                        firebaseHelper.deleteHiringDriver();
                                         Intent intent = new Intent(DriverMapActivity.this, MainActivity.class);
                                         startActivity(intent);
                                         finish();
@@ -1190,6 +1204,14 @@ public class DriverMapActivity<callStateListener> extends AppCompatActivity impl
             ref.child(String.valueOf(str)).child("longitude1").setValue(lon1);
             ref.child(String.valueOf(str)).child("latitude2").setValue(lat2);
             ref.child(String.valueOf(str)).child("longitude2").setValue(lon2);
+
+// updating  current hiring driver data
+        SharedPreferences mPrefs = getSharedPreferences("IDvalue",0);
+        String tok = FirebaseInstanceId.getInstance().getToken();
+        str = mPrefs.getInt("DriverIDValue", 0);
+        firebaseHelper = new FirebaseHelper(str.toString());
+        firebaseHelper.updateHiringDriver(new Driver(lat1,lon1,tok));
+
 
             track_Database.child(String.valueOf(maxid)).child("Location").child("Driver ID").setValue(str);
             track_Database.child(String.valueOf(maxid)).child("Location").child("lat1").setValue(lat1);
@@ -1486,6 +1508,8 @@ public class DriverMapActivity<callStateListener> extends AppCompatActivity impl
         ref.child(String.valueOf(str)).child("longitude1").removeValue();
         ref.child(String.valueOf(str)).child("latitude2").removeValue();
         ref.child(String.valueOf(str)).child("longitude2").removeValue();
+
+
 
     }
 

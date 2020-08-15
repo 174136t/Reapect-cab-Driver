@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-    <android.support.v4.widget.DrawerLayout tools:openDrawer="start" tools:context="com.nexeyotest.respectcab.DriverPackageActivity" android:fitsSystemWindows="true" android:background="@drawable/background" android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/drawer_layout" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.drawerlayout.widget.DrawerLayout tools:openDrawer="start" tools:context="com.nexeyotest.respectcab.DriverPackageActivity" android:fitsSystemWindows="true" android:background="@drawable/background" android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/drawer_layout" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
 
 
     <LinearLayout android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/linearLayout" android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar android:background="@color/design_default_color_primary" android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/toolbar" app:popupTheme="@style/AlertDialog.AppCompat.Light" android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" android:elevation="4dp"/>
+    <androidx.appcompat.widget.Toolbar android:background="@color/design_default_color_primary" android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/toolbar" app:popupTheme="@style/AlertDialog.AppCompat.Light" android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" android:elevation="4dp"/>
 
     <Switch android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/workingSwitch" android:visibility="invisible" android:text="Online"/>
 
 
-    -<android.support.constraint.ConstraintLayout android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/relativeLayout2" android:keepScreenOn="true">
+    -<androidx.constraintlayout.widget.ConstraintLayout android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/relativeLayout2" android:keepScreenOn="true">
     tools:context=".DriverMapActivity">
     <FrameLayout android:background="@drawable/background" android:layout_height="@dimen/_526sdp" android:layout_width="@dimen/_315sdp" android:id="@+id/fragment_container" tools:ignore="MissingConstraints" app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.666" app:layout_constraintEnd_toEndOf="parent"> </FrameLayout>
 
@@ -70,10 +70,10 @@
 
     <TextView android:layout_height="19dp" android:layout_width="60dp" android:id="@+id/textView4" android:text="@string/distance_km_label" app:layout_constraintStart_toStartOf="@+id/distanceV" app:layout_constraintHorizontal_bias="0.508" app:layout_constraintEnd_toEndOf="@+id/distanceV" app:layout_constraintTop_toTopOf="@+id/distanceV" android:textColor="#000000" android:gravity="center" app:layout_constraintVertical_bias="0.622" app:layout_constraintBottom_toBottomOf="@+id/distanceV" app:fontFamily="@font/thanmon"/>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
 
-    <android.support.design.widget.NavigationView android:layout_height="match_parent" android:layout_width="wrap_content" android:id="@+id/nav_view" app:menu="@menu/drawer_menu" app:headerLayout="@layout/nav_header_main2" android:layout_gravity="start"> </android.support.design.widget.NavigationView>
+    <com.google.android.material.navigation.NavigationView android:layout_height="match_parent" android:layout_width="wrap_content" android:id="@+id/nav_view" app:menu="@menu/drawer_menu" app:headerLayout="@layout/nav_header_main2" android:layout_gravity="start"> </com.google.android.material.navigation.NavigationView>
 
-</android.support.v4.widget.DrawerLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

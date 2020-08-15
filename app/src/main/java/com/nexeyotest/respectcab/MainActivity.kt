@@ -42,11 +42,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import com.nexeyo.respectcab.R
 import com.nexeyotest.respectcab.ConnectivityReceiver.ConnectivityReceiverListener
 import java.util.*
@@ -92,7 +94,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     //private var currentPositionMarker: Marker? = null
    // private val googleMapHelper = GoogleMapHelper()
     var str: Int? = null
-
+    var token: String? = null
     //mRef =  FirebaseDatabase.getInstance().getReference("Driver_Earning_And_Commission2").child(String.valueOf(str));
 
 
@@ -151,6 +153,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Log.d("bbbbbbbbbbbbbbbbbbbbbbb", driverOnlineFlag.toString())
                driverStatusTextView.text = resources.getString(R.string.offline)
                 firebaseHelper.deleteDriver()
+                firebaseHelper.deletePushToken()
             }
         }
 
@@ -489,6 +492,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         str = mPrefs.getInt("DriverIDValue", 0)
         firebaseHelper = FirebaseHelper(str.toString())
         firebaseHelper.deleteDriver()
+        firebaseHelper.deletePushToken()
 //                        createHiringLocationCallback()
         Log.e("ppppppppppppp", driverOnlineFlag.toString())
     }
@@ -540,50 +544,71 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun createLocationCallback() {
         locationCallback = object : LocationCallback() {
+            @SuppressLint("StringFormatInvalid")
             override fun onLocationResult(locationResult: LocationResult?) {
                 super.onLocationResult(locationResult)
                 if (locationResult!!.lastLocation == null) return
                 val latLng = LatLng(locationResult.lastLocation.latitude, locationResult.lastLocation.longitude)
                 Log.e("Location", latLng.latitude.toString() + " , " + latLng.longitude)
-                val tok = FirebaseInstanceId.getInstance().token
-                Log.e("token", tok.toString())
+//                val tok = FirebaseInstanceId.getInstance().token
+
+                FirebaseInstanceId.getInstance().instanceId
+                        .addOnCompleteListener(OnCompleteListener { task ->
+                            if (!task.isSuccessful) {
+                                Log.w(TAG, "getInstanceId failed", task.exception)
+                                return@OnCompleteListener
+                            }
+
+                            // Get new Instance ID token
+                             token = task.result?.token
+
+                            // Log and toast
+                            val msg = getString(R.string.msg_token_fmt, token)
+                            Log.d(TAG, msg)
+                           // Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                        })
+
+
+
+                Log.e("token", token.toString())
                 if (locationFlag) {
                     locationFlag = false
                     //animateCamera(latLng)
                 }
                 if (driverOnlineFlag) {
                     Log.d("cccccccccccccccc", driverOnlineFlag.toString())
-                    firebaseHelper.updateDriver(Driver(lat = latLng.latitude, lng = latLng.longitude, token = tok.toString()))
+                    firebaseHelper.updateDriver(Driver(lat = latLng.latitude, lng = latLng.longitude, token = token.toString()))
+                    firebaseHelper.updateTokens(Token(devtoken = token.toString()))
                 }
                 //showOrAnimateMarker(latLng)
             }
         }
     }
 
-    private fun createHiringLocationCallback() {
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult?) {
-                super.onLocationResult(locationResult)
-                if (locationResult!!.lastLocation == null) return
-                val latLng = LatLng(locationResult.lastLocation.latitude, locationResult.lastLocation.longitude)
-                Log.e("Location", latLng.latitude.toString() + " , " + latLng.longitude)
-                val tok = FirebaseInstanceId.getInstance().token
-                Log.e("token when hiring", tok.toString())
-
-
-                val mPrefs = getSharedPreferences("IDvalue", 0)
-                str = mPrefs.getInt("DriverIDValue", 0)
-                firebaseHelper = FirebaseHelper(str.toString())
-
-
-                if (!driverOnlineFlag) {
-                    Log.e("kkkkkkk", driverOnlineFlag.toString())
-                    firebaseHelper.updateHiringDriver(Driver(lat = latLng.latitude, lng = latLng.longitude, token = tok.toString()))
-                }
-                //showOrAnimateMarker(latLng)
-            }
-        }
-    }
+//    private fun createHiringLocationCallback() {
+//        locationCallback = object : LocationCallback() {
+//            override fun onLocationResult(locationResult: LocationResult?) {
+//                super.onLocationResult(locationResult)
+//                if (locationResult!!.lastLocation == null) return
+//                val latLng = LatLng(locationResult.lastLocation.latitude, locationResult.lastLocation.longitude)
+//                Log.e("Location", latLng.latitude.toString() + " , " + latLng.longitude)
+//                val tok = FirebaseInstanceId.getInstance().token
+//                Log.e("token when hiring", tok.toString())
+//
+//
+//                val mPrefs = getSharedPreferences("IDvalue", 0)
+//                str = mPrefs.getInt("DriverIDValue", 0)
+//                firebaseHelper = FirebaseHelper(str.toString())
+//
+//
+//                if (!driverOnlineFlag) {
+//                    Log.e("kkkkkkk", driverOnlineFlag.toString())
+//                    firebaseHelper.updateHiringDriver(Driver(lat = latLng.latitude, lng = latLng.longitude, token = tok.toString()))
+//                }
+//                //showOrAnimateMarker(latLng)
+//            }
+//        }
+//    }
 
     @SuppressLint("MissingPermission")
     private fun requestLocationUpdate() {
@@ -600,7 +625,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         locationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
     }
 
-
+    fun runtimeEnableAutoInit() {
+        // [START fcm_runtime_enable_auto_init]
+        FirebaseMessaging.getInstance().isAutoInitEnabled = true
+        // [END fcm_runtime_enable_auto_init]
+    }
 
 //    override fun onRequestPermissionsResul(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
 //        super.onRequestPermissionsResul(requestCode, permissions, grantResults)
@@ -719,12 +748,74 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onStart()
         CheckGpsStatus()
         Log.i(TAG, "onStart")
+        Log.d("66666666666", driverOnlineFlag.toString())
+        Log.d("66666666666", driverOnlineFlag.toString())
+        Log.d("66666666666", driverOnlineFlag.toString())
+        locationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        locationRequest = uiHelper.getLocationRequest()
+        if (!uiHelper.isPlayServicesAvailable(this)) {
+            Toast.makeText(this, "Play Services did not installed!", Toast.LENGTH_SHORT).show()
+            finish()
+        } else {}
+//            requestLocationUpdate()
+
+        val driverStatusTextView = findViewById<TextView>(R.id.driverStatusTextView)
+        findViewById<SwitchCompat>(R.id.driverStatusSwitch).setOnCheckedChangeListener { _, b ->
+            driverOnlineFlag = b
+            if (driverOnlineFlag){
+                val tok = FirebaseInstanceId.getInstance().token
+                Log.e("token", tok.toString())
+                Log.d("aaaaaaaaaaaa", driverOnlineFlag.toString())
+                createLocationCallback()
+                driverStatusTextView.text = resources.getString(R.string.online_driver)
+                requestLocationUpdate()
+            }
+            else {
+                driverOnlineFlag = false
+                Log.d("bbbbbbbbbbbbbbbbbbbbbbb", driverOnlineFlag.toString())
+                driverStatusTextView.text = resources.getString(R.string.offline)
+                firebaseHelper.deleteDriver()
+                firebaseHelper.deletePushToken()
+            }
+        }
+        Log.i(TAG, "onStart")
     }
 
     override fun onResume() {
         super.onResume()
         CheckGpsStatus()
         Log.i(TAG, "onResume")
+        Log.d("7777777777777777777", driverOnlineFlag.toString())
+        Log.d("7777777777777777777", driverOnlineFlag.toString())
+        Log.d("7777777777777777777", driverOnlineFlag.toString())
+        locationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        locationRequest = uiHelper.getLocationRequest()
+        if (!uiHelper.isPlayServicesAvailable(this)) {
+            Toast.makeText(this, "Play Services did not installed!", Toast.LENGTH_SHORT).show()
+            finish()
+        } else {}
+//            requestLocationUpdate()
+
+        val driverStatusTextView = findViewById<TextView>(R.id.driverStatusTextView)
+        findViewById<SwitchCompat>(R.id.driverStatusSwitch).setOnCheckedChangeListener { _, b ->
+            driverOnlineFlag = b
+            if (driverOnlineFlag){
+                val tok = FirebaseInstanceId.getInstance().token
+                Log.e("token", tok.toString())
+                Log.d("aaaaaaaaaaaa", driverOnlineFlag.toString())
+                createLocationCallback()
+                driverStatusTextView.text = resources.getString(R.string.online_driver)
+                requestLocationUpdate()
+            }
+            else {
+                driverOnlineFlag = false
+                Log.d("bbbbbbbbbbbbbbbbbbbbbbb", driverOnlineFlag.toString())
+                driverStatusTextView.text = resources.getString(R.string.offline)
+                firebaseHelper.deleteDriver()
+                firebaseHelper.deletePushToken()
+            }
+        }
+
         MyApplication.getInstance().setConnectivityListener(this)
     }
 

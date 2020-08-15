@@ -3,11 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.nexeyo.respectcab">
 
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality.
-    -->
     <application
         android:name="com.nexeyotest.respectcab.MyApplication"
         android:allowBackup="true"
@@ -21,15 +16,20 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name="com.nexeyotest.respectcab.DriverPackageActivity" />
+        <activity android:name="com.nexeyotest.respectcab.NotificationActivity">
+            <intent-filter>
+                <action android:name="com.nexeyotest.respectcab.Target_Notification" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.nexeyotest.respectcab.DriverPackageActivity" />
         <activity android:name="com.nexeyotest.respectcab.ClientPackageActivity" />
         <activity android:name="com.nexeyotest.respectcab.PackageAssign" />
         <activity android:name="com.nexeyotest.respectcab.CustomerRideRequest" />
         <activity android:name="com.nexeyotest.respectcab.DriverCommissionDetails" />
-
         <activity android:name="com.nexeyotest.respectcab.Finance_Activity" />
-
         <activity android:name="com.nexeyotest.respectcab.PaymentHistoryActivity" />
         <activity
             android:name="com.nexeyotest.respectcab.DriverMapActivity"
@@ -50,7 +50,6 @@
             <!-- </intent-filter> -->
         </activity>
         <activity android:name="com.nexeyotest.respectcab.DriverHistory" />
-
         <activity android:name="com.nexeyotest.respectcab.CustomerActivity" />
         <activity
             android:name="com.nexeyotest.respectcab.DriverLoginActivity"
@@ -62,16 +61,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/.
-        -->
         <activity android:name="com.nexeyotest.respectcab.DriverVehicle" />
-
         <activity
             android:name="com.nexeyotest.respectcab.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -82,9 +72,33 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_stat_ic_notification" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
         <receiver
             android:name="com.nexeyotest.respectcab.ConnectivityReceiver"
             android:enabled="true">
@@ -95,20 +109,43 @@
             </intent-filter>
         </receiver>
 
+        <!--
+ Set custom default icon. This is used when no icon is set for incoming notification messages.
+     See README(https://goo.gl/l4GJaQ) for more.
+        -->
+        <!--
+ Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
         <service
             android:name="com.nexeyotest.respectcab.ForegroundService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true" /> <!-- Set Notification channel Id -->
         <service
             android:name="com.nexeyotest.respectcab.onAppKilled"
-            android:stopWithTask="false" />
-
+            android:stopWithTask="false" /> <!-- Prevent auto initialization -->
         <service android:name="com.nexeyotest.respectcab.GpsService" />
-
+        <service
+            android:name="com.nexeyotest.respectcab.FcmMessagingService"
+            android:directBootAware="true"
+            android:exported="false"
+            tools:ignore="Instantiatable">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service> <!-- <service -->
+        <!-- android:name="com.nexeyotest.respectcab.NotificationActivity" -->
+        <!-- android:directBootAware="true" -->
+        <!-- android:exported="false"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="com.google.firebase.MESSAGING_EVENT" /> -->
+        <!-- </intent-filter> -->
+        <!-- </service> -->
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
     </application>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

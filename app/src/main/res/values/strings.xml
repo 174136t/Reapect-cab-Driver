@@ -28,4 +28,12 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="online_driver">Online</string>
+    <string name="need_location">Enable GPS SERVICE</string>
+    <string name="location_content">This app wants to change your device settings use GPS,Wi-Fi and cell networks for your location</string>
+    <string name="offline">Offline</string>
+    <string name="default_notification_channel_id">Taxi Notification</string>
+    <string name="msg_token_fmt">FCM Token</string>
+    <string name="Notification">Hoorayy!!</string>
+
 </resources>

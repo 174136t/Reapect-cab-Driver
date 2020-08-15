@@ -17,18 +17,25 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.annotation.NonNull;
+//import android.support.annotation.Nullable;
+//import android.support.design.widget.NavigationView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+//import androidx.core.widget.DrawerLayout;
+//import android.support.v7.app.ActionBarDrawerToggle;
+//import android.support.v7.app.AlertDialog;
+//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+//import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -50,6 +57,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -57,6 +65,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.nexeyo.respectcab.R;
 
 import java.io.IOException;
@@ -261,7 +270,7 @@ public class DriverPackageActivity<callStateListener> extends AppCompatActivity 
     DatabaseReference mRef;
     String StatusCost = "1";
     int flag;
-
+    FirebaseHelper firebaseHelper = new FirebaseHelper("0000");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1083,6 +1092,12 @@ public class DriverPackageActivity<callStateListener> extends AppCompatActivity 
 
                                         disconnectDriver();
 
+                                        // deleting current hiring drivers data
+                                        SharedPreferences mPrefs = getSharedPreferences("IDvalue",0);
+                                        str = mPrefs.getInt("DriverIDValue", 0);
+                                        firebaseHelper = new FirebaseHelper(str.toString());
+                                        firebaseHelper.deleteHiringDriver();
+                                        //////////////////////
                                         Intent intent = new Intent(DriverPackageActivity.this, MainActivity.class);
                                         startActivity(intent);
                                         finish();
@@ -1239,6 +1254,14 @@ public class DriverPackageActivity<callStateListener> extends AppCompatActivity 
         ref.child(String.valueOf(str)).child("longitude1").setValue(lon1);
         ref.child(String.valueOf(str)).child("latitude2").setValue(lat2);
         ref.child(String.valueOf(str)).child("longitude2").setValue(lon2);
+
+
+        // updating  current hiring driver data
+        SharedPreferences mPrefs = getSharedPreferences("IDvalue",0);
+        String tok = FirebaseInstanceId.getInstance().getToken();
+        str = mPrefs.getInt("DriverIDValue", 0);
+        firebaseHelper = new FirebaseHelper(str.toString());
+        firebaseHelper.updateHiringDriver(new Driver(lat1,lon1,tok));
 
         track_Database.child(String.valueOf(maxid)).child("Location").child("Driver ID").setValue(str);
         track_Database.child(String.valueOf(maxid)).child("Location").child("lat1").setValue(lat1);
