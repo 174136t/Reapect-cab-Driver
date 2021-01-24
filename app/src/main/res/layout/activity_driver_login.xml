@@ -3,25 +3,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.nexeyotest.respectcab.DriverLoginActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#F2C306"
+    >
 
+    <ImageView
+        android:id="@+id/logoMain"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+
+        android:layout_above="@id/AppName"
+        android:layout_alignTop="@+id/email"
+        android:layout_gravity="center"
+        android:layout_marginTop="-3dp"
+        android:layout_marginBottom="30dp"
+        android:contentDescription="@string/content_description_media"
+        android:scaleType="fitCenter"
+
+        app:srcCompat="@drawable/taxilogo"
+        tools:ignore="VectorDrawableCompat" />
+    <TextView
+        android:id="@+id/AppName"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_110sdp"
+        android:layout_centerInParent="true"
+        android:layout_above="@id/search_field"
+        android:textSize="@dimen/_30sdp"
+        android:text="@string/appName"
+        android:layout_gravity="center"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        />
     <EditText
         android:id="@+id/search_field"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="38dp"
-        android:hint="Phone Number/Driver ID Number"
-        android:layout_alignParentLeft="true"
-        android:inputType= "number"/>
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_above="@id/driver_full_name"
+
+        android:hint="@string/enter_phone_number"
+        android:inputType="number"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:background="@drawable/edit_text"
+        android:layout_centerInParent="true"
+        android:padding="10dip"/>
+<!--        android:drawableLeft="@drawable/mobile_icon"-->
+<!--        android:drawableTint="#030303"-->
+
+        />
+
+<!--    <ImageView-->
+<!--        android:id="@+id/username_icon"-->
+<!--        android:layout_width="40dp"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:background="#030303"-->
+<!--        android:padding="3dp"-->
+<!--        android:src="@drawable/common_full_open_on_phone" />-->
 
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/search_field"
+
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_marginStart="2dp"
@@ -44,15 +91,17 @@
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/search_field"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="8dp"
-        android:hint="password"/>
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_above="@id/driver_name"
+        android:padding="10dip"
+        android:layout_marginBottom="@dimen/_50sdp"
+        android:layout_marginTop="45dp"
+        android:hint="@string/enter_your_password"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:background="@drawable/edit_text"
+        android:layout_centerInParent="true"/>
 
     <Button
         android:id="@+id/registration"
@@ -65,99 +114,96 @@
         android:layout_marginLeft="-12dp"
         android:layout_marginTop="17dp"
         android:text="REGISTRATION"
+
         android:visibility="invisible"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/result_list"
         android:layout_width="601dp"
-        android:layout_height="236dp"
-        android:layout_below="@+id/password"
-        android:layout_alignStart="@+id/email"
-        android:layout_alignLeft="@+id/email"
-        android:layout_marginStart="-11dp"
-        android:layout_marginLeft="-11dp"
-        android:layout_marginTop="162dp">
+        android:layout_height="2dp"
+        android:layout_below="@+id/search_field"
+
+
+        >
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <Button
         android:id="@+id/search_btn"
-        android:layout_width="578dp"
-        android:layout_height="67dp"
-        android:layout_below="@+id/result_list"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="-154dp"
-        android:text="Next" />
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_50sdp"
+
+        android:layout_centerInParent="true"
+
+        android:background="@drawable/no_stroke"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_45sdp"
+        android:text="Login" />
 
     <Button
         android:id="@+id/bck_btn"
-        android:layout_width="578dp"
-        android:layout_height="67dp"
-        android:layout_below="@+id/result_list"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="6dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="-69dp"
-        android:text="Back" />
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="@dimen/_45sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/rounded_corners"
+        android:layout_centerInParent="true"
+        android:text="Back"
+        android:textColor="#030303" />
 
     <Button
         android:id="@+id/login"
-        android:layout_width="578dp"
-        android:layout_height="67dp"
-        android:layout_below="@+id/password"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="245dp"
-        android:text="LOGIN" />
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="50dp"
+        android:layout_above="@id/bck_btn"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:background="@drawable/no_stroke"
+        android:text="Done!"
+        android:textColor="#030303"
+        android:layout_centerInParent="true"
+        app:cornerRadius="1000dp" />
 
     <EditText
         android:id="@+id/driver_name"
-        android:layout_width="163dp"
+        android:layout_width="wrap_content"
         android:layout_height="63dp"
-        android:layout_below="@+id/email"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="9dp"
-        android:layout_marginLeft="9dp"
-        android:layout_marginTop="17dp"
+
+android:layout_above="@id/login"
+        android:layout_marginTop="2dp"
+        android:layout_centerInParent="true"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
     <EditText
         android:id="@+id/driver_mobile_no"
-        android:layout_width="171dp"
+        android:layout_width="wrap_content"
         android:layout_height="63dp"
-        android:layout_below="@+id/email"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="19dp"
-        android:layout_marginEnd="232dp"
-        android:layout_marginRight="232dp"
+        android:layout_below="@+id/result_list"
+
+        android:layout_marginTop="2dp"
+        android:layout_centerInParent="true"
         android:ems="10"
         android:inputType="textPersonName"
+
         android:text="Name"
         android:visibility="invisible"/>
 
     <EditText
         android:id="@+id/driver_full_name"
-        android:layout_width="171dp"
+        android:layout_width="wrap_content"
         android:layout_height="63dp"
-        android:layout_below="@+id/email"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="19dp"
-        android:layout_marginEnd="232dp"
-        android:layout_marginRight="232dp"
+        android:layout_above="@id/login"
+
+        android:layout_marginTop="2dp"
+        android:layout_centerInParent="true"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:text="" />
 
 </RelativeLayout>

@@ -3,41 +3,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:theme="@style/AppTheme.NoActionBar">
+    android:theme="@style/AppTheme.NoActionBar"
+    android:background="@color/themecolor">
 
 
     <TextView
         android:id="@+id/editText"
         android:layout_width="match_parent"
-        android:layout_height="51dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
         android:layout_marginTop="0dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/themecolor"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="   Payment History"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:padding="@dimen/_10sdp"
+        android:gravity="center_horizontal" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/balance_list"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
+        android:layout_height="@dimen/_150sdp"
         android:layout_below="@+id/editText"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginStart="@dimen/_1sdp"
-        android:layout_marginLeft="@dimen/_1sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginLeft="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_1sdp"
-        android:layout_marginEnd="@dimen/_1sdp"
-        android:layout_marginRight="@dimen/_1sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:background="@drawable/round_button"
+        android:padding="@dimen/_10sdp"
         tools:listitem="@layout/recycler_view_item" />
 
 
@@ -46,15 +52,18 @@
         android:layout_width="@dimen/_400sdp"
         android:layout_height="@dimen/_30sdp"
         android:layout_below="@+id/balance_list"
-        android:layout_marginTop="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginBottom="@dimen/_1sdp"
         android:layout_weight="1"
-
+        android:background="@drawable/top_corner_radius"
         android:clickable="true"
         android:focusable="true"
         android:onClick="front"
         android:orientation="vertical"
-        tools:ignore="OnClick">
+        tools:ignore="OnClick"
+
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_5sdp">
 
         <TextView
             android:id="@+id/trip_date_f"
@@ -63,7 +72,10 @@
             android:layout_column="0"
             android:layout_margin="@dimen/_1sdp"
             android:text=" Date "
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textSize="18sp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textAlignment="center"
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/trip_id_f"
@@ -83,9 +95,12 @@
             android:layout_column="2"
             android:layout_margin="@dimen/_1sdp"
             android:gravity="end"
-            android:text="Payment  "
-            android:textAlignment="textEnd"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="Payment(Rs)"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+
+            tools:ignore="RtlCompat" />
 
     </TableRow>
 
@@ -99,13 +114,15 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="@dimen/_1sdp"
-        android:layout_marginLeft="@dimen/_1sdp"
-        android:layout_marginTop="@dimen/_3sdp"
-        android:layout_marginEnd="@dimen/_1sdp"
-        android:layout_marginRight="@dimen/_1sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_1sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_1sdp"
-        tools:listitem="@layout/recycler_view_item" />
+        tools:listitem="@layout/recycler_view_item"
+        android:background="@color/white"
+        android:padding="@dimen/_5sdp"/>
 
 
 </RelativeLayout>

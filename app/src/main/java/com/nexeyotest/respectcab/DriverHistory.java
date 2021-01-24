@@ -8,6 +8,7 @@ import android.os.Bundle;
 //import android.support.annotation.NonNull;
 //import android.support.v7.widget.LinearLayoutManager;
 //import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -77,7 +78,7 @@ public class DriverHistory extends AppCompatActivity {
         };
         mRecyclerView.setAdapter(firebaseRecyclerAdapter2);
 
-        Toast.makeText(DriverHistory.this, "Started setAdapter", Toast.LENGTH_LONG).show();
+//        Toast.makeText(DriverHistory.this, "Started setAdapter", Toast.LENGTH_LONG).show();
     }
 
     public static class HistoryViewHolder extends RecyclerView.ViewHolder {
@@ -95,22 +96,32 @@ public class DriverHistory extends AppCompatActivity {
             user_name5.setText(tripstartdate);
 
             TextView user_name = (TextView) mView.findViewById(R.id.history_text);
-            user_name.setText("From " + tripstartaddress + " To " + tripendaddress);
+            user_name.setText("  " + tripstartaddress );
 
-            TextView user_name2 = (TextView) mView.findViewById(R.id.history_time);
-            user_name2.setText("( " + tripstarttime + " To " + tripendtime +" )");
+            TextView user_name1 = (TextView) mView.findViewById(R.id.history_text2);
+            user_name1.setText("  " + tripendaddress);
+
+//            TextView user_name2 = (TextView) mView.findViewById(R.id.history_time);
+//            user_name2.setText("( " + tripstarttime + " To " + tripendtime +" )");
+
+            TextView user_name9 = (TextView) mView.findViewById(R.id.startTime);
+            user_name9.setText(tripstarttime);
+
+            TextView user_name10 = (TextView) mView.findViewById(R.id.endTime);
+            user_name10.setText(tripendtime);
 
             TextView user_name3 = (TextView) mView.findViewById(R.id.trip_id);
             user_name3.setText("Trip ID " + tripid);
 
             TextView user_name6 = (TextView) mView.findViewById(R.id.trip_total_cost);
-            user_name6.setText("Rs " + triptotalcost);
+            user_name6.setText("Rs " + triptotalcost+"0");
 
-            TextView user_name7 = (TextView) mView.findViewById(R.id.driver_id);
-            user_name7.setText("Driver ID " + driverid);
+//            TextView user_name7 = (TextView) mView.findViewById(R.id.driver_id);
+//            user_name7.setText("Driver ID " + driverid);
 
             TextView user_name8 = (TextView) mView.findViewById(R.id.payment_method);
             user_name8.setText(paymentmethod);
+            user_name8.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
 
             if (user_name8.getText().toString().equals("Cash")){
                 user_name8.setTextColor(Color.parseColor("#2B9E08"));

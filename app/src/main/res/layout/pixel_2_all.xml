@@ -5,26 +5,42 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@color/white"
     android:fitsSystemWindows="true"
     tools:context="com.nexeyotest.respectcab.DriverMapActivity"
-    tools:openDrawer="start">
+    >
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/themecolor"
+       >
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/design_default_color_primary"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/AlertDialog.AppCompat.Light" />
-
+            android:background="@color/themecolor"
+            app:title="@string/appName"
+            app:titleTextColor="@color/black"
+            android:textAlignment="center"
+            android:gravity="center_horizontal" >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/appName"
+            android:textColor="#030303"
+            android:textAlignment="center"
+            android:gravity = "center_horizontal"
+            android:layout_centerInParent="true"
+            android:id="@+id/toolbar_title"
+            android:textStyle="bold"
+            android:textSize="@dimen/_25sdp"
+            android:layout_marginEnd="?android:attr/actionBarSize"
+            tools:ignore="RtlCompat" />
+        </androidx.appcompat.widget.Toolbar>
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,14 +52,19 @@
             android:id="@+id/relativeLayout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:keepScreenOn="true">
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:background="@drawable/allcorner_radius"
+            android:keepScreenOn="true"
+            android:layout_marginBottom="@dimen/_5sdp">
             tools:context=".DriverMapActivity">
 
             <FrameLayout
                 android:id="@+id/fragment_container"
                 android:layout_width="@dimen/_315sdp"
                 android:layout_height="@dimen/_526sdp"
-                android:background="@drawable/background"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.666"
                 app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +83,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/fragment_container"
-                tools:ignore="MissingConstraints,NotSibling" />
+                tools:ignore="MissingConstraints,NotSibling"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"/>
             <!--map:layout_constraintEnd_toEndOf="parent"-->
             <!--map:layout_constraintStart_toStartOf="parent"-->
 
@@ -71,12 +94,13 @@
                 android:id="@+id/speed"
                 android:layout_width="52dp"
                 android:layout_height="44dp"
-                android:background="#FFFFFF"
+                android:background="@drawable/top_corner_radius"
                 android:gravity="center"
                 android:text=""
                 android:textColor="#d6d6c2"
                 android:textSize="10sp"
                 tools:ignore="MissingConstraints"
+
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="30dp" />
 
@@ -205,12 +229,12 @@
                 android:layout_height="@dimen/_50sdp"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginLeft="@dimen/_16sdp"
-
+                android:padding="@dimen/_5sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
-                android:background="#0040FF"
+                android:background="@drawable/colorful_rounded_corners"
                 android:gravity="center|top"
                 android:text="00:00:00"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/distanceV"
@@ -225,16 +249,17 @@
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginLeft="@dimen/_16sdp"
                 android:layout_marginBottom="20dp"
-                android:background="#0040FF"
+                android:background="@drawable/colorful_rounded_corners"
                 android:ems="10"
                 android:gravity="center_horizontal"
                 android:text="00:00:00"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/forcestart"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="MissingConstraints" />
+                tools:ignore="MissingConstraints"
+                android:padding="@dimen/_5sdp"/>
 
             <Button
                 android:id="@+id/start"
@@ -262,7 +287,7 @@
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/end_button"
                 android:text="END TRIP"
-                android:textColor="#000000"
+                android:textColor="@color/white"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -335,9 +360,9 @@
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginLeft="@dimen/_16sdp"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/waiting_button"
+                android:background="@drawable/round_button"
                 android:text="START WAITING"
-                android:textColor="#000000"
+                android:textColor="@color/white"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -350,17 +375,19 @@
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginLeft="@dimen/_16sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
-                android:background="#0040FF"
+                android:background="@drawable/colorful_rounded_corners"
                 android:ems="10"
                 android:gravity="center_horizontal"
                 android:inputType="textPersonName"
                 android:text="0.0 "
-                android:textColor="#FFFFFF"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/timerValue2"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="MissingConstraints" />
+                tools:ignore="MissingConstraints"
+                android:padding="@dimen/_5sdp"
+                android:textAlignment="center"/>
 
             <TextView
                 android:id="@+id/Tripcost"
@@ -371,18 +398,19 @@
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_marginRight="@dimen/_8sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
-                android:background="#0040FF"
+                android:background="@drawable/colorful_rounded_corners"
                 android:ems="10"
                 android:gravity="center_horizontal"
                 android:inputType="textPersonName"
                 android:text="TripCost "
-                android:textColor="#FFFFFF"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/Waitingcost"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/distanceV"
-                tools:ignore="MissingConstraints" />
+                tools:ignore="MissingConstraints"
+                android:padding="@dimen/_5sdp"/>
 
             <TextView
                 android:id="@+id/Waitingcost"
@@ -393,19 +421,20 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="@dimen/_8sdp"
                 android:layout_marginBottom="20dp"
-                android:background="#0040FF"
+                android:background="@drawable/colorful_rounded_corners"
                 android:ems="10"
                 android:gravity="center_horizontal"
                 android:inputType="textPersonName"
                 android:text="WaitingCost "
-                android:textColor="#FFFFFF"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/End"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.52"
                 app:layout_constraintStart_toEndOf="@+id/timerValue2"
-                tools:ignore="MissingConstraints" />
+                tools:ignore="MissingConstraints"
+                android:padding="@dimen/_5sdp"/>
 
 
             <TextView
@@ -417,10 +446,10 @@
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_marginRight="@dimen/_8sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
-                android:background="#0040FF"
+                android:background="@drawable/colorful_rounded_corners"
                 android:gravity="center_horizontal"
                 android:text="TotalCost"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/black"
                 android:textSize="30dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/Tripcost"
@@ -430,7 +459,7 @@
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="99dp"
+                android:layout_width="@dimen/_140sdp"
                 android:layout_height="20dp"
                 android:text="@string/trip_time_label"
                 android:textColor="#000000"
@@ -440,11 +469,13 @@
                 app:layout_constraintHorizontal_bias="0.626"
                 app:layout_constraintStart_toStartOf="@+id/timerValue"
                 app:layout_constraintTop_toTopOf="@+id/timerValue"
-                app:layout_constraintVertical_bias="0.619" />
+                app:layout_constraintVertical_bias="0.619"
+                android:textAlignment="center"
+                android:gravity="center_horizontal" />
 
             <TextView
                 android:id="@+id/textViewTc"
-                android:layout_width="99dp"
+                android:layout_width="@dimen/_140sdp"
                 android:layout_height="25dp"
                 android:gravity="center_horizontal"
                 android:text="Total Cost RS"
@@ -456,11 +487,12 @@
                 app:layout_constraintStart_toStartOf="@+id/totalcost"
                 app:layout_constraintTop_toTopOf="@+id/totalcost"
                 app:layout_constraintVertical_bias="0.897"
+                android:textAlignment="center"
                 tools:ignore="MissingConstraints" />
 
             <TextView
                 android:id="@+id/textViewToc"
-                android:layout_width="159dp"
+                android:layout_width="@dimen/_140sdp"
                 android:layout_height="27dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="center_horizontal"
@@ -472,11 +504,12 @@
                 app:layout_constraintStart_toStartOf="@+id/Waitingcost"
                 app:layout_constraintTop_toTopOf="@+id/Waitingcost"
                 app:layout_constraintVertical_bias="1.0"
-                tools:ignore="MissingConstraints" />
+                tools:ignore="MissingConstraints"
+                android:textAlignment="center"/>
 
             <TextView
                 android:id="@+id/textViewTrc"
-                android:layout_width="@dimen/_100sdp"
+                android:layout_width="@dimen/_140sdp"
                 android:layout_height="22dp"
                 android:gravity="center_horizontal"
                 android:text="Trip Cost RS"
@@ -488,12 +521,13 @@
                 app:layout_constraintStart_toStartOf="@+id/Tripcost"
                 app:layout_constraintTop_toTopOf="@+id/Tripcost"
                 app:layout_constraintVertical_bias="0.642"
-                tools:ignore="MissingConstraints" />
+                tools:ignore="MissingConstraints"
+                android:textAlignment="center"/>
 
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_140sdp"
                 android:layout_height="wrap_content"
                 android:text="@string/waiting_time_label"
                 android:textColor="#000000"
@@ -503,11 +537,13 @@
                 app:layout_constraintHorizontal_bias="0.542"
                 app:layout_constraintStart_toStartOf="@+id/timerValue2"
                 app:layout_constraintTop_toTopOf="@+id/timerValue2"
-                app:layout_constraintVertical_bias="0.695" />
+                app:layout_constraintVertical_bias="0.695"
+                android:textAlignment="center"
+                android:gravity="center_horizontal" />
 
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="60dp"
+                android:layout_width="@dimen/_140sdp"
                 android:layout_height="19dp"
                 android:gravity="center"
                 android:text="@string/distance_km_label"
@@ -518,7 +554,8 @@
                 app:layout_constraintHorizontal_bias="0.508"
                 app:layout_constraintStart_toStartOf="@+id/distanceV"
                 app:layout_constraintTop_toTopOf="@+id/distanceV"
-                app:layout_constraintVertical_bias="0.622" />
+                app:layout_constraintVertical_bias="0.622"
+                android:textAlignment="center"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

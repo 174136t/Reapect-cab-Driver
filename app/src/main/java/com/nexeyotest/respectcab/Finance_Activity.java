@@ -134,7 +134,7 @@ public class Finance_Activity extends AppCompatActivity {
         mRecyclerView.setAdapter(firebaseRecyclerAdapter3);
 
 
-        Toast.makeText(Finance_Activity.this, "Started setAdapter", Toast.LENGTH_LONG).show();
+//        Toast.makeText(Finance_Activity.this, "Started setAdapter", Toast.LENGTH_LONG).show();
     }
 
     public static class financeViewHolder extends RecyclerView.ViewHolder {
@@ -152,10 +152,10 @@ public class Finance_Activity extends AppCompatActivity {
             user_name5.setText(tripdate);
 
             TextView user_name6 = (TextView) mView.findViewById(R.id.trip_id_f);
-            user_name6.setText(String.valueOf(totalearning));
+            user_name6.setText(String.valueOf(totalearning)+"0");
 
             TextView user_name7 = (TextView) mView.findViewById(R.id.trip_cost_f);
-            user_name7.setText(String.valueOf(totalcommission));
+            user_name7.setText(String.valueOf(totalcommission)+"0");
 
         }
     }
@@ -181,7 +181,7 @@ public class Finance_Activity extends AppCompatActivity {
 
         mRecyclerViewB.setAdapter(firebaseRecyclerAdapter4);
 
-        Toast.makeText(Finance_Activity.this, "Started setAdapter", Toast.LENGTH_LONG).show();
+//        Toast.makeText(Finance_Activity.this, "Started setAdapter", Toast.LENGTH_LONG).show();
     }
 
     public static class financeViewHolder4 extends RecyclerView.ViewHolder {

@@ -3,43 +3,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:theme="@style/AppTheme.NoActionBar">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/AppTheme.NoActionBar"
+    android:background="@color/themecolor"
+    >
 
 
     <TextView
         android:id="@+id/editText"
         android:layout_width="match_parent"
-        android:layout_height="46dp"
-
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
         android:layout_marginTop="0dp"
-        android:background="@color/design_default_color_primary_dark"
+        android:background="@color/themecolor"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="     Customer Request Rides"
-        android:textColor="#FFFFFF"
+        android:text="Customer Request Rides"
+        android:gravity="center_horizontal"
+        android:textColor="@color/black"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textAlignment="center"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/package_list"
         android:layout_width="410dp"
-        android:layout_height="449dp"
+        android:layout_height="@dimen/_430sdp"
         android:layout_below="@+id/package_list2"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginStart="-1dp"
-        android:layout_marginLeft="-1dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="-97dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginRight="2dp"
-
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:padding="@dimen/_10sdp"
         />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -78,19 +83,30 @@
 
     <Button
         android:id="@+id/start_package2"
-        android:layout_width="386dp"
-        android:layout_height="59dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
+
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/colorful_rounded_corners"
+        android:text="@string/start_package"
+        android:elevation="@dimen/_80sdp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="1dp"
-        android:text="Start package" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_above="@id/textty"
+        android:layout_marginTop="@dimen/_25sdp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/textty"
+        />
 
 <!--    <TextView-->
 <!--        android:id="@+id/empty_view"-->

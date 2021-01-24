@@ -6,10 +6,10 @@
     <application
         android:name="com.nexeyotest.respectcab.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="Respect Test"
+        android:icon="@mipmap/user_profile"
+        android:label="NexRide"
         android:resizeableActivity="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/user_profile_round"
         android:supportsPictureInPicture="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
@@ -24,6 +24,13 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="com.nexeyotest.respectcab.NotificationCancelActivity">
+            <intent-filter>
+                <action android:name="com.nexeyotest.respectcab.Cancel_Notification" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name="com.nexeyotest.respectcab.DriverPackageActivity" />
         <activity android:name="com.nexeyotest.respectcab.ClientPackageActivity" />
         <activity android:name="com.nexeyotest.respectcab.PackageAssign" />
@@ -31,6 +38,10 @@
         <activity android:name="com.nexeyotest.respectcab.DriverCommissionDetails" />
         <activity android:name="com.nexeyotest.respectcab.Finance_Activity" />
         <activity android:name="com.nexeyotest.respectcab.PaymentHistoryActivity" />
+        <activity android:name="com.nexeyotest.respectcab.TripStatusNo" />
+        <activity android:name="com.nexeyotest.respectcab.FailedMapActivity" />
+        <activity android:name="com.nexeyotest.respectcab.FailedTripHistory" />
+        <activity android:name="com.nexeyotest.respectcab.FailedDriverPackageActivity" />
         <activity
             android:name="com.nexeyotest.respectcab.DriverMapActivity"
             android:label="Respect Cab Service"
@@ -72,6 +83,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -83,7 +95,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_stat_ic_notification" />
@@ -99,6 +110,7 @@
         <meta-data
             android:name="firebase_analytics_collection_enabled"
             android:value="false" />
+
         <receiver
             android:name="com.nexeyotest.respectcab.ConnectivityReceiver"
             android:enabled="true">
@@ -108,7 +120,6 @@
                     tools:ignore="BatteryLife" />
             </intent-filter>
         </receiver>
-
         <!--
  Set custom default icon. This is used when no icon is set for incoming notification messages.
      See README(https://goo.gl/l4GJaQ) for more.
@@ -117,23 +128,21 @@
  Set color used with incoming notification messages. This is used when no color is set for the incoming
              notification message. See README(https://goo.gl/6BKBk7) for more.
         -->
-        <service
-            android:name="com.nexeyotest.respectcab.ForegroundService"
-            android:enabled="true"
-            android:exported="true" /> <!-- Set Notification channel Id -->
+        <receiver
+            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.measurement.UPLOAD" />
+            </intent-filter>
+        </receiver> <!-- Set Notification channel Id -->
+<!--        <service-->
+<!--            android:name="com.nexeyotest.respectcab.ForegroundService"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="true" /> &lt;!&ndash; Prevent auto initialization &ndash;&gt;-->
         <service
             android:name="com.nexeyotest.respectcab.onAppKilled"
-            android:stopWithTask="false" /> <!-- Prevent auto initialization -->
-        <service android:name="com.nexeyotest.respectcab.GpsService" />
-        <service
-            android:name="com.nexeyotest.respectcab.FcmMessagingService"
-            android:directBootAware="true"
-            android:exported="false"
-            tools:ignore="Instantiatable">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service> <!-- <service -->
+            android:stopWithTask="false" />
+        <service android:name="com.nexeyotest.respectcab.GpsService" /> <!-- <service -->
         <!-- android:name="com.nexeyotest.respectcab.NotificationActivity" -->
         <!-- android:directBootAware="true" -->
         <!-- android:exported="false"> -->
@@ -141,17 +150,27 @@
         <!-- <action android:name="com.google.firebase.MESSAGING_EVENT" /> -->
         <!-- </intent-filter> -->
         <!-- </service> -->
+        <service android:name="com.nexeyotest.respectcab.FcmMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.google.android.gms.measurement.AppMeasurementService"
+            android:enabled="true"
+            android:exported="false" />
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
     </application>
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

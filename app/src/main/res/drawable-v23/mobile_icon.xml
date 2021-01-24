@@ -2,9 +2,10 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:drawable="@drawable/icon"
-        android:width="@dimen/icon_size"
-        android:height="@dimen/icon_size"
-        />
+        android:drawable="@drawable/common_full_open_on_phone" />
+<!--        android:width="@dimen/icon_size"-->
+        android:height="@dimen/_40sdp"
+<!--        -->
+
 
 </layer-list >

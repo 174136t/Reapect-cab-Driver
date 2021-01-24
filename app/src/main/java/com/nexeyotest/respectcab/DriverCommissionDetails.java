@@ -89,7 +89,7 @@ public class DriverCommissionDetails extends AppCompatActivity {
         mRecyclerView.setAdapter(firebaseRecyclerAdapter3);
 
 
-        Toast.makeText(DriverCommissionDetails.this, "Started setAdapter", Toast.LENGTH_LONG).show();
+//        Toast.makeText(DriverCommissionDetails.this, "Started setAdapter", Toast.LENGTH_LONG).show();
     }
 
     public static class DriverCommissionDetailsViewHolder extends RecyclerView.ViewHolder {
@@ -107,10 +107,10 @@ public class DriverCommissionDetails extends AppCompatActivity {
             user_name5.setText(tripid);
 
             TextView user_name6 = (TextView) mView.findViewById(R.id.trip_id_f_details);
-            user_name6.setText(String.valueOf(totalearning));
+            user_name6.setText(String.valueOf(totalearning)+"0");
 
             TextView user_name7 = (TextView) mView.findViewById(R.id.trip_cost_f_details);
-            user_name7.setText(String.valueOf(totalcommission));
+            user_name7.setText(String.valueOf(totalcommission)+"0");
         }
     }
 }

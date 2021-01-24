@@ -16,9 +16,12 @@ import javax.mail.internet.MimeMultipart;
 
 public class GMailSender {
 
-    private static final String SMTP_HOST_NAME = "smtp.emailsrvr.com"; //can be your host server smtp.yourdomain.com
+//    private static final String SMTP_HOST_NAME = "smtp.gmail.com"; //can be your host server smtp.yourdomain.com
+private static final String SMTP_HOST_NAME = "smtp.emailsrvr.com";
     private static final String SMTP_AUTH_USER = "support@respectcab.com"; //your login username/email
     private static final String SMTP_AUTH_PWD  = "Cab#2019"; //password/secret
+//    private static final String SMTP_AUTH_USER = "info.nexride@gmail.com"; //your login username/email
+//    private static final String SMTP_AUTH_PWD  = "Nexeyo688"; //
 
     private static Message message;
 
@@ -28,6 +31,7 @@ public class GMailSender {
 
         // Sender's email ID needs to be mentioned
         String from = "RespectCabService@respectcab.com"; //from
+//        String from = "info.nexride@gmail.com";
 
         final String username = SMTP_AUTH_USER;
         final String password = SMTP_AUTH_PWD;
@@ -40,6 +44,7 @@ public class GMailSender {
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", host);
         props.put("mail.smtp.port", "587");
+
 
         // Get the Session object.
         Session session = Session.getInstance(props,

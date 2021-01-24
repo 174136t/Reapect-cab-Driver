@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/background"
+    tools:context="com.nexeyotest.respectcab.MainActivity"
+    tools:openDrawer="start"
+    >
+<!--    <FrameLayout-->
+<!--        android:id="@+id/driverStatusLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:background="@color/colorPrimary"-->
+<!--        android:orientation="horizontal">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/driverStatusTextView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginStart="15dp"-->
+<!--            android:gravity="center"-->
+<!--            android:text="@string/offline"-->
+<!--            android:textColor="@color/colorIcons"-->
+<!--            android:textSize="22sp"-->
+<!--            android:layout_marginLeft="15dp" />-->
+
+<!--        <android.support.v7.widget.SwitchCompat-->
+<!--            android:id="@+id/driverStatusSwitch"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_gravity="end"-->
+<!--            android:layout_marginEnd="15dp"-->
+<!--            android:checked="false"-->
+<!--            android:theme="@style/SCBSwitch"-->
+<!--            android:layout_marginRight="15dp" />-->
+
+<!--    </FrameLayout>-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/navigationView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:background="@color/new1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:itemBackground="@color/new1"
+
+
+            app:menu="@menu/navigation"
+            />
+
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            -->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/themecolor"
+            android:elevation="@dimen/_40sdp"
+            android:textAlignment="center"
+            app:title="@string/appName"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/AlertDialog.AppCompat.Light"
+            android:layout_centerInParent="true"
+            app:titleTextColor="@color/black">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/appName"
+            android:textColor="#030303"
+            android:textAlignment="center"
+            android:gravity = "center_horizontal"
+            android:layout_centerInParent="true"
+            android:id="@+id/toolbar_title"
+            android:textStyle="bold"
+            android:textSize="@dimen/_25sdp"
+            android:layout_marginEnd="?android:attr/actionBarSize"
+            tools:ignore="RtlCompat" />
+
+        </androidx.appcompat.widget.Toolbar>>
+<!--        <TextView-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/app_name"/>-->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/relativeLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:keepScreenOn="true"
+            android:layout_marginBottom="@dimen/_60sdp"
+            tools:ignore="ExtraText,ObsoleteLayoutParam"
+            >
+<!--            <![CDATA[-->
+<!--            tools:context=".MainActivity">-->
+<!--            ]]>-->
+
+            <Button
+                android:id="@+id/driver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/start_trip"
+                android:gravity="center_horizontal"
+                android:background="@drawable/colorful_rounded_corners"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_above = "@id/navigationView"
+                android:layout_marginTop="25dp"
+                android:padding="10dip"
+                android:textColor="#030303"
+                android:elevation="@dimen/_150sdp"
+                tools:ignore="MissingConstraints,NotSibling"
+                android:layout_gravity="center_horizontal|center"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"/>
+
+<!--            <Button-->
+<!--                android:id="@+id/logout"-->
+<!--                android:layout_width="@dimen/_140sdp"-->
+<!--                android:layout_height="@dimen/_50sdp"-->
+<!--                android:layout_alignParentStart="true"-->
+<!--                android:layout_alignParentLeft="true"-->
+<!--                android:layout_alignParentBottom="true"-->
+<!--                android:layout_marginStart="12dp"-->
+<!--                android:layout_marginLeft="12dp"-->
+<!--                android:layout_marginBottom="16dp"-->
+<!--                android:text="Logout"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                tools:ignore="MissingConstraints" />-->
+
+            <TextView
+                android:id="@+id/driverStatusTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_below="@+id/card_view"
+                android:gravity="center"
+                android:text="@string/offline"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_25sdp"
+                android:layout_marginTop="5dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="165dp"
+                android:layout_marginLeft="150dp"
+
+                android:layout_marginEnd="@dimen/_160sdp"
+                android:layout_marginRight="@dimen/_150sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_view"
+
+                tools:ignore="MissingConstraints" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/driverStatusSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:theme="@style/SCBSwitch"
+                tools:ignore="MissingConstraints"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_toRightOf="@+id/driverStatusTextView"
+                app:layout_constraintStart_toEndOf="@+id/driverStatusTextView"
+                app:layout_constraintTop_toBottomOf="@+id/card_view"
+                android:layout_marginRight="75dp"
+               />
+
+            <TextView
+                android:id="@+id/driver_id_main"
+                android:layout_width="91dp"
+                android:layout_height="55dp"
+
+                android:layout_below="@+id/card_view"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="@dimen/_33sdp"
+                android:layout_marginLeft="@dimen/_33sdp"
+                android:layout_marginTop="@dimen/_231sdp"
+                android:layout_marginBottom="@dimen/_361sdp"
+                android:text="TextView"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/cus_email"
+                app:layout_constraintEnd_toStartOf="@+id/card_view"
+                app:layout_constraintHorizontal_bias="0.555"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_view"
+                app:layout_constraintVertical_bias="0.522"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/driver_total_earn"
+                android:layout_width="65dp"
+                android:layout_height="44dp"
+                android:layout_below="@+id/card_view"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginStart="65dp"
+                android:layout_marginLeft="65dp"
+                android:layout_marginBottom="461dp"
+                android:layout_toEndOf="@+id/driver_id_main"
+                android:layout_toRightOf="@+id/driver_id_main"
+                android:text="TextView"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/cus_email"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <EditText
+                android:id="@+id/cus_mobile"
+                android:layout_width="@dimen/_250sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_below="@+id/cus_email"
+                android:layout_marginTop="5dp"
+                android:textAlignment="center"
+                android:hint="@string/customer_mobile_no"
+                android:inputType="number"
+                android:text=""
+                android:background="@drawable/fill_textfield"
+                app:layout_constraintTop_toBottomOf="@+id/cus_email"
+                android:padding="10dip"
+                android:layout_centerInParent="true"
+                tools:ignore="MissingConstraints"
+                android:drawableStart=
+                    "@drawable/ic_baseline_smartphone_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.52"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <EditText
+                android:id="@+id/cus_email"
+                android:layout_width="@dimen/_250sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:drawableStart=
+                    "@drawable/ic_baseline_email_24"
+                android:hint="@string/customer_email"
+                android:textAlignment="center"
+                android:layout_marginTop="5dp"
+                android:text=""
+                android:background="@drawable/fill_textfield"
+                app:layout_constraintTop_toBottomOf="@+id/driverStatusTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.52"
+                app:layout_constraintStart_toStartOf="parent"
+                android:padding="10dip"
+                tools:ignore="MissingConstraints" />
+            <TextView
+                android:id="@+id/text3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="0.002"
+                android:text=""
+                android:layout_centerHorizontal="true"
+                tools:ignore="MissingConstraints" />
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="0.2"
+                android:layout_below="@+id/text3"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/pngfind_taxi725261"
+                android:scaleType="fitCenter"
+
+                app:layout_constraintTop_toBottomOf="@+id/text3"
+                tools:srcCompat="@tools:sample/avatars"
+
+                tools:ignore="MissingConstraints,NotSibling" />
+
+
+            <androidx.cardview.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/card_view"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:cardCornerRadius="20dp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:background="@drawable/top_corner_radius"
+                tools:ignore="MissingConstraints"
+                app:layout_constraintTop_toBottomOf="@+id/imageView3"
+
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                <TextView
+                    android:id="@+id/driver_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="5dp"
+                    android:text="TextView"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/_20sdp"
+                    android:textStyle="bold"
+
+                    android:textColor="@color/black"
+                    tools:ignore="MissingConstraints"
+
+                    android:padding="10dip"/>
+
+                    <TextView
+                        android:id="@+id/driver_id_display"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text"
+                        android:layout_marginTop="3dp"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:text="@string/driver_id_18"
+                        android:drawableStart=
+                            "@drawable/ic_baseline_account_circle_24"
+                        android:textStyle="bold"
+                        android:padding="10dip"
+                        tools:ignore="MissingConstraints"
+                        app:layout_constraintTop_toBottomOf="@+id/driver_name"
+                        />
+                    <TextView
+                        android:id="@+id/driver_mobile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart=
+                            "@drawable/ic_phone"
+                        android:gravity="center"
+                        android:text=" 0766708136"
+                        android:textStyle="bold"
+                        android:background="@drawable/edit_text"
+                        android:textAlignment="center"
+                        android:layout_marginTop="3dp"
+                        android:padding="10dip"
+                        app:layout_constraintTop_toBottomOf="@+id/driver_id_display"
+                        tools:ignore="MissingConstraints" />
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
+
+<!--            <ToggleButton-->
+<!--                android:id="@+id/switch1"-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="25dp"-->
+<!--                android:layout_below="@+id/card_view"-->
+<!--                android:layout_alignParentStart="true"-->
+<!--                android:layout_alignParentLeft="true"-->
+<!--                android:layout_marginStart="13dp"-->
+<!--                android:layout_marginLeft="13dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_marginEnd="@dimen/_1sdp"-->
+<!--                android:layout_marginRight="@dimen/_18sdp"-->
+<!--                android:background="@drawable/colorful_rounded_corners"-->
+<!--                android:text="abc"-->
+<!--                android:scaleX="2.5"-->
+<!--                android:scaleY="2.5"-->
+<!--                android:textOff=""-->
+<!--                android:textOn=""-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.459"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/driverStatusTextView"-->
+<!--                tools:ignore="MissingConstraints" />-->
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_49sdp"
+                android:layout_alignTop="@+id/textView1"
+                android:layout_centerHorizontal="true"
+                android:text="Click Here to Enable Disable GPS location service!"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.958"
+                app:layout_constraintStart_toEndOf="@+id/textView1"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+<!--            <TextView-->
+<!--                android:id="@+id/textView1"-->
+<!--                android:layout_width="@dimen/_233sdp"-->
+<!--                android:layout_height="@dimen/_50sdp"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:gravity="center"-->
+<!--                android:text="location service Status "-->
+<!--                android:textAppearance="?android:attr/textAppearanceLarge"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+                tools:ignore="MissingConstraints" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/vehicle_list3"
+                android:layout_width="@dimen/_6sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_below="@+id/vehicle_type_list3"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/imageView3"
+                app:layout_constraintEnd_toEndOf="@+id/button1"
+                app:layout_constraintStart_toStartOf="@+id/textView1"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints"
+                tools:listitem="@layout/recycler_view_item" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/vehicle_type_list3"
+                android:layout_width="439dp"
+                android:layout_height="282dp"
+
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/imageView3"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.267"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp"
+                tools:listitem="@layout/recycler_view_item" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/customer_email_rv"
+                android:layout_width="37dp"
+                android:layout_height="40dp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.52"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteY="79dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/_16sdp"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="@dimen/_250sdp"
+                tools:layout_editor_absoluteY="@dimen/_115sdp"
+                android:visibility="invisible"/>
+
+<!--            <Button-->
+<!--                android:id="@+id/button_next"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="630dp"-->
+<!--                android:layout_marginLeft="630dp"-->
+<!--                android:layout_marginTop="1dp"-->
+<!--                android:text="Next1"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/cus_mobile"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/cus_mobile"-->
+<!--                tools:ignore="MissingConstraints" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/button_next_next"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="630dp"-->
+<!--                android:layout_marginLeft="630dp"-->
+<!--                android:layout_marginEnd="5dp"-->
+<!--                android:layout_marginRight="5dp"-->
+<!--                android:text="Next2"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/cus_email"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/cus_mobile"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/cus_mobile"-->
+<!--                tools:ignore="MissingConstraints" />-->
+
+            <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/vehicle_list_name"-->
+            <!--android:layout_width="636dp"-->
+            <!--android:layout_height="218dp"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--tools:ignore="MissingConstraints"-->
+            <!--tools:layout_editor_absoluteX="-35dp"-->
+            <!--tools:layout_editor_absoluteY="26dp"-->
+            <!--tools:listitem="@layout/recycler_view_item" />-->
+
+<!--            <Spinner-->
+<!--                android:id="@+id/spinner_package"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:layout_marginLeft="8dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:layout_marginEnd="8dp"-->
+<!--                android:layout_marginRight="8dp"-->
+<!--                android:layout_marginBottom="8dp"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/cus_email"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.988"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/switch1"-->
+<!--                app:layout_constraintVertical_bias="0.0" />-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:id="@+id/nav_view"
+    app:headerLayout="@layout/nav_header_main2"
+    app:menu="@menu/drawer_menu">
+
+</com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>

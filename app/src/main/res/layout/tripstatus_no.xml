@@ -2,169 +2,286 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_400sdp"
     android:orientation="vertical"
     tools:layout_editor_absoluteY="25dp">
+    <androidx.cardview.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_350sdp"
+        card_view:cardCornerRadius="15dp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/top_corner_radius"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
 
-    <TextView
-        android:id="@+id/history_text"
-        android:layout_width="395dp"
-        android:layout_height="63dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginRight="4dp"
-        android:text="driverID"
-        android:textSize="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@tools:sample/cities" />
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_20sdp"
+            >
+            <TextView
+                android:id="@+id/trip_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+                android:layout_marginTop="4dp"
+                android:text="driverID"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                tools:text="@tools:sample/cities" />
+            <TextView
+                android:id="@+id/trip_total_cost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textAlignment="textEnd"
+                android:text="driverID"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorAccent"
+                tools:ignore="MissingConstraints"
+                tools:text="@tools:sample/cities"
+                android:padding="@dimen/_10sdp"
+                android:gravity="end" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/history_time"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
 
-    <TextView
-        android:id="@+id/trip_date"
-        android:layout_width="119dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="8dp"
-        android:text="driverID"
-        android:textSize="10dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/history_time"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="@tools:sample/cities" />
+                android:text="Trip date and time"
+                android:textSize="12sp"
 
-    <TextView
-        android:id="@+id/total_distance"
-        android:layout_width="119dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="8dp"
-        android:text="driverID"
-        android:textSize="10dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trip_date"
-        app:layout_constraintVertical_bias="0.285"
-        tools:text="@tools:sample/cities" />
+                tools:text="@tools:sample/cities" />
+            <TextView
+                android:id="@+id/history_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
 
-    <TextView
-        android:id="@+id/history_time"
-        android:layout_width="119dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="8dp"
-        android:text="Trip date and time"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/history_text"
-        tools:text="@tools:sample/cities" />
+                android:text="driverID"
+                android:textSize="12dp"
+                android:drawableLeft="@drawable/ic_baseline_gps_fixed_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@tools:sample/cities"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:drawableTint="@color/black"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/endtime"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+
+                android:text="Crash"
+                android:textColor="@color/blue"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                tools:text="@tools:sample/cities" />
+            <TextView
+                android:id="@+id/endAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="driverID"
+                android:textSize="12dp"
+                android:drawableLeft="@drawable/ic_baseline_place_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@tools:sample/cities"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:drawableTint="@color/black"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/total_distance"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
+                android:text="driverID"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:padding="@dimen/_10sdp"
+                tools:text="@tools:sample/cities"
+                android:textAlignment="viewStart"
+                android:gravity="center_horizontal"
+                tools:ignore="RtlCompat"
+                android:textColor="@color/brown"/>
+
+            <TextView
+                android:id="@+id/waiting_cost"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/brown"
+                android:text="driverID"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="MissingConstraints,RtlCompat"
+                android:padding="@dimen/_10sdp"
+                tools:text="@tools:sample/cities"
+                android:textAlignment="viewStart"
+                android:gravity="center_horizontal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/payment_method"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:padding="@dimen/_10sdp"
+                android:textAlignment="viewStart"
+                android:gravity="center_horizontal"
+                tools:ignore="RtlCompat"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/brown"/>
+
+            <TextView
+                android:id="@+id/waiting_time"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:padding="@dimen/_10sdp"
+                android:textAlignment="viewStart"
+                android:gravity="center_horizontal"
+                tools:ignore="RtlCompat"
+                android:textColor="@color/brown"/>
+        </LinearLayout>
+
 
     <TextView
         android:id="@+id/trip_id"
-        android:layout_width="110dp"
-        android:layout_height="21dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginTop="@dimen/_20sdp"
         android:text="driverID"
-        android:textSize="12sp"
+        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/history_time"
         app:layout_constraintTop_toBottomOf="@+id/history_text"
         tools:ignore="MissingConstraints"
-        tools:text="@tools:sample/cities" />
-
-    <TextView
-        android:id="@+id/driver_id"
-        android:layout_width="123dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="driverID"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/trip_id"
-        app:layout_constraintTop_toBottomOf="@+id/history_text"
-        tools:ignore="MissingConstraints"
-        tools:text="@tools:sample/cities" />
-
-    <TextView
-        android:id="@+id/trip_total_cost"
-        android:layout_width="123dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:text="driverID"
-        android:textSize="10dp"
+        tools:text="@tools:sample/cities"
+        android:gravity="center_horizontal"
+        android:textColor="@color/black"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/driver_id"
-        tools:ignore="MissingConstraints"
-        tools:text="@tools:sample/cities" />
+        android:layout_marginBottom="@dimen/_5sdp"/>
 
-    <TextView
-        android:id="@+id/waiting_cost"
-        android:layout_width="123dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:text="driverID"
-        android:textSize="10dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trip_total_cost"
-        tools:ignore="MissingConstraints"
-        tools:text="@tools:sample/cities" />
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:padding="16dp">-->
+<!--            <Button-->
+<!--                android:id="@+id/continueTrip"-->
+<!--                android:layout_height="@dimen/_40sdp"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="Continue"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.6"-->
+<!--                android:background="@drawable/continuebtn"-->
+<!--                tools:ignore="MissingConstraints,OnClick"-->
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="580dp"
-        android:layout_height="2dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/waiting_time"
-        tools:ignore="MissingConstraints" />
+<!--                />-->
 
-    <TextView
-        android:id="@+id/payment_method"
-        android:layout_width="121dp"
-        android:layout_height="20dp"
-        android:text="TextView"
-        android:textSize="10dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/trip_total_cost"
-        app:layout_constraintHorizontal_bias="0.583"
-        app:layout_constraintStart_toEndOf="@+id/trip_date"
-        app:layout_constraintTop_toBottomOf="@+id/trip_id"
-        app:layout_constraintVertical_bias="0.142" />
+<!--            <Button-->
+<!--                android:id="@+id/stopTrip"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_height="@dimen/_40sdp"-->
 
-    <TextView
-        android:id="@+id/waiting_time"
-        android:layout_width="121dp"
-        android:layout_height="20dp"
-        android:text="TextView"
-        android:textSize="10dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/trip_total_cost"
-        app:layout_constraintHorizontal_bias="0.571"
-        app:layout_constraintStart_toEndOf="@+id/total_distance"
-        app:layout_constraintTop_toBottomOf="@+id/payment_method"
-        app:layout_constraintVertical_bias="0.545" />
+<!--                android:layout_marginLeft="12dp"-->
 
+<!--                android:text="Stop"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                android:background="@drawable/continuebtn"-->
+<!--                tools:ignore="MissingConstraints" />-->
+<!--        </LinearLayout>-->
+<!--    <TextView-->
+<!--        android:id="@+id/driver_id"-->
+<!--        android:layout_width="123dp"-->
+<!--        android:layout_height="22dp"-->
+<!--        android:layout_marginStart="36dp"-->
+<!--        android:layout_marginLeft="36dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:layout_marginEnd="8dp"-->
+<!--        android:layout_marginRight="8dp"-->
+<!--        android:text="driverID"-->
+<!--        android:textSize="12sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="1.0"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/trip_id"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/history_text"-->
+<!--        tools:ignore="MissingConstraints"-->
+<!--        tools:text="@tools:sample/cities" />-->
+
+
+
+
+
+<!--    <View-->
+<!--        android:id="@+id/divider"-->
+<!--        android:layout_width="580dp"-->
+<!--        android:layout_height="2dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:layout_marginRight="16dp"-->
+<!--        android:background="?android:attr/listDivider"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/waiting_time"-->
+<!--        tools:ignore="MissingConstraints" />-->
+
+
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

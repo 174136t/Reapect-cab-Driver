@@ -104,6 +104,7 @@ public class CustomerRideRequest extends AppCompatActivity {
                                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                                     Map<String, Object> valuesMap = (HashMap<String, Object>) child.getValue();
 
+                                    assert valuesMap != null;
                                     key = valuesMap.get("driverid");
                                     found = "Yes";
 
@@ -175,9 +176,9 @@ public class CustomerRideRequest extends AppCompatActivity {
                         final AlertDialog.Builder alert = new AlertDialog.Builder(CustomerRideRequest.this, R.style.MaterialThemeDialog);
                         final TextView confirm_title = new TextView(CustomerRideRequest.this);
 
-                        confirm_title.setText("     Respect cab service");
+                        confirm_title.setText("      NexRide Service");
                         confirm_title.setTextSize(20);
-                        confirm_title.setTextColor(Color.BLUE);
+                        confirm_title.setTextColor(Color.BLACK);
                         alert
                                 .setCustomTitle(confirm_title)
                                 .setMessage("Are you Sure you want to start a trip?")
@@ -185,25 +186,46 @@ public class CustomerRideRequest extends AppCompatActivity {
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                                     public void onClick(DialogInterface dialog, int whichButton) {
-                                        Intent intent = new Intent(CustomerRideRequest.this, ClientPackageActivity.class);
-                                        startActivity(intent);
-                                        finish();
+                                        DatabaseReference rideRef = FirebaseDatabase.getInstance().getReference("NewRideAvailable");
+                                        SharedPreferences mPrefs = getSharedPreferences("IDvalue",0);
+                                        final String cusPhone = mPrefs.getString("CustomerPhone","DEFAULT");
+                                        rideRef.orderByChild("phoneNo").equalTo(cusPhone).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                if(snapshot.exists()){
+                                                    Intent intent = new Intent(CustomerRideRequest.this, ClientPackageActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
 
 //
 //                                     new com.nexeyotest.respectcab.MainActivity()
-                                       // com.nexeyotest.respectcab.MainActivityKt.
-                                       // new MainActivity().del();
-                                        Log.e("Meka vada", "oooooooooooooooo");
+                                                    // com.nexeyotest.respectcab.MainActivityKt.
+                                                    // new MainActivity().del();
+                                                    Log.e("Meka vada", "oooooooooooooooo");
 //                                        boolean a ;
 //                                        a  = new MainActivity().getDriverOnlineFlag();
 //                                        a = false;
-                                        new MainActivity().setDriverOnlineFlag(false);
-                                        SharedPreferences mPrefs = getSharedPreferences("IDvalue", 0);
-                                        strr = mPrefs.getInt("DriverIDValue", 0);
-                                        firebaseHelper = new FirebaseHelper(strr.toString());
-                                        firebaseHelper.deleteDriver();
-                                        Log.e("Meka hriiii", "yyyyyyyyyyyyyyy");
-                                        return;
+                                                    new MainActivity().setDriverOnlineFlag(false);
+                                                    SharedPreferences mPrefs = getSharedPreferences("IDvalue", 0);
+                                                    strr = mPrefs.getInt("DriverIDValue", 0);
+                                                    firebaseHelper = new FirebaseHelper(strr.toString());
+                                                    firebaseHelper.deleteDriver();
+                                                    firebaseHelper.deleteAllDriver();
+                                                    Log.e("Meka hriiii", "yyyyyyyyyyyyyyy");
+                                                    return;
+                                                }else{
+                                                    Toast.makeText( CustomerRideRequest.this, "This ride has been cancelled!",
+                                                            Toast.LENGTH_LONG).show();
+                                                    finish();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+
                                     }
                                 })
                                 .setNegativeButton(android.R.string.no, null).show();
@@ -211,9 +233,9 @@ public class CustomerRideRequest extends AppCompatActivity {
                         final AlertDialog.Builder alert = new AlertDialog.Builder(CustomerRideRequest.this, R.style.MaterialThemeDialog);
                         final TextView confirm_title = new TextView(CustomerRideRequest.this);
 
-                        confirm_title.setText("     Respect cab service");
+                        confirm_title.setText("      NexRide Service");
                         confirm_title.setTextSize(20);
-                        confirm_title.setTextColor(Color.BLUE);
+                        confirm_title.setTextColor(Color.BLACK);
                         alert
                                 .setCustomTitle(confirm_title)
                                 .setMessage("No Customer rides Available")
@@ -228,7 +250,7 @@ public class CustomerRideRequest extends AppCompatActivity {
     }
 
     private void firebaseUserSearch(String s) {
-        Toast.makeText(CustomerRideRequest.this, "Started Search", Toast.LENGTH_LONG).show();
+//        Toast.makeText(CustomerRideRequest.this, "Started Search", Toast.LENGTH_LONG).show();
 
 
         final Query firebaseSearchQuery4 = FirebaseDatabase.getInstance().getReference("CustomerRideAssign").orderByChild("driverid").equalTo(s);
@@ -359,7 +381,7 @@ public class CustomerRideRequest extends AppCompatActivity {
 
         mRecyclerViewB.setAdapter(firebaseRecyclerAdapter_package_assign);
 
-        Toast.makeText(CustomerRideRequest.this, "Started setAdapter", Toast.LENGTH_LONG).show();
+//        Toast.makeText(CustomerRideRequest.this, "Started setAdapter", Toast.LENGTH_LONG).show();
     }
 
 
@@ -418,7 +440,7 @@ public class CustomerRideRequest extends AppCompatActivity {
 
 
     private void firebaseUserSearchPackage() {
-        Toast.makeText(CustomerRideRequest.this, "Started Search", Toast.LENGTH_LONG).show();
+//        Toast.makeText(CustomerRideRequest.this, "Started Search", Toast.LENGTH_LONG).show();
 
         final Query firebaseSearchQueryPackage = FirebaseDatabase.getInstance().getReference("customers").orderByChild("mobile").equalTo(customer_phone_number_f.getText().toString());
 

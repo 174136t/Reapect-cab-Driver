@@ -4,14 +4,126 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/rounded_corners"
+
     tools:context="com.nexeyotest.respectcab.NotificationActivity">
 
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Notification"
-        tools:layout_editor_absoluteX="175dp"
-        tools:layout_editor_absoluteY="193dp"
-        tools:ignore="MissingConstraints" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView12"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/Notification"-->
+<!--        tools:layout_editor_absoluteX="175dp"-->
+<!--        tools:layout_editor_absoluteY="193dp"-->
+<!--        tools:ignore="MissingConstraints" />-->
+
+
+    <LinearLayout
+        android:id="@+id/lay1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:layout_marginBottom="@dimen/_60sdp"
+        tools:ignore="MissingConstraints">
+
+        <!-- Media -->
+        <TextView
+            android:id="@+id/text3"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text=""
+            android:layout_centerHorizontal="true"
+            tools:ignore="MissingConstraints" />
+        <ImageView
+
+            android:layout_width="match_parent"
+            android:layout_height="194dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/taxi"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/content_description_media"
+            tools:ignore="VectorDrawableCompat" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:padding="16dp">
+
+            <!-- Title, secondary and supporting text -->
+            <TextView
+                android:layout_marginTop="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:text="@string/title"
+                android:layout_gravity="center"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="20sp"
+                android:text="@string/secondary_text"
+                android:layout_gravity="center"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:text="@string/supporting_text"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:padding="16dp">
+        <Button
+            android:id="@+id/accept"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/Accept"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.6"
+            android:background="@drawable/no_stroke"
+            tools:ignore="MissingConstraints,OnClick"
+
+            />
+
+        <Button
+            android:id="@+id/reject"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/_40sdp"
+
+            android:layout_marginLeft="12dp"
+
+            android:text="@string/Reject"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/rounded_corners"
+            tools:ignore="MissingConstraints" />
+    </LinearLayout>
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+

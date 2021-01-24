@@ -1,12 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    card_view:cardCornerRadius="20dp"
+
+    android:background="@drawable/top_corner_radius"
+
+    >
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal">
 
 
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:gravity="center_horizontal">-->
     <TextView
         android:id="@+id/nextcost"
         android:layout_width="198dp"
@@ -15,6 +32,9 @@
         app:layout_constraintEnd_toEndOf="@+id/initialcost_f"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        android:padding="10dp"
+        android:paddingLeft="30dp"
+        android:paddingStart="30dp"
         app:layout_constraintTop_toBottomOf="@+id/vehicle_type_f" />
 
     <TextView
@@ -22,7 +42,9 @@
         android:layout_width="198dp"
         android:layout_height="58dp"
         android:text="customer phone"
+        android:textColor="@color/md_divider_white"
         app:layout_constraintEnd_toEndOf="parent"
+        android:padding="10dp"
         app:layout_constraintTop_toBottomOf="@+id/waiting_cost_f" />
 
     <TextView
@@ -30,7 +52,9 @@
         android:layout_width="198dp"
         android:layout_height="58dp"
         android:text="customer Email"
+        android:textColor="@color/md_divider_white"
         app:layout_constraintEnd_toEndOf="parent"
+        android:padding="10dp"
         app:layout_constraintTop_toBottomOf="@+id/customer_phone_f" />
 
     <TextView
@@ -38,8 +62,11 @@
         android:layout_width="198dp"
         android:layout_height="58dp"
         android:text="waiting cost"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/next_hours_f" />
+        android:padding="10dp"
+        android:paddingLeft="30dp"
+        android:paddingStart="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/next_hours_f"
+        app:layout_constraintEnd_toEndOf="@+id/initialcost_f"/>
 
     <TextView
         android:id="@+id/vehicle_type_f"
@@ -49,6 +76,9 @@
         app:layout_constraintEnd_toEndOf="@+id/initialcost_f"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        android:padding="10dp"
+        android:paddingLeft="30dp"
+        android:paddingStart="30dp"
         app:layout_constraintTop_toBottomOf="@+id/initialdistance_f2" />
 
     <TextView
@@ -59,6 +89,9 @@
         app:layout_constraintEnd_toEndOf="@+id/initialcost_f"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        android:padding="10dp"
+        android:paddingLeft="30dp"
+        android:paddingStart="30dp"
         app:layout_constraintTop_toBottomOf="@+id/next_hours_cost_f" />
 
     <TextView
@@ -71,15 +104,26 @@
         app:layout_constraintStart_toEndOf="@+id/textView8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+        android:padding="10dp"
+        tools:ignore="MissingConstraints"
+        android:paddingLeft="30dp"
+        android:paddingStart="30dp"
+        />
 
     <TextView
         android:id="@+id/initial_hours_f"
         android:layout_width="198dp"
         android:layout_height="58dp"
         android:text="initial hours"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nextcost" />
+        app:layout_constraintHorizontal_bias="1.0"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/nextcost"
+        android:layout_marginStart="212dp"
+        android:layout_marginLeft="212dp"
+        android:paddingLeft="30dp"
+        android:paddingStart="30dp"
+        app:layout_constraintEnd_toEndOf="@+id/initialcost_f"
+        />
 
     <TextView
         android:id="@+id/next_hours_cost_f"
@@ -89,6 +133,9 @@
         app:layout_constraintEnd_toEndOf="@+id/initialcost_f"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        android:padding="10dp"
+        android:paddingLeft="30dp"
+        android:paddingStart="30dp"
         app:layout_constraintTop_toBottomOf="@+id/initialcost_f" />
 
     <TextView
@@ -97,20 +144,30 @@
         android:layout_height="58dp"
         android:layout_marginTop="8dp"
         android:text="next hours"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/initial_hours_f" />
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/initial_hours_f"
+        android:layout_marginStart="212dp"
+        android:layout_marginLeft="212dp"
+        android:paddingLeft="30dp"
+        android:paddingStart="30dp"
+
+        app:layout_constraintEnd_toEndOf="@+id/initialcost_f"/>
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="139dp"
         android:layout_height="48dp"
         android:layout_marginStart="36dp"
+        android:layout_marginTop="12dp"
         android:layout_marginLeft="36dp"
         android:text="Initial Cost"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="0dp"
-        tools:ignore="MissingConstraints" />
+        android:padding="10dp"
+        android:paddingLeft="30dp"
+        android:paddingStart="30dp"
+        tools:ignore="MissingConstraints"/>
 
     <TextView
         android:id="@+id/textView9"
@@ -122,6 +179,9 @@
         android:text="Next Hourly Cost"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
+        android:padding="10dp"
+        android:paddingLeft="30dp"
+        android:paddingStart="30dp"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
@@ -134,18 +194,24 @@
         android:text="Initial Distance"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
+        android:padding="10dp"
+        android:paddingLeft="30dp"
+        android:paddingStart="30dp"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <TextView
         android:id="@+id/textView11"
         android:layout_width="131dp"
         android:layout_height="48dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
         android:layout_marginTop="12dp"
         android:text="Vehicle Type"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
+        android:padding="10dp"
+        android:paddingLeft="30dp"
+        android:paddingStart="30dp"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <TextView
@@ -158,18 +224,24 @@
         android:text="Next Km Cost"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
+        android:padding="10dp"
+        android:paddingLeft="30dp"
+        android:paddingStart="30dp"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <TextView
         android:id="@+id/textView16"
-        android:layout_width="126dp"
+        android:layout_width="127dp"
         android:layout_height="55dp"
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
         android:layout_marginTop="20dp"
-        android:text="Initial Hours"
+        android:text="Initial Hours     "
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
+        android:padding="10dp"
+        android:paddingLeft="30dp"
+        android:paddingStart="30dp"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <TextView
@@ -182,6 +254,9 @@
         android:text="Next Hours"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
+        android:padding="10dp"
+        android:paddingLeft="30dp"
+        android:paddingStart="30dp"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
     <TextView
@@ -194,7 +269,12 @@
         android:text="Waiting Cost"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
+        android:padding="10dp"
+        android:paddingLeft="30dp"
+        android:paddingStart="30dp"
         app:layout_constraintTop_toBottomOf="@+id/textView17" />
+<!--        </LinearLayout>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

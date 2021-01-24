@@ -29,18 +29,20 @@
                 android:layout_column="0"
                 android:layout_margin="@dimen/_1sdp"
                 android:text=" Date "
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textAlignment="center"
+                android:gravity="center_horizontal" />
 
-<!--            <TextView-->
-<!--                android:id="@+id/trip_id_f"-->
-<!--                android:layout_width="@dimen/_80sdp"-->
-<!--                android:layout_height="@dimen/_28sdp"-->
-<!--                android:layout_column="1"-->
-<!--                android:layout_margin="@dimen/_1sdp"-->
-<!--                android:text="Miles "-->
-<!--                android:textAlignment="textEnd"-->
-<!--                android:textAppearance="?android:attr/textAppearanceLarge"-->
-<!--                android:gravity="end" />-->
+            <TextView
+                android:id="@+id/trip_id_f"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_28sdp"
+                android:layout_column="1"
+                android:layout_margin="@dimen/_1sdp"
+                android:text=" "
+                android:textAlignment="textEnd"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="end" />
 
             <TextView
                 android:id="@+id/trip_cost_f"
@@ -49,9 +51,10 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Calories"
                 android:layout_column="2"
-                android:textAlignment="textEnd"
+                android:textAlignment="center"
                 android:layout_margin="@dimen/_1sdp"
-                android:gravity="end" />
+                android:gravity="end"
+                tools:ignore="RtlCompat" />
 
 
         </TableRow>

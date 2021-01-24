@@ -9,6 +9,7 @@ class FirebaseHelper constructor(driverId: String) {
     companion object {
         private const val ONLINE_DRIVERS = "OnlineDrivers"
         private const val ONLINE_HIRING_DRIVERS = "OnlineHiringDrivers"
+        private const val All_ONLINE_DRIVERS = "allOnlineDrivers"
         private const val PUSH_TOKENS = "PushTokens"
 
     }
@@ -23,6 +24,12 @@ class FirebaseHelper constructor(driverId: String) {
             .getInstance()
             .reference
             .child(ONLINE_HIRING_DRIVERS)
+            .child(driverId)
+
+    private val allOnlineDriverDatabaseReference: DatabaseReference = FirebaseDatabase
+            .getInstance()
+            .reference
+            .child(All_ONLINE_DRIVERS)
             .child(driverId)
 
     private val pushNotifications: DatabaseReference = FirebaseDatabase
@@ -40,6 +47,10 @@ class FirebaseHelper constructor(driverId: String) {
                 .onDisconnect()
                 .removeValue()
 
+        allOnlineDriverDatabaseReference
+                .onDisconnect()
+                .removeValue()
+
         pushNotifications
                 .onDisconnect()
                 .removeValue()
@@ -48,23 +59,33 @@ class FirebaseHelper constructor(driverId: String) {
     fun updateDriver(driver: Driver) {
         onlineDriverDatabaseReference
                 .setValue(driver)
-        Log.e("Driver Info", " Updated")
+//        Log.e("Driver Info", " Updated")
+    }
+
+    fun updateAllDriver(driver: Driver) {
+        allOnlineDriverDatabaseReference
+                .setValue(driver)
+//        Log.e("All Driver Info", " Updated")
     }
 
     fun updateHiringDriver(driver: Driver) {
         onlineHiringDriverDatabaseReference
                 .setValue(driver)
-        Log.e("Driver Info", " Updated")
+//        Log.e("Driver Info", " Updated")
     }
 
     fun updateTokens(devtoken: Token) {
         pushNotifications
                 .setValue(devtoken)
-        Log.e("Driver Token Info", " Token added successfully")
+//        Log.e("Driver Token Info", " Token added successfully")
     }
 
     fun deleteDriver() {
         onlineDriverDatabaseReference
+                .removeValue()
+    }
+    fun deleteAllDriver() {
+        allOnlineDriverDatabaseReference
                 .removeValue()
     }
     fun deleteHiringDriver() {

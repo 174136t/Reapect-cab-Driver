@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:theme="@style/AppTheme.NoActionBar">
+    android:theme="@style/AppTheme.NoActionBar"
+    android:background="@color/themecolor">
 
 
     <TextView
@@ -16,15 +17,18 @@
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
         android:layout_marginTop="0dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/themecolor"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="     Commission for trips"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/black"
         android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:padding="@dimen/_10sdp"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:gravity="center_horizontal" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/balance_list"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_100sdp"
@@ -38,6 +42,8 @@
         android:layout_marginTop="@dimen/_1sdp"
         android:layout_marginEnd="@dimen/_1sdp"
         android:layout_marginRight="@dimen/_1sdp"
+        android:padding="@dimen/_10sdp"
+        android:background="@drawable/round_button"
         tools:listitem="@layout/recycler_view_item" />
 
 
@@ -46,23 +52,30 @@
         android:layout_width="@dimen/_400sdp"
         android:layout_height="@dimen/_30sdp"
         android:layout_below="@+id/balance_list"
-        android:layout_marginTop="@dimen/_1sdp"
-        android:layout_marginBottom="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:layout_weight="1"
         android:clickable="true"
         android:focusable="true"
         android:onClick="front"
         android:orientation="vertical"
-        tools:ignore="OnClick">
+        tools:ignore="OnClick"
+        android:background="@drawable/top_corner_radius"
+
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_5sdp">
 
         <TextView
             android:id="@+id/trip_date_f"
-            android:layout_width="@dimen/_80sdp"
+            android:layout_width="@dimen/_85sdp"
             android:layout_height="@dimen/_28sdp"
             android:layout_column="0"
             android:layout_margin="@dimen/_1sdp"
+            android:textSize="18sp"
             android:text=" Date "
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/trip_id_f"
@@ -71,24 +84,30 @@
             android:layout_column="1"
             android:layout_margin="@dimen/_1sdp"
             android:gravity="end"
-            android:text="Earning "
-            android:textAlignment="textEnd"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="Earning"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            tools:ignore="RtlCompat" />
 
         <TextView
             android:id="@+id/trip_cost_f"
-            android:layout_width="@dimen/_110sdp"
+            android:layout_width="@dimen/_95sdp"
             android:layout_height="@dimen/_28sdp"
             android:layout_column="2"
             android:layout_margin="@dimen/_1sdp"
             android:gravity="end"
             android:text="commission"
-            android:textAlignment="textEnd"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textSize="18sp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            tools:ignore="RtlCompat" />
 
     </TableRow>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/commission_list"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_150sdp"
@@ -98,13 +117,14 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="@dimen/_1sdp"
-        android:layout_marginLeft="@dimen/_1sdp"
-        android:layout_marginTop="@dimen/_3sdp"
-        android:layout_marginEnd="@dimen/_1sdp"
-        android:layout_marginRight="@dimen/_1sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_1sdp"
-        tools:listitem="@layout/recycler_view_item" />
+        tools:listitem="@layout/recycler_view_item"
+        android:background="@color/white"
+        android:padding="@dimen/_5sdp"/>
 
 
 </RelativeLayout>

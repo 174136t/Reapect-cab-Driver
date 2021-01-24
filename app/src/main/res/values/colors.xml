@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#013A33</color>
+    <color name="colorPrimaryDark">#00937F</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="colorIcons">#FFFFFF</color>
+    <color name="colorIcons">#030303</color>
+    <color name="black">#030303</color>
+    <color name="black_overlay">#66000000</color>
+    <color name = 'new1'>#DEFBEC</color>
+    <color name = 'themecolor'>#F2C306</color>
+    <color name="blue">#0029FC</color>
+    <color name="white">#FFFFFF</color>
+    <color name="brown">#7B4500</color>
 </resources>

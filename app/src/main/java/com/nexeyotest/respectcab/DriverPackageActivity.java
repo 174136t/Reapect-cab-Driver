@@ -90,6 +90,9 @@ public class DriverPackageActivity<callStateListener> extends AppCompatActivity 
     private DatabaseReference fDatabase;
     private DatabaseReference dDatabase;
     public DatabaseReference track_Database;
+    public DatabaseReference unFinished_Database;
+    public DatabaseReference pDatabase;
+
     private static final String TAG = "debug1";
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
@@ -524,6 +527,9 @@ public class DriverPackageActivity<callStateListener> extends AppCompatActivity 
         fDatabase = FirebaseDatabase.getInstance().getReference("Date wise Driver Report");
         dDatabase = FirebaseDatabase.getInstance().getReference("Driver_Earning_And_Commission2");
         track_Database = FirebaseDatabase.getInstance().getReference("DriverTracking");
+        unFinished_Database = FirebaseDatabase.getInstance().getReference("UnFinishedRides");
+        pDatabase = FirebaseDatabase.getInstance().getReference("packageassign");
+
 
 
 
@@ -605,8 +611,13 @@ public class DriverPackageActivity<callStateListener> extends AppCompatActivity 
         FirebaseDatabase.getInstance().getReference("Driver_Earning_And_Commission2").child(String.valueOf(str)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                FinanceBalance_Model fin = snapshot.getValue(FinanceBalance_Model.class);
-                pPaid_commission = Math.round((Double.valueOf(fin.getPaidcommission())) * 100.0) / 100.0;
+                if (snapshot.exists()) {
+                    FinanceBalance_Model fin = snapshot.getValue(FinanceBalance_Model.class);
+                    pPaid_commission = Math.round((Double.valueOf(fin.getPaidcommission())) * 100.0) / 100.0;
+                }else{
+                    pPaid_commission = 0.0;
+                }
+
 
                 //System.out.println(snapshot.getValue());  //prints "Do you have data? You'll love Firebase."
             }
@@ -635,9 +646,9 @@ public class DriverPackageActivity<callStateListener> extends AppCompatActivity 
                 myMsg.setTextColor(Color.BLUE);
 
                 final TextView confirm_title = new TextView(DriverPackageActivity.this);
-                confirm_title.setText("     Respect cab service");
+                confirm_title.setText("     NexRide Service");
                 confirm_title.setTextSize(20);
-                confirm_title.setTextColor(Color.BLUE);
+                confirm_title.setTextColor(Color.BLACK);
 
 
                 builder.setCustomTitle(myMsg);
@@ -718,6 +729,10 @@ public class DriverPackageActivity<callStateListener> extends AppCompatActivity 
                                         dataMap.put("paymentmethod", payment_method);
                                         dataMap.put("vouchercode", input.getText().toString());
 
+                                        sp = getSharedPreferences("IDvalue", 0);
+                                        SharedPreferences.Editor editor = sp.edit();
+                                        editor.putString("start","default");
+
                                         mDatabase.child(String.valueOf(maxid)).setValue(dataMap);
 
                                         fDDatabase.child(mTripDate.getText().toString()).child(driver_id.getText().toString()).child(String.valueOf(maxid)).setValue(dataMap);
@@ -789,7 +804,7 @@ public class DriverPackageActivity<callStateListener> extends AppCompatActivity 
                                                     }
                                                     HashMap<String, Object> dataMap2 = new HashMap<String, Object>();
 
-                                                    dataMap2.put("totalearning", Double.parseDouble(String.valueOf(sum + pTotal_earn)));
+                                                    dataMap2.put("totalearning", Double.parseDouble(String.valueOf(sum )));
                                                     dataMap2.put("totalcommission", Double.parseDouble(String.valueOf(sumCommission)));
                                                     dataMap2.put("date", tripendDate);
                                                     dataMap2.put("driverid", driver_id.getText().toString());
@@ -822,7 +837,7 @@ public class DriverPackageActivity<callStateListener> extends AppCompatActivity 
 
 
                                             String to = str_package_customer_email;
-                                            String subject = "Respect Cab Service Trip Details";
+                                            String subject = "NexRide Trip Details";
                                             String message =
                                                     //html template for receipt
                                                     "<!DOCTYPE html>\n" +
@@ -1029,7 +1044,7 @@ public class DriverPackageActivity<callStateListener> extends AppCompatActivity 
                                                             "        \n" +
                                                             "         \n" +
                                                             "<hr class=\"style-eight\" />"+
-                                                            "        <h3><b>Respect Cab Service<b></h3>\n" +
+                                                            "        <h3><b>NexRide Service<b></h3>\n" +
                                                             "          <font style=\"font-size:15px;\" color=\"black\"> \n" +
                                                             "        <h1><b>Thanks for riding, </b></h1>\n" +
                                                             "        We hope you enjoyed your ride</br>\n" +
@@ -1088,7 +1103,7 @@ public class DriverPackageActivity<callStateListener> extends AppCompatActivity 
                                         mTripCostV = 0.00;
                                         mWaitingCostV = 0.00;
 
-                                        Toast.makeText(DriverPackageActivity.this, "Inserted", Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(DriverPackageActivity.this, "Inserted", Toast.LENGTH_SHORT).show();
 
                                         disconnectDriver();
 
@@ -1098,8 +1113,8 @@ public class DriverPackageActivity<callStateListener> extends AppCompatActivity 
                                         firebaseHelper = new FirebaseHelper(str.toString());
                                         firebaseHelper.deleteHiringDriver();
                                         //////////////////////
-                                        Intent intent = new Intent(DriverPackageActivity.this, MainActivity.class);
-                                        startActivity(intent);
+//                                        Intent intent = new Intent(DriverPackageActivity.this, MainActivity.class);
+//                                        startActivity(intent);
                                         finish();
                                     }
                                 })
@@ -1261,26 +1276,45 @@ public class DriverPackageActivity<callStateListener> extends AppCompatActivity 
         String tok = FirebaseInstanceId.getInstance().getToken();
         str = mPrefs.getInt("DriverIDValue", 0);
         firebaseHelper = new FirebaseHelper(str.toString());
-        firebaseHelper.updateHiringDriver(new Driver(lat1,lon1,tok));
+        firebaseHelper.updateHiringDriver(new Driver(str,lat1,lon1,tok,"unavailable"));
 
-        track_Database.child(String.valueOf(maxid)).child("Location").child("Driver ID").setValue(str);
-        track_Database.child(String.valueOf(maxid)).child("Location").child("lat1").setValue(lat1);
-        track_Database.child(String.valueOf(maxid)).child("Location").child("lon1").setValue(lon1);
-        track_Database.child(String.valueOf(maxid)).child("Location").child("lat2").setValue(lat2);
-        track_Database.child(String.valueOf(maxid)).child("Location").child("lon2").setValue(lon2);
-        track_Database.child(String.valueOf(maxid)).child("Location").child("startaddress").setValue(address);
-        track_Database.child(String.valueOf(maxid)).child("Location").child("endaddress").setValue(address2);
-        track_Database.child(String.valueOf(maxid)).child("Location").child("endaddress").setValue(address3);
-        track_Database.child(String.valueOf(maxid)).child("Location").child("waitingcost").setValue(String.valueOf(mWaitingCostV));
-        track_Database.child(String.valueOf(maxid)).child("Location").child("waitingtime").setValue(mTimer2.getText().toString().trim());
-        track_Database.child(String.valueOf(maxid)).child("Location").child("triptime").setValue(mTimer1.getText().toString().trim());
-        track_Database.child(String.valueOf(maxid)).child("Location").child("totaldistance").setValue(String.valueOf(distanceV));
-        track_Database.child(String.valueOf(maxid)).child("Location").child("date").setValue(mTripDate.getText().toString());
-        track_Database.child(String.valueOf(maxid)).child("Location").child("starttime").setValue(tripstarttime);
-        track_Database.child(String.valueOf(maxid)).child("Location").child("tripcost").setValue(costTotalLast = Math.round(costTotalLast * 100.0) / 100.0);
-        track_Database.child(String.valueOf(maxid)).child("Location").child("status").setValue(track_status);
+        track_Database.child(String.valueOf(maxid)).child("driverid").setValue(str);
+        track_Database.child(String.valueOf(maxid)).child("lat1").setValue(lat1);
+        track_Database.child(String.valueOf(maxid)).child("lon1").setValue(lon1);
+        track_Database.child(String.valueOf(maxid)).child("lat2").setValue(lat2);
+        track_Database.child(String.valueOf(maxid)).child("lon2").setValue(lon2);
+        track_Database.child(String.valueOf(maxid)).child("startaddress").setValue(address);
+        track_Database.child(String.valueOf(maxid)).child("endaddress").setValue(address2);
+        track_Database.child(String.valueOf(maxid)).child("endaddress").setValue(address3);
+        track_Database.child(String.valueOf(maxid)).child("waitingcost").setValue(String.valueOf(mWaitingCostV));
+        track_Database.child(String.valueOf(maxid)).child("waitingtime").setValue(mTimer2.getText().toString().trim());
+        track_Database.child(String.valueOf(maxid)).child("triptime").setValue(mTimer1.getText().toString().trim());
+        track_Database.child(String.valueOf(maxid)).child("totaldistance").setValue(String.valueOf(distanceV));
+        track_Database.child(String.valueOf(maxid)).child("date").setValue(mTripDate.getText().toString());
+        track_Database.child(String.valueOf(maxid)).child("starttime").setValue(tripstarttime);
+        track_Database.child(String.valueOf(maxid)).child("tripcost").setValue(costTotalLast = Math.round(costTotalLast * 100.0) / 100.0);
+        track_Database.child(String.valueOf(maxid)).child("status").setValue(track_status);
+        track_Database.child(String.valueOf(maxid)).child("tripid").setValue(maxid);
 
+        unFinished_Database.child(String.valueOf(str)).child("driverid").setValue(str);
+        unFinished_Database.child(String.valueOf(str)).child("lat1").setValue(lat1);
+        unFinished_Database.child(String.valueOf(str)).child("lon1").setValue(lon1);
+        unFinished_Database.child(String.valueOf(str)).child("lat2").setValue(lat2);
+        unFinished_Database.child(String.valueOf(str)).child("lon2").setValue(lon2);
+        unFinished_Database.child(String.valueOf(str)).child("startaddress").setValue(address);
+        unFinished_Database.child(String.valueOf(str)).child("endaddress").setValue(address2);
+        unFinished_Database.child(String.valueOf(str)).child("endaddress").setValue(address3);
+        unFinished_Database.child(String.valueOf(str)).child("waitingcost").setValue(String.valueOf(mWaitingCostV));
+        unFinished_Database.child(String.valueOf(str)).child("waitingtime").setValue(mTimer2.getText().toString().trim());
+        unFinished_Database.child(String.valueOf(str)).child("triptime").setValue(mTimer1.getText().toString().trim());
+        unFinished_Database.child(String.valueOf(str)).child("totaldistance").setValue(String.valueOf(distanceV));
+        unFinished_Database.child(String.valueOf(str)).child("date").setValue(mTripDate.getText().toString());
+        unFinished_Database.child(String.valueOf(str)).child("starttime").setValue(tripstarttime);
+        unFinished_Database.child(String.valueOf(str)).child("tripcost").setValue(costTotalLast = Math.round(costTotalLast * 100.0) / 100.0);
+        unFinished_Database.child(String.valueOf(str)).child("status").setValue(track_status);
+        unFinished_Database.child(String.valueOf(str)).child("tripid").setValue(maxid);
 
+        pDatabase.child(String.valueOf(str)).child("tripstatus").setValue("Running");
         ////
         if (status == 0) {
 
@@ -1694,7 +1728,7 @@ public class DriverPackageActivity<callStateListener> extends AppCompatActivity 
 
 
     public void disconnectDriver(){
-        track_Database.child(String.valueOf(maxid)).child("Location").child("status").setValue(track_status2);
+        track_Database.child(String.valueOf(maxid)).child("status").setValue(track_status2);
         maxidstatus = 0;
 
         LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
@@ -1703,7 +1737,7 @@ public class DriverPackageActivity<callStateListener> extends AppCompatActivity 
 
 //        GeoFire geoFire = new GeoFire(ref);
 //        geoFire.removeLocation(userId);
-
+        unFinished_Database.child(String.valueOf(str)).removeValue();
         ref.child(String.valueOf(str)).child("latitude1").removeValue();
         ref.child(String.valueOf(str)).child("longitude1").removeValue();
         ref.child(String.valueOf(str)).child("latitude2").removeValue();
@@ -1787,7 +1821,7 @@ public class DriverPackageActivity<callStateListener> extends AppCompatActivity 
             case R.id.nav_logout:
                 final AlertDialog.Builder alert2 = new AlertDialog.Builder(DriverPackageActivity.this);
                 alert2
-                        .setTitle("NEXTAXI")
+                        .setTitle("NexRide")
                         .setMessage("Are you sure you want to LOGOUT?")
                         .setIcon(android.R.drawable.ic_dialog_alert)
 
@@ -1832,17 +1866,17 @@ public class DriverPackageActivity<callStateListener> extends AppCompatActivity 
         return true;
     }
 
-    public void startService() {
-        Intent serviceIntent = new Intent(this, ForegroundService.class);
-        serviceIntent.putExtra("inputExtra", "Respect Cab Service is running in background");
-
-        ContextCompat.startForegroundService(this, serviceIntent);
-    }
-
-    public void stopService() {
-        Intent serviceIntent = new Intent(this, ForegroundService.class);
-        stopService(serviceIntent);
-    }
+//    public void startService() {
+//        Intent serviceIntent = new Intent(this, ForegroundService.class);
+//        serviceIntent.putExtra("inputExtra", "FluTaxi Service is running in background");
+//
+//        ContextCompat.startForegroundService(this, serviceIntent);
+//    }
+//
+//    public void stopService() {
+//        Intent serviceIntent = new Intent(this, ForegroundService.class);
+//        stopService(serviceIntent);
+//    }
 
 
     @Override
@@ -1868,7 +1902,7 @@ public class DriverPackageActivity<callStateListener> extends AppCompatActivity 
     @Override
     protected void onPause() {
         super.onPause();
-        startService();
+//        startService();
         Log.i(TAG, "onPause");
     }
 
@@ -1897,7 +1931,7 @@ public class DriverPackageActivity<callStateListener> extends AppCompatActivity 
     @Override
     protected void onRestart() {
         super.onRestart();
-        stopService();
+//        stopService();
 
         Log.i(TAG, "onRestart");
     }
@@ -1908,7 +1942,7 @@ public class DriverPackageActivity<callStateListener> extends AppCompatActivity 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopService();
+//        stopService();
         Log.i(TAG, "onDestroy");
     }
 

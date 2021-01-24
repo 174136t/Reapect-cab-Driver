@@ -21,37 +21,42 @@
 
             <TextView
                 android:id="@+id/trip_date_f_details"
-                android:layout_width="@dimen/_80sdp"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/_28sdp"
                 android:layout_column="0"
                 android:layout_margin="@dimen/_1sdp"
                 android:background="#FFFFFF"
                 android:text=" Date "
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="center_horizontal"
+                />
 
             <TextView
                 android:id="@+id/trip_id_f_details"
-                android:layout_width="@dimen/_100sdp"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/_28sdp"
                 android:layout_column="1"
                 android:layout_margin="1dp"
                 android:background="#FFFFFF"
                 android:text="Miles "
-                android:textAlignment="textEnd"
+                android:textAlignment="center"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="end" />
+                android:gravity="end"
+                tools:ignore="RtlCompat" />
 
             <TextView
                 android:id="@+id/trip_cost_f_details"
-                android:layout_width="@dimen/_100sdp"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/_28sdp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Calories"
                 android:layout_column="2"
                 android:layout_margin="1dp"
-                android:textAlignment="textEnd"
+                android:textAlignment="center"
                 android:background="#FFFFFF"
-                android:gravity="end" />
+                android:gravity="end"
+                tools:ignore="RtlCompat" />
 
 
         </TableRow>

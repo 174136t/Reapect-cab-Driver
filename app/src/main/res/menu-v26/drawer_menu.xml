@@ -9,31 +9,42 @@
             android:icon="@drawable/baseline_home_black_18dp"
             android:iconTint="@color/black"
             android:title="@string/menu_home" />
-        <item
-            android:id="@+id/nav_history"
-            android:icon="@drawable/baseline_history_black_18dp"
-            android:iconTint="@color/black"
-            android:title="@string/menu_history" />
+
             <!-- new item-->
         <item 
             android:id="@+id/nav_customer"
-            android:icon="@drawable/baseline_emoji_people_black_18dp"
+            android:icon="@drawable/ic_baseline_emoji_people_24"
             android:iconTint="@color/black"
             android:title="Customer rides" />
              <!-- new item-->
         <item
             android:id="@+id/nav_m_notify"
-            android:icon="@drawable/baseline_emoji_transportation_black_18dp"
+            android:icon="@drawable/ic_baseline_emoji_transportation_24"
             android:iconTint="@color/black"
             android:title="@string/menu_m_notify" />
         <item
+            android:id="@+id/trip_Status"
+            android:icon="@drawable/ic_baseline_error_outline_24"
+            android:iconTint="@color/black"
+            android:title="Failed Trips" />
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_baseline_history_24"
+            android:iconTint="@color/black"
+            android:title="@string/menu_history" />
+        <item
+            android:id="@+id/nav_failedhistory"
+            android:icon="@drawable/baseline_history_black_18dp"
+            android:iconTint="@color/black"
+            android:title="@string/failed_trips_history" />
+        <item
             android:id="@+id/nav_finance"
-            android:icon="@drawable/baseline_monetization_on_black_18dp"
+            android:icon="@drawable/ic_baseline_monetization_on_24"
             android:iconTint="@color/black"
             android:title="@string/menu_finance" />
         <item
             android:id="@+id/nav_payment"
-            android:icon="@drawable/baseline_wysiwyg_black_18dp"
+            android:icon="@drawable/ic_baseline_payment_24"
             android:iconTint="@color/black"
             android:title="@string/menu_payment_history" />
 <!--        <item-->
@@ -45,6 +56,12 @@
             android:icon="@drawable/ic_menu_send"
             android:iconTint="@color/black"
             android:title="@string/menu_maps" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_baseline_exit_to_app_24"
+            android:iconTint="@color/black"
+            android:layout_gravity="bottom"
+            android:title="@string/menu_logout" />
     </group>
     <!--<item android:title="Communicate">-->
     <!--<menu>-->
@@ -58,13 +75,9 @@
     <!--android:title="Send"/>-->
     <!--</menu>-->
     <!--</item>-->
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_logout"
-                android:icon="@drawable/baseline_login_black_18dp"
-                android:iconTint="@color/black"
-                android:title="@string/menu_logout" />
-        </menu>
-    </item>
+<!--    <item android:title="Communicate">-->
+<!--        <menu>-->
+<!--           -->
+<!--        </menu>-->
+<!--    </item>-->
 </menu>

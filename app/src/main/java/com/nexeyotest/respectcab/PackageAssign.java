@@ -172,9 +172,9 @@ public class PackageAssign extends AppCompatActivity {
                         final AlertDialog.Builder alert = new AlertDialog.Builder(PackageAssign.this, R.style.MaterialThemeDialog);
                         final TextView confirm_title = new TextView(PackageAssign.this);
 
-                        confirm_title.setText("     Respect cab service");
+                        confirm_title.setText("      NexRide Service");
                         confirm_title.setTextSize(20);
-                        confirm_title.setTextColor(Color.BLUE);
+                        confirm_title.setTextColor(Color.BLACK);
                         alert
                                 .setCustomTitle(confirm_title)
                                 .setMessage("Are you Sure you want to start a trip?")
@@ -189,6 +189,7 @@ public class PackageAssign extends AppCompatActivity {
                                         strr = mPrefs.getInt("DriverIDValue", 0);
                                         firebaseHelper = new FirebaseHelper(strr.toString());
                                         firebaseHelper.deleteDriver();
+                                        firebaseHelper.deleteAllDriver();
                                         firebaseHelper.deletePushToken();
                                         return;
                                     }
@@ -198,9 +199,9 @@ public class PackageAssign extends AppCompatActivity {
                         final AlertDialog.Builder alert = new AlertDialog.Builder(PackageAssign.this, R.style.MaterialThemeDialog);
                         final TextView confirm_title = new TextView(PackageAssign.this);
 
-                        confirm_title.setText("     Respect cab service");
+                        confirm_title.setText("      NexRide Service");
                         confirm_title.setTextSize(20);
-                        confirm_title.setTextColor(Color.BLUE);
+                        confirm_title.setTextColor(Color.BLACK);
                         alert
                                 .setCustomTitle(confirm_title)
                                 .setMessage("No Packages Available")
@@ -215,7 +216,7 @@ public class PackageAssign extends AppCompatActivity {
     }
 
     private void firebaseUserSearch(String s) {
-        Toast.makeText(PackageAssign.this, "Started Search", Toast.LENGTH_LONG).show();
+//        Toast.makeText(PackageAssign.this, "Started Search", Toast.LENGTH_LONG).show();
 
 
         final Query firebaseSearchQuery4 = FirebaseDatabase.getInstance().getReference("packageassign").orderByChild("driverid").equalTo(s);
@@ -346,7 +347,7 @@ public class PackageAssign extends AppCompatActivity {
 
         mRecyclerViewB.setAdapter(firebaseRecyclerAdapter_package_assign);
 
-        Toast.makeText(PackageAssign.this, "Started setAdapter", Toast.LENGTH_LONG).show();
+//        Toast.makeText(PackageAssign.this, "Started setAdapter", Toast.LENGTH_LONG).show();
     }
 
 
@@ -405,7 +406,7 @@ public class PackageAssign extends AppCompatActivity {
 
 
     private void firebaseUserSearchPackage() {
-        Toast.makeText(PackageAssign.this, "Started Search", Toast.LENGTH_LONG).show();
+//        Toast.makeText(PackageAssign.this, "Started Search", Toast.LENGTH_LONG).show();
 
         final Query firebaseSearchQueryPackage = FirebaseDatabase.getInstance().getReference("customers").orderByChild("mobile").equalTo(customer_phone_number_f.getText().toString());
 

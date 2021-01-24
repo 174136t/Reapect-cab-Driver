@@ -1,5 +1,15 @@
 package com.nexeyotest.respectcab
 
+//import android.support.design.widget.NavigationView
+//import android.support.design.widget.Snackbar
+//import androidx.core.widget.DrawerLayout
+//import android.support.v7.app.ActionBarDrawerToggle
+//import android.support.v7.app.AlertDialog
+//import android.support.v7.app.AppCompatActivity
+//import android.support.v7.widget.LinearLayoutManager
+//import android.support.v7.widget.RecyclerView
+//import android.support.v7.widget.SwitchCompat
+//import android.support.v7.widget.Toolbar
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,32 +20,24 @@ import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
-//import android.support.design.widget.NavigationView
-//import android.support.design.widget.Snackbar
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.view.GravityCompat
-//import androidx.core.widget.DrawerLayout
-//import android.support.v7.app.ActionBarDrawerToggle
-//import android.support.v7.app.AlertDialog
-//import android.support.v7.app.AppCompatActivity
-//import android.support.v7.widget.LinearLayoutManager
-//import android.support.v7.widget.RecyclerView
-//import android.support.v7.widget.SwitchCompat
-//import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,6 +45,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -56,7 +59,7 @@ import java.util.*
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, ConnectivityReceiverListener {
     private var mDriver: Button? = null
     private var mLogout: Button? = null
-    var mAvailability: ToggleButton? = null
+    var mAvailability: SwitchCompat? = null
     var mCus_mobile: EditText? = null
     lateinit var sp: SharedPreferences
     lateinit private var drawer: DrawerLayout
@@ -96,11 +99,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     var str: Int? = null
     var token: String? = null
     //mRef =  FirebaseDatabase.getInstance().getReference("Driver_Earning_And_Commission2").child(String.valueOf(str));
-
-
+    private var count = 0
+    lateinit var toolba: ActionBar
     private var firebaseHelper = FirebaseHelper("0000")
    // private val markerAnimationHelper = MarkerAnimationHelper()
     private val uiHelper = UiHelper()
+    var startAddress: String? = null
     //    String status_waiting = "null";
     //    int speed = 0;
     //    TextView mSpeed, mEmail;
@@ -115,13 +119,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     //    List<Address> addresses = new ArrayList<>();
     //    String address = "0";
   //  @SuppressLint("LongLogTag")
+    @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mainold)
         mInstance = this
         this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         button = findViewById<View>(R.id.button1) as Button
-        textview = findViewById<View>(R.id.textView1) as TextView
+//        textview = findViewById<View>(R.id.textView1) as TextView
         context = applicationContext
         val mPref = getSharedPreferences("IDvalue", 0)
         val st = mPref.getInt("DriverIDValue", 0)
@@ -142,17 +147,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             driverOnlineFlag = b
             if (driverOnlineFlag){
                 val tok = FirebaseInstanceId.getInstance().token
-                Log.e("token", tok.toString())
-                Log.d("aaaaaaaaaaaa", driverOnlineFlag.toString())
+//                Log.e("token", tok.toString())
+//                Log.d("aaaaaaaaaaaa", driverOnlineFlag.toString())
+                sp = getSharedPreferences("IDvalue", 0)
+                val editor = sp.edit()
+                val stat = "available"
+                editor.putString("driverStatus", stat)
+                editor.commit()
                 createLocationCallback()
                 driverStatusTextView.text = resources.getString(R.string.online_driver)
                 requestLocationUpdate()
             }
             else {
                 driverOnlineFlag = false
-                Log.d("bbbbbbbbbbbbbbbbbbbbbbb", driverOnlineFlag.toString())
+//                Log.d("bbbbbbbbbbbbbbbbbbbbbbb", driverOnlineFlag.toString())
                driverStatusTextView.text = resources.getString(R.string.offline)
                 firebaseHelper.deleteDriver()
+                firebaseHelper.deleteAllDriver()
                 firebaseHelper.deletePushToken()
             }
         }
@@ -165,24 +176,30 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             startActivity(intent1)
         }
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
+//        toolbar.navigationIcon?.setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY)
         setSupportActionBar(toolbar)
+
+        toolba = supportActionBar!!
+        val bottomNavigation: BottomNavigationView = findViewById(R.id.navigationView)
+        bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         drawer = findViewById(R.id.drawer_layout)
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
         val toggle = ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        toggle.getDrawerArrowDrawable().setColor(Color.BLACK);
         drawer.addDrawerListener(toggle)
         toggle.syncState()
         //window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         mDriver = findViewById<View>(R.id.driver) as Button
-        mLogout = findViewById<View>(R.id.logout) as Button
-        mAvailability = findViewById<View>(R.id.switch1) as ToggleButton
+//        mLogout = findViewById<View>(R.id.logout) as Button
+        mAvailability = findViewById<View>(R.id.driverStatusSwitch) as SwitchCompat
         mCus_email = findViewById<View>(R.id.cus_email) as EditText
         mCus_mobile = findViewById<View>(R.id.cus_mobile) as EditText
-        button_next = findViewById<View>(R.id.button_next) as Button
-        button_next_next = findViewById<View>(R.id.button_next_next) as Button
-        button_next_next!!.visibility = View.INVISIBLE
-        button_next!!.visibility = View.INVISIBLE
+//        button_next = findViewById<View>(R.id.button_next) as Button
+//        button_next_next = findViewById<View>(R.id.button_next_next) as Button
+//        button_next_next!!.visibility = View.INVISIBLE
+//        button_next!!.visibility = View.INVISIBLE
         mRecyclerViewC = findViewById<View>(R.id.customer_email_rv) as RecyclerView
         mRecyclerViewC!!.setHasFixedSize(true)
         mRecyclerViewC!!.layoutManager = LinearLayoutManager(this)
@@ -222,9 +239,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mDriver!!.setOnClickListener(View.OnClickListener {
             val alert = AlertDialog.Builder(this@MainActivity, R.style.MaterialThemeDialog)
             val confirm_title = TextView(this@MainActivity)
-            confirm_title.text = "     Respect cab service"
+            confirm_title.text = "      NexRide service"
             confirm_title.textSize = 20f
-            confirm_title.setTextColor(Color.BLUE)
+            confirm_title.setTextColor(Color.BLACK)
             alert
                     .setCustomTitle(confirm_title)
                     .setMessage("Are you Sure you want to start a trip?")
@@ -261,56 +278,62 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //                editorPackage.putString("TripPackageValue", spinner.getSelectedItem().toString());
 //                editorPackage.commit();
         })
-        button_next!!.setOnClickListener { v ->
-            val mCus_phone = mCus_mobile!!.text.toString()
-            firebaseUserSearch(mCus_phone)
-            hideKeyboard(v as Button)
-
-            //button_next_next.setVisibility(View.VISIBLE);
-        }
-        button_next_next!!.setOnClickListener { v -> hideKeyboard(v as Button) }
-        mLogout!!.setOnClickListener {
-            val alert = AlertDialog.Builder(this@MainActivity, R.style.MaterialThemeDialog)
-            val confirm_title = TextView(this@MainActivity)
-            confirm_title.text = "     Respect cab service"
-            confirm_title.textSize = 20f
-            confirm_title.setTextColor(Color.BLUE)
-            alert
-                    .setCustomTitle(confirm_title)
-                    .setMessage("Are you Sure you want to logout?")
-                    .setPositiveButton(android.R.string.yes) { dialog, whichButton ->
-                        val sp = getSharedPreferences("IDvalue", Context.MODE_PRIVATE)
-                        val e = sp.edit()
-                        e.clear()
-                        e.commit()
-                        FirebaseAuth.getInstance().signOut()
-                        val intent = Intent(this@MainActivity, DriverLoginActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
-                    .setNegativeButton(android.R.string.no, null).show()
-        }
+//        button_next!!.setOnClickListener { v ->
+//            val mCus_phone = mCus_mobile!!.text.toString()
+//            firebaseUserSearch(mCus_phone)
+//            hideKeyboard(v as Button)
+//
+//            //button_next_next.setVisibility(View.VISIBLE);
+//        }
+//        button_next_next!!.setOnClickListener { v -> hideKeyboard(v as Button) }
+//        mLogout!!.setOnClickListener {
+//            val alert = AlertDialog.Builder(this@MainActivity, R.style.MaterialThemeDialog)
+//            val confirm_title = TextView(this@MainActivity)
+//            confirm_title.text = "     Respect cab service"
+//            confirm_title.textSize = 20f
+//            confirm_title.setTextColor(Color.BLUE)
+//            alert
+//                    .setCustomTitle(confirm_title)
+//                    .setMessage("Are you Sure you want to logout?")
+//                    .setPositiveButton(android.R.string.yes) { dialog, whichButton ->
+//                        val sp = getSharedPreferences("IDvalue", Context.MODE_PRIVATE)
+//                        val e = sp.edit()
+//                        e.clear()
+//                        e.commit()
+//                        FirebaseAuth.getInstance().signOut()
+//                        val intent = Intent(this@MainActivity, DriverLoginActivity::class.java)
+//                        startActivity(intent)
+//                        finish()
+//                    }
+//                    .setNegativeButton(android.R.string.no, null).show()
+//        }
         mAvailability!!.setOnClickListener {
             checkConnection()
             val isConnected = ConnectivityReceiver.isConnected()
-            showSnack(isConnected)
+            count ++
+            Log.d("ssssssssssssssssss", count.toString())
+            if(count %2 == 1){
+                showSnack(isConnected)
+
+            }
+
             if (ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this@MainActivity, "Location permission is already granted", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this@MainActivity, "Location permission is already granted", Toast.LENGTH_SHORT).show()
 
                 // TODO Auto-generated method stub
                 if (mAvailability!!.isChecked && drivername != "123" && drivername != "" && GpsStatus == true && isConnected == true) {
                     mDriver!!.isEnabled = true
-                    mLogout!!.isEnabled = false
+//                    mLogout!!.isEnabled = false
                     mCus_email!!.visibility = View.VISIBLE
                     mCus_mobile!!.visibility = View.VISIBLE
-                    button_next!!.visibility = View.VISIBLE
+//                    button_next!!.visibility = View.VISIBLE
                 } else {
                     mDriver!!.isEnabled = false
-                    mLogout!!.isEnabled = true
+//                    mLogout!!.isEnabled = true
                     mCus_email!!.visibility = View.INVISIBLE
                     mCus_mobile!!.visibility = View.INVISIBLE
-                    button_next!!.visibility = View.INVISIBLE
-                    button_next_next!!.visibility = View.INVISIBLE
+//                    button_next!!.visibility = View.INVISIBLE
+//                    button_next_next!!.visibility = View.INVISIBLE
                 }
             } else {
                 // Request Location Permission
@@ -362,7 +385,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun firebaseUserSearch5() {
-        Toast.makeText(this@MainActivity, "Started Search", Toast.LENGTH_LONG).show()
+//        Toast.makeText(this@MainActivity, "Started Search", Toast.LENGTH_LONG).show()
 
         //final Query firebaseSearchQuery = FirebaseDatabase.getInstance().getReference("drivers").orderByChild("mobile").equalTo(searchText);
         val firebaseSearchQuery4 = FirebaseDatabase.getInstance().getReference("vehicle").orderByChild("vdidname").equalTo(key.toString())
@@ -417,7 +440,44 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
     }
+    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.navigation_songs -> {
+                val intent1 = Intent(this@MainActivity, CustomerRideRequest::class.java)
+                startActivity(intent1)
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.switch1 -> {
+                val intent2 = Intent(this@MainActivity, PackageAssign::class.java)
+                startActivity(intent2)
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_albums -> {
+                //                            Intent intent = new Intent(NotificationActivity.this,
+//                                    CustomerRideRequest.class);
+//                            startActivity(intent);
+                val mPrefs = getSharedPreferences("IDvalue", 0)
+                startAddress = mPrefs.getString("start", "default")
+                val uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?daddr= %s", startAddress)
 
+
+                if(startAddress != "default"){
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+                    startActivity(intent)
+                }
+
+                return@OnNavigationItemSelectedListener true
+            }
+
+        }
+        false
+    }
+
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        // ...
+//        bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+//    }
+    // ...
     fun firebaseUserSearch4() {
 
 //        final Query firebaseSearchQuery = FirebaseDatabase.getInstance().getReference("DriverHistory_Model").child("1");
@@ -442,7 +502,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
         mRecyclerViewB!!.adapter = firebaseRecyclerAdapter5
-        Toast.makeText(this@MainActivity, "Started setAdapter", Toast.LENGTH_LONG).show()
+//        Toast.makeText(this@MainActivity, "Started setAdapter", Toast.LENGTH_LONG).show()
     }
 
     class VehicleTypeViewHolder(var mViewT: View) : RecyclerView.ViewHolder(mViewT) {
@@ -463,7 +523,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun firebaseUserSearch(searchText: String) {
-        Toast.makeText(this@MainActivity, "Started Search", Toast.LENGTH_LONG).show()
+//        Toast.makeText(this@MainActivity, "Started Search", Toast.LENGTH_LONG).show()
         val firebaseSearchQuery = FirebaseDatabase.getInstance().getReference("customers").orderByChild("mobile").equalTo(searchText)
         val firebaseRecyclerAdapter: FirebaseRecyclerAdapter<CustomerEmail_Model, UsersViewHolder> = object : FirebaseRecyclerAdapter<CustomerEmail_Model, UsersViewHolder>(
                 CustomerEmail_Model::class.java,
@@ -492,6 +552,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         str = mPrefs.getInt("DriverIDValue", 0)
         firebaseHelper = FirebaseHelper(str.toString())
         firebaseHelper.deleteDriver()
+        firebaseHelper.deleteAllDriver()
+        //firebaseHelper.deleteAllDriver()
         firebaseHelper.deletePushToken()
 //                        createHiringLocationCallback()
         Log.e("ppppppppppppp", driverOnlineFlag.toString())
@@ -503,11 +565,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         GpsStatus = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
         if (GpsStatus == true) {
             button!!.visibility = View.INVISIBLE
-            textview!!.text = ""
+//            textview!!.text = ""
             button!!.isEnabled = false
             //createLocationCallback()
         } else {
-            textview!!.text = "GPS Is Disabled"
+//            textview!!.text = "GPS Is Disabled"
             button!!.visibility = View.INVISIBLE
             button!!.isEnabled = false
         }
@@ -523,7 +585,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     requestLocationUpdate()
                     val alert = AlertDialog.Builder(this@MainActivity)
                     alert
-                            .setTitle("Respect Cab")
+                            .setTitle("NexRide")
                             .setMessage("Are you Sure you want to start a trip?")
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .setPositiveButton(android.R.string.yes, DialogInterface.OnClickListener { dialog, whichButton ->
@@ -549,7 +611,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 super.onLocationResult(locationResult)
                 if (locationResult!!.lastLocation == null) return
                 val latLng = LatLng(locationResult.lastLocation.latitude, locationResult.lastLocation.longitude)
-                Log.e("Location", latLng.latitude.toString() + " , " + latLng.longitude)
+//                Log.e("Location", latLng.latitude.toString() + " , " + latLng.longitude)
 //                val tok = FirebaseInstanceId.getInstance().token
 
                 FirebaseInstanceId.getInstance().instanceId
@@ -564,21 +626,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                             // Log and toast
                             val msg = getString(R.string.msg_token_fmt, token)
-                            Log.d(TAG, msg)
+//                            Log.d(TAG, msg)
                            // Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                         })
 
 
 
-                Log.e("token", token.toString())
+//                Log.e("token", token.toString())
                 if (locationFlag) {
                     locationFlag = false
                     //animateCamera(latLng)
                 }
                 if (driverOnlineFlag) {
-                    Log.d("cccccccccccccccc", driverOnlineFlag.toString())
-                    firebaseHelper.updateDriver(Driver(lat = latLng.latitude, lng = latLng.longitude, token = token.toString()))
-                    firebaseHelper.updateTokens(Token(devtoken = token.toString()))
+                    val mPref = getSharedPreferences("IDvalue", 0)
+                    val str = mPref.getInt("DriverIDValue", 0)
+                    val stat = mPref.getString("driverStatus", "available")
+//                    Log.d("cccccccccccccccc", driverOnlineFlag.toString())
+                    firebaseHelper.updateDriver(Driver(id = str ,lat = latLng.latitude, lng = latLng.longitude, token = token.toString(), status = "available"))
+                    firebaseHelper.updateAllDriver(Driver(id = str ,lat = latLng.latitude, lng = latLng.longitude, token = token.toString(), status = stat))
+
+//                    firebaseHelper.updateTokens(Token(devtoken = token.toString()))
                 }
                 //showOrAnimateMarker(latLng)
             }
@@ -649,9 +716,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_logout -> {
                 val alert = AlertDialog.Builder(this@MainActivity, R.style.MaterialThemeDialog)
                 val confirm_title = TextView(this@MainActivity)
-                confirm_title.text = "     Respect cab service"
+                confirm_title.text = "      NexRide service"
                 confirm_title.textSize = 20f
-                confirm_title.setTextColor(Color.BLUE)
+                confirm_title.setTextColor(Color.BLACK)
                 alert
                         .setCustomTitle(confirm_title)
                         .setMessage("Are you Sure you want to logout?")
@@ -672,6 +739,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val intent = Intent(this@MainActivity, DriverHistory::class.java)
                 startActivity(intent)
             }
+            R.id.nav_failedhistory -> {
+                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HistoryFragment()).commit();
+                val intent = Intent(this@MainActivity, FailedTripHistory::class.java)
+                startActivity(intent)
+            }
             R.id.nav_customer -> {
                 //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HistoryFragment()).commit();
                 val intent5 = Intent(this@MainActivity, CustomerRideRequest::class.java)
@@ -681,6 +753,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HistoryFragment()).commit();
                 val intent2 = Intent(this@MainActivity, PackageAssign::class.java)
                 startActivity(intent2)
+            }
+            R.id.trip_Status -> {
+                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HistoryFragment()).commit();
+                val intent6 = Intent(this@MainActivity, TripStatusNo::class.java)
+                startActivity(intent6)
             }
             R.id.nav_finance -> {
                 //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HistoryFragment()).commit();
@@ -692,6 +769,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val intent4 = Intent(this@MainActivity, PaymentHistoryActivity::class.java)
                 startActivity(intent4)
             }
+            R.id.nav_googlemap -> {
+                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HistoryFragment()).commit();
+                val gmmIntentUri = Uri.parse("geo:0,0?q=")
+                val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                mapIntent.setPackage("com.google.android.apps.maps")
+                startActivity(mapIntent)
+            }
+
         }
         drawer!!.closeDrawer(GravityCompat.START)
         return true
@@ -711,7 +796,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun checkConnection() {
         val isConnected = ConnectivityReceiver.isConnected()
-        showSnack(isConnected)
+        //showSnack(isConnected)
     }
 
     //    public boolean isOnline() {
@@ -766,6 +851,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val tok = FirebaseInstanceId.getInstance().token
                 Log.e("token", tok.toString())
                 Log.d("aaaaaaaaaaaa", driverOnlineFlag.toString())
+                sp = getSharedPreferences("IDvalue", 0)
+                val editor = sp.edit()
+                val stat = "available"
+                editor.putString("driverStatus", stat)
+                editor.commit()
                 createLocationCallback()
                 driverStatusTextView.text = resources.getString(R.string.online_driver)
                 requestLocationUpdate()
@@ -775,6 +865,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Log.d("bbbbbbbbbbbbbbbbbbbbbbb", driverOnlineFlag.toString())
                 driverStatusTextView.text = resources.getString(R.string.offline)
                 firebaseHelper.deleteDriver()
+                firebaseHelper.deleteAllDriver()
                 firebaseHelper.deletePushToken()
             }
         }
@@ -801,17 +892,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             driverOnlineFlag = b
             if (driverOnlineFlag){
                 val tok = FirebaseInstanceId.getInstance().token
-                Log.e("token", tok.toString())
-                Log.d("aaaaaaaaaaaa", driverOnlineFlag.toString())
+//                Log.e("token", tok.toString())
+//                Log.d("aaaaaaaaaaaa", driverOnlineFlag.toString())
+                sp = getSharedPreferences("IDvalue", 0)
+                val editor = sp.edit()
+                val stat = "available"
+                editor.putString("driverStatus", stat)
+                editor.commit()
                 createLocationCallback()
                 driverStatusTextView.text = resources.getString(R.string.online_driver)
                 requestLocationUpdate()
             }
             else {
                 driverOnlineFlag = false
-                Log.d("bbbbbbbbbbbbbbbbbbbbbbb", driverOnlineFlag.toString())
+//                Log.d("bbbbbbbbbbbbbbbbbbbbbbb", driverOnlineFlag.toString())
                 driverStatusTextView.text = resources.getString(R.string.offline)
                 firebaseHelper.deleteDriver()
+                firebaseHelper.deleteAllDriver()
                 firebaseHelper.deletePushToken()
             }
         }

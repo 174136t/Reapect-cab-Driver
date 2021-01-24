@@ -14,7 +14,7 @@
     </style>
 
     <style name="MaterialThemeDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="colorAccent">@color/design_default_color_primary</item>
+        <item name="colorAccent">#0A6400</item>
     </style>
 
 </resources>

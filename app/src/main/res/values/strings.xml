@@ -35,5 +35,32 @@
     <string name="default_notification_channel_id">Taxi Notification</string>
     <string name="msg_token_fmt">FCM Token</string>
     <string name="Notification">Hoorayy!!</string>
+    <string name="title">New Ride Available!!!</string>
+    <string name="content_description_media">NexRide</string>
+    <string name="secondary_text"><![CDATA[Hurry up & take it]]></string>
+    <string name="supporting_text">If you want it click accept or otherwise clisck reject ASAP</string>
+    <string name="action_1">Accept</string>
+    <string name="action_2">Reject</string>
+    <string name="Accept">Accept</string>
+    <string name="Reject">Reject</string>
+    <string name="ok">Ok</string>
+    <string name="title_activity_notification_cancel">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="oops">Oops!!</string>
+    <string name="this_ride_has_been_cancelled">This ride has been cancelled!!</string>
+    <string name="better_luck_next_time">Better luck next time</string>
+    <string name="appName">NexRide </string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="enter_phone_number">Enter phone number</string>
+    <string name="driver_id_18">Driver Id - 18</string>
+    <string name="start_trip">Start Trip</string>
+    <string name="customer_email">Enter Customer Email</string>
+    <string name="customer_mobile_no">Enter Customer Mobile No</string>
+    <string name="start_package">Start package</string>
+    <string name="rides">Package Rides</string>
+    <string name="failed_trips_history">Failed Trips history</string>
+    <string name="failed_trip_history">Failed Trip History</string>
+    <string name="commission_for_trips_details">Commission for trips Details</string>
 
 </resources>

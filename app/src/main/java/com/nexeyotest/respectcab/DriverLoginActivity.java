@@ -3,6 +3,7 @@ package com.nexeyotest.respectcab;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 //import android.support.annotation.NonNull;
 //import android.support.v7.app.AppCompatActivity;
@@ -20,10 +21,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.nexeyo.respectcab.R;
+
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,6 +57,7 @@ public class DriverLoginActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
     SharedPreferences sp;
+    public Integer str;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +66,10 @@ public class DriverLoginActivity extends AppCompatActivity {
 
         //sp1=getSharedPreferences("login",MODE_PRIVATE);
 
+
+
+
+
         mDatabase = FirebaseDatabase.getInstance().getReference("drivers");
 
         mAuth = FirebaseAuth.getInstance();
@@ -66,16 +77,34 @@ public class DriverLoginActivity extends AppCompatActivity {
         firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null) {
-                    Intent intent = new Intent(DriverLoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return;
-                }
-                else {
-                    Toast.makeText(DriverLoginActivity.this, "Sign in error", Toast.LENGTH_SHORT).show();
-                }
+                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                SharedPreferences mPrefs = getSharedPreferences("IDvalue",0);
+                str = mPrefs.getInt("DriverIDValue", 0);
+                DatabaseReference rideRef = FirebaseDatabase.getInstance().getReference("UnFinishedRides");
+                rideRef.orderByChild("driverid").equalTo(str).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            Intent intent = new Intent(DriverLoginActivity.this,TripStatusNo.class);
+                            startActivity(intent);
+                            finish();
+                        }else if (user != null) {
+                                Intent intent = new Intent(DriverLoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                                return;
+                            }
+                            else {
+//                    Toast.makeText(DriverLoginActivity.this, "Sign in error", Toast.LENGTH_SHORT).show();
+                            }
+
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+
             }
         };
 
@@ -110,7 +139,7 @@ public class DriverLoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final String email = mEmail.getText().toString();
-                final String password = mPassword.getText().toString();
+                final String password = mPassword.getText().toString().isEmpty() ? "a": mPassword.getText().toString() ;
 
                 mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(DriverLoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -131,11 +160,11 @@ public class DriverLoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                final String password = mPassword.getText().toString();
+                final String password = mPassword.getText().toString().isEmpty() ? "a": mPassword.getText().toString() ;
                 final String email = mEmail.getText().toString();
                 if (email.isEmpty())
                 {
-                    Toast.makeText(DriverLoginActivity.this, "Invalid Phone Number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DriverLoginActivity.this, "Sign in error", Toast.LENGTH_SHORT).show();
                 }
                 else {
 
@@ -157,13 +186,14 @@ public class DriverLoginActivity extends AppCompatActivity {
 
                         EditText editText4 = (EditText) findViewById(R.id.driver_full_name);
                         String driver_full_name = editText4.getText().toString();
-
+                        String stat = "available" ;
                         sp = getSharedPreferences("IDvalue", 0);
                         SharedPreferences.Editor editor = sp.edit();
                         editor.putInt("DriverIDValue", driver_ID);
                         editor.putString("drivername", driver_name);
                         editor.putString("drivermobile", driver_mobile);
                         editor.putString("driverfullname", driver_full_name);
+                        editor.putString("driverStatus",stat);
                         editor.commit();
 
 
@@ -209,7 +239,7 @@ public class DriverLoginActivity extends AppCompatActivity {
 
 
     private void firebaseUserSearch(String searchText) {
-        Toast.makeText(DriverLoginActivity.this, "Started Search", Toast.LENGTH_LONG).show();
+        //Toast.makeText(DriverLoginActivity.this, "Started Search", Toast.LENGTH_LONG).show();
 
         final Query firebaseSearchQuery = FirebaseDatabase.getInstance().getReference("drivers").orderByChild("mobile").equalTo(searchText);
 
@@ -233,6 +263,7 @@ public class DriverLoginActivity extends AppCompatActivity {
     public static class UsersViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
+
 
         public UsersViewHolder(@NonNull View itemView) {
             super(itemView);

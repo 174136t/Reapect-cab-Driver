@@ -133,7 +133,7 @@ public class PaymentHistoryActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(firebaseRecyclerAdapter3);
 
 
-        Toast.makeText(PaymentHistoryActivity.this, "Started setAdapter", Toast.LENGTH_LONG).show();
+//        Toast.makeText(PaymentHistoryActivity.this, "Started setAdapter", Toast.LENGTH_LONG).show();
     }
 
     public static class paymentViewHolder extends RecyclerView.ViewHolder {
@@ -154,7 +154,7 @@ public class PaymentHistoryActivity extends AppCompatActivity {
 //            user_name6.setText(String.valueOf(totalearning));
 
             TextView user_name7 = (TextView) mView.findViewById(R.id.trip_cost_f);
-            user_name7.setText(String.valueOf(paid_amount));
+            user_name7.setText(String.valueOf(paid_amount)+"0");
 
         }
     }
@@ -182,7 +182,7 @@ public class PaymentHistoryActivity extends AppCompatActivity {
 
         mRecyclerViewB.setAdapter(firebaseRecyclerAdapter4);
 
-        Toast.makeText(PaymentHistoryActivity.this, "Started setAdapter", Toast.LENGTH_LONG).show();
+//        Toast.makeText(PaymentHistoryActivity.this, "Started setAdapter", Toast.LENGTH_LONG).show();
     }
 
     public static class paymentViewHolder4 extends RecyclerView.ViewHolder {
