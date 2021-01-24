@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/baseline_home_black_18dp"
+            android:iconTint="@color/black"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/baseline_history_black_18dp"
+            android:iconTint="@color/black"
+            android:title="@string/menu_history" />
+            <!-- new item-->
+        <item 
+            android:id="@+id/nav_customer"
+            android:icon="@drawable/baseline_emoji_people_black_18dp"
+            android:iconTint="@color/black"
+            android:title="Customer rides" />
+             <!-- new item-->
+        <item
+            android:id="@+id/nav_m_notify"
+            android:icon="@drawable/baseline_emoji_transportation_black_18dp"
+            android:iconTint="@color/black"
+            android:title="@string/menu_m_notify" />
+        <item
+            android:id="@+id/nav_finance"
+            android:icon="@drawable/baseline_monetization_on_black_18dp"
+            android:iconTint="@color/black"
+            android:title="@string/menu_finance" />
+        <item
+            android:id="@+id/nav_payment"
+            android:icon="@drawable/baseline_wysiwyg_black_18dp"
+            android:iconTint="@color/black"
+            android:title="@string/menu_payment_history" />
+<!--        <item-->
+<!--            android:id="@+id/nav_settings"-->
+<!--            android:icon="@drawable/ic_menu_manage"-->
+<!--            android:title="@string/menu_settings" />-->
+        <item
+            android:id="@+id/nav_googlemap"
+            android:icon="@drawable/ic_menu_send"
+            android:iconTint="@color/black"
+            android:title="@string/menu_maps" />
+    </group>
+    <!--<item android:title="Communicate">-->
+    <!--<menu>-->
+    <!--<item-->
+    <!--android:id="@+id/nav_share"-->
+    <!--android:icon="@drawable/ic_launcher_background"-->
+    <!--android:title="Share" />-->
+    <!--<item-->
+    <!--android:id="@+id/nav_send"-->
+    <!--android:icon="@drawable/ic_launcher_background"-->
+    <!--android:title="Send"/>-->
+    <!--</menu>-->
+    <!--</item>-->
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/baseline_login_black_18dp"
+                android:iconTint="@color/black"
+                android:title="@string/menu_logout" />
+        </menu>
+    </item>
+</menu>
