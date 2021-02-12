@@ -239,7 +239,7 @@
 
             <EditText
                 android:id="@+id/cus_mobile"
-                android:layout_width="@dimen/_250sdp"
+                android:layout_width="@dimen/_200sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_below="@+id/cus_email"
                 android:layout_marginTop="5dp"
@@ -248,14 +248,14 @@
                 android:inputType="number"
                 android:text=""
                 android:background="@drawable/fill_textfield"
-                app:layout_constraintTop_toBottomOf="@+id/cus_email"
+                app:layout_constraintTop_toBottomOf="@+id/driverStatusTextView"
                 android:padding="10dip"
                 android:layout_centerInParent="true"
                 tools:ignore="MissingConstraints"
                 android:drawableStart=
                     "@drawable/ic_baseline_smartphone_24"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.52"
+                app:layout_constraintHorizontal_bias="0.3"
                 app:layout_constraintStart_toStartOf="parent"
                 />
 
@@ -270,7 +270,7 @@
                 android:layout_marginTop="5dp"
                 android:text=""
                 android:background="@drawable/fill_textfield"
-                app:layout_constraintTop_toBottomOf="@+id/driverStatusTextView"
+                app:layout_constraintTop_toBottomOf="@+id/cus_mobile"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.52"
                 app:layout_constraintStart_toStartOf="parent"
@@ -490,33 +490,35 @@
                 tools:layout_editor_absoluteY="@dimen/_115sdp"
                 android:visibility="invisible"/>
 
-<!--            <Button-->
-<!--                android:id="@+id/button_next"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="630dp"-->
-<!--                android:layout_marginLeft="630dp"-->
-<!--                android:layout_marginTop="1dp"-->
-<!--                android:text="Next1"-->
-<!--                app:layout_constraintEnd_toStartOf="@+id/cus_mobile"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="@+id/cus_mobile"-->
-<!--                tools:ignore="MissingConstraints" />-->
+            <Button
+                android:id="@+id/button_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="630dp"
+                android:layout_marginLeft="630dp"
+                android:layout_marginTop="1dp"
+                android:text="Search"
+                android:padding="10dip"
+                android:background="@drawable/rounded_corners"
+                app:layout_constraintEnd_toStartOf="@+id/cus_mobile"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/cus_mobile"
+                tools:ignore="MissingConstraints" />
 
-<!--            <Button-->
-<!--                android:id="@+id/button_next_next"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="630dp"-->
-<!--                android:layout_marginLeft="630dp"-->
-<!--                android:layout_marginEnd="5dp"-->
-<!--                android:layout_marginRight="5dp"-->
-<!--                android:text="Next2"-->
-<!--                app:layout_constraintBottom_toBottomOf="@+id/cus_email"-->
-<!--                app:layout_constraintEnd_toStartOf="@+id/cus_mobile"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/cus_mobile"-->
-<!--                tools:ignore="MissingConstraints" />-->
+            <Button
+                android:id="@+id/button_next_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="630dp"
+                android:layout_marginLeft="630dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:text="Next2"
+                app:layout_constraintBottom_toBottomOf="@+id/cus_email"
+                app:layout_constraintEnd_toStartOf="@+id/cus_mobile"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cus_mobile"
+                tools:ignore="MissingConstraints" />
 
             <!--<android.support.v7.widget.RecyclerView-->
             <!--android:id="@+id/vehicle_list_name"-->

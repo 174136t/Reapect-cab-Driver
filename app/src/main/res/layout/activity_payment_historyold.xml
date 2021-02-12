@@ -67,7 +67,7 @@
 
         <TextView
             android:id="@+id/trip_date_f"
-            android:layout_width="@dimen/_80sdp"
+            android:layout_width="@dimen/_157sdp"
             android:layout_height="@dimen/_28sdp"
             android:layout_column="0"
             android:layout_margin="@dimen/_1sdp"
@@ -75,26 +75,27 @@
             android:textSize="18sp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textAlignment="center"
-            android:gravity="center_horizontal" />
+            android:gravity="center_vertical"
+            tools:ignore="RtlCompat" />
 
-        <TextView
-            android:id="@+id/trip_id_f"
-            android:layout_width="@dimen/_110sdp"
-            android:layout_height="@dimen/_28sdp"
-            android:layout_column="1"
-            android:layout_margin="@dimen/_1sdp"
-            android:gravity="end"
-            android:text=" "
-            android:textAlignment="textEnd"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+<!--        <TextView-->
+<!--            android:id="@+id/trip_id_f"-->
+<!--            android:layout_width="@dimen/_110sdp"-->
+<!--            android:layout_height="@dimen/_28sdp"-->
+<!--            android:layout_column="1"-->
+<!--            android:layout_margin="@dimen/_1sdp"-->
+<!--            android:gravity="end"-->
+<!--            android:text=" "-->
+<!--            android:textAlignment="textEnd"-->
+<!--            android:textAppearance="?android:attr/textAppearanceLarge" />-->
 
         <TextView
             android:id="@+id/trip_cost_f"
-            android:layout_width="@dimen/_110sdp"
+            android:layout_width="@dimen/_160sdp"
             android:layout_height="@dimen/_28sdp"
-            android:layout_column="2"
+            android:layout_column="1"
             android:layout_margin="@dimen/_1sdp"
-            android:gravity="end"
+            android:gravity="center_vertical"
             android:text="Payment(Rs)"
             android:textSize="18sp"
             android:textAlignment="center"

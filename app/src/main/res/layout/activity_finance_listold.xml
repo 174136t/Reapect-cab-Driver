@@ -29,8 +29,13 @@
                 android:layout_column="0"
                 android:layout_margin="@dimen/_1sdp"
                 android:text=" Date "
-                android:textColor="@color/black"
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
+                android:background="@color/themecolor"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="center_vertical"
+                tools:ignore="RtlCompat" />
 
             <TextView
                 android:id="@+id/trip_id_f"
@@ -39,10 +44,12 @@
                 android:layout_column="1"
                 android:layout_margin="@dimen/_1sdp"
                 android:text="Miles "
-
+                android:background="@color/themecolor"
+                android:textColor="@color/white"
                 android:textAlignment="center"
+                android:textSize="18sp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="end"
+                android:gravity="center_vertical"
                 tools:ignore="RtlCompat" />
 
             <TextView
@@ -51,10 +58,13 @@
                 android:layout_height="@dimen/_28sdp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Calories"
+                android:background="@color/themecolor"
                 android:layout_column="2"
                 android:textAlignment="center"
+                android:textSize="18sp"
+                android:textColor="@color/white"
                 android:layout_margin="@dimen/_1sdp"
-                android:gravity="end"
+                android:gravity="center_vertical"
                 tools:ignore="RtlCompat" />
 
 

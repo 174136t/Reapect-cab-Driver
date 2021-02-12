@@ -18,6 +18,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.os.SystemClock;
 //import android.support.annotation.NonNull;
 //import android.support.annotation.Nullable;
@@ -286,6 +287,9 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
     public double package_nexthours;
     public double package_waitingcost;
     public double package_cost_nextdistance;
+    String tag = "com.nexeyotest.respectcab:LOCK";
+    public String straddress;
+    public String strtime;
 
     @SuppressLint("WrongConstant")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -294,6 +298,7 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
 
 //        startForegroundService();
         super.onCreate(savedInstanceState);
+
         //Configuration config = getResources().getConfiguration();
         //        Display display = getWindowManager().getDefaultDisplay();
         //        int width = display.getWidth();
@@ -319,6 +324,8 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
         str_d_name = mPrefs.getString("drivername", "Unknown");
         str_d_mobile = mPrefs.getString("drivermobile","");
         maxid =Long.valueOf( mPrefs.getString("tripid","DEFAULT"));
+        straddress=mPrefs.getString("straddress","DEFAULT");
+        strtime=mPrefs.getString("strtime","DEFAULT");
 //        costTotalLast1 = Double.valueOf(mPrefs.getString("tripcost","DEFAULT"));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -804,9 +811,9 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
                                         dataMap.put("customeremail",customer_email.getText().toString().trim());
                                         dataMap.put("tripstartdate",mTripDate.getText().toString());
                                         dataMap.put("tripenddate", tripendDate);
-                                        dataMap.put("tripstarttime", tripstarttime);
+                                        dataMap.put("tripstarttime", strtime);
                                         dataMap.put("tripendtime", tripendtime);
-                                        dataMap.put("startaddress", address);
+                                        dataMap.put("startaddress", straddress);
                                         dataMap.put("endaddress", address2);
                                         dataMap.put("endaddress", address3);
                                         dataMap.put("paymentmethod", payment_method);
@@ -1033,7 +1040,7 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
                                                             "\n" +
                                                             "      <font style=\"font-size:15px;\">Start time\n" +
                                                             "        <span style=\"float:right;\">\n" +
-                                                            tripstarttime+
+                                                            strtime+
                                                             "        </span>\n" +
                                                             "      </font></br>\n" +
                                                             "      <hr class=\"style-two\">\n" +
@@ -1055,7 +1062,7 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
                                                             "\n" +
                                                             "      <font style=\"font-size:15px;\">From\n" +
                                                             "        <span style=\"float:right;\">\n" +
-                                                            address+
+                                                            straddress+
                                                             "        </span>  \n" +
                                                             "      </font><br><br>\n" +
                                                             "      <hr class=\"style-eight\">\n" +
@@ -1201,6 +1208,7 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
                 });
 
                 AlertDialog dialoglast = builder.create();
+                dialoglast.getWindow().setGravity(Gravity.TOP);
                 dialoglast.show();
             }
         });
@@ -1246,7 +1254,7 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             return;
         }
@@ -1363,13 +1371,13 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
         //maxid eka trip id krnna
         String tripid = mPrefs.getString("tripid","DEFAULT");
         int trip = Integer.parseInt(tripid);
-        String start = mPrefs.getString("tripstartaddress","0");
+//        String start = mPrefs.getString("tripstartaddress","0");
         track_Database.child(tripid).child("driverid").setValue(String.valueOf(str));
         track_Database.child(tripid).child("lat1").setValue(lat1);
         track_Database.child(tripid).child("lon1").setValue(lon1);
         track_Database.child(tripid).child("lat2").setValue(lat2);
         track_Database.child(tripid).child("lon2").setValue(lon2);
-        track_Database.child(tripid).child("startaddress").setValue(start);
+        track_Database.child(tripid).child("startaddress").setValue(straddress);
         track_Database.child(tripid).child("endaddress").setValue(address2);
         track_Database.child(tripid).child("endaddress").setValue(address3);
         track_Database.child(tripid).child("waitingcost").setValue(String.valueOf(mWaitingCostV));
@@ -1377,7 +1385,7 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
         track_Database.child(tripid).child("triptime").setValue(mTimer1.getText().toString().trim());
         track_Database.child(tripid).child("totaldistance").setValue(String.valueOf(distanceV));
         track_Database.child(tripid).child("date").setValue(mTripDate.getText().toString());
-        track_Database.child(tripid).child("starttime").setValue(tripstarttime);
+        track_Database.child(tripid).child("starttime").setValue(strtime);
         track_Database.child(tripid).child("endtime").setValue(tripendtime);
         track_Database.child(tripid).child("tripcost").setValue(costTotalLast = Math.round(costTotalLast * 100.0) / 100.0);
         track_Database.child(tripid).child("status").setValue(track_status);
@@ -1388,7 +1396,7 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
         unFinished_Database.child(String.valueOf(str)).child("lon1").setValue(lon1);
         unFinished_Database.child(String.valueOf(str)).child("lat2").setValue(lat2);
         unFinished_Database.child(String.valueOf(str)).child("lon2").setValue(lon2);
-        unFinished_Database.child(String.valueOf(str)).child("startaddress").setValue(address);
+//        unFinished_Database.child(String.valueOf(str)).child("startaddress").setValue(address);
         unFinished_Database.child(String.valueOf(str)).child("endaddress").setValue(address2);
         unFinished_Database.child(String.valueOf(str)).child("endaddress").setValue(address3);
         unFinished_Database.child(String.valueOf(str)).child("waitingcost").setValue(String.valueOf(mWaitingCostV));
@@ -1396,7 +1404,7 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
         unFinished_Database.child(String.valueOf(str)).child("triptime").setValue(mTimer1.getText().toString().trim());
         unFinished_Database.child(String.valueOf(str)).child("totaldistance").setValue(String.valueOf(distanceV));
         unFinished_Database.child(String.valueOf(str)).child("date").setValue(mTripDate.getText().toString());
-        unFinished_Database.child(String.valueOf(str)).child("starttime").setValue(tripstarttime);
+//        unFinished_Database.child(String.valueOf(str)).child("starttime").setValue(tripstarttime);
         unFinished_Database.child(String.valueOf(str)).child("tripcost").setValue(costTotalLast = Math.round(costTotalLast * 100.0) / 100.0);
         unFinished_Database.child(String.valueOf(str)).child("status").setValue(track_status);
         unFinished_Database.child(String.valueOf(str)).child("tripid").setValue(trip);
@@ -1406,7 +1414,7 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
         rDatabase.child(String.valueOf(str)).child("lon1").setValue(lon1);
         rDatabase.child(String.valueOf(str)).child("lat2").setValue(lat2);
         rDatabase.child(String.valueOf(str)).child("lon2").setValue(lon2);
-        rDatabase.child(String.valueOf(str)).child("startaddress").setValue(address);
+        rDatabase.child(String.valueOf(str)).child("startaddress").setValue(straddress);
         rDatabase.child(String.valueOf(str)).child("endaddress").setValue(address2);
         rDatabase.child(String.valueOf(str)).child("endaddress").setValue(address3);
         rDatabase.child(String.valueOf(str)).child("waitingcost").setValue(String.valueOf(mWaitingCostV));
@@ -1414,7 +1422,7 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
         rDatabase.child(String.valueOf(str)).child("triptime").setValue(mTimer1.getText().toString().trim());
         rDatabase.child(String.valueOf(str)).child("totaldistance").setValue(String.valueOf(distanceV));
         rDatabase.child(String.valueOf(str)).child("date").setValue(mTripDate.getText().toString());
-        rDatabase.child(String.valueOf(str)).child("starttime").setValue(tripstarttime);
+        rDatabase.child(String.valueOf(str)).child("starttime").setValue(strtime);
         rDatabase.child(String.valueOf(str)).child("tripcost").setValue(costTotalLast = Math.round(costTotalLast * 100.0) / 100.0);
         rDatabase.child(String.valueOf(str)).child("status").setValue(track_status);
 //            track_Database.child(String.valueOf(maxid)).child("Location").child("driverid").setValue(str);
@@ -1466,7 +1474,8 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
             }
 
             if (addresses != null && addresses.size() > 0) {
-                address = addresses.get(0).getAddressLine(0);
+//                2021/02/10
+//                address = addresses.get(0).getAddressLine(0);
             }
 
             //speed = (double) roundToNDigits(((location.getSpeed() * 3600) / 1000), 2);
@@ -1708,7 +1717,7 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
     }
 
     public void connectDriver(){
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
 
         }
@@ -1791,7 +1800,7 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
 
             updatedTime = timeSwapBuff + timeInMilliseconds+prevTime;
-            Log.d("rrrrrr", String.valueOf(updatedTime));
+//            Log.d("rrrrrr", String.valueOf(updatedTime));
             int secs = (int) (updatedTime / 1000);
             int mins = secs / 60;
             int hrs = mins / 60;
@@ -1897,17 +1906,24 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
         return true;
     }
 
-//    public void startService() {
+    public void startService() {
 //        Intent serviceIntent = new Intent(this, ForegroundService.class);
 //        serviceIntent.putExtra("inputExtra", "FluTaxi Service is running in background");
 //
 //        ContextCompat.startForegroundService(this, serviceIntent);
-//    }
-//
-//    public void stopService() {
-//        Intent serviceIntent = new Intent(this, ForegroundService.class);
-//        stopService(serviceIntent);
-//    }
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M && Build.MANUFACTURER.equals("Huawei"))
+        { tag = "LocationManagerService"; }
+        PowerManager.WakeLock wakeLock = ((PowerManager) getSystemService(Context.POWER_SERVICE)).newWakeLock(1, tag); wakeLock.acquire();
+
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        serviceIntent.putExtra("inputExtra", "NexRide Service is running in background");
+        ContextCompat.startForegroundService(this, serviceIntent);
+    }
+
+    public void stopService() {
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        stopService(serviceIntent);
+    }
 
 
     @Override
@@ -1918,7 +1934,8 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
     @Override
     protected void onStart() {
         super.onStart();
-
+        //new bug fix 2021/02/10
+//        stopService();
 
         Log.i(TAG, "onStart");
     }
@@ -1926,14 +1943,15 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
     @Override
     protected void onResume() {
         super.onResume();
-
+//new bug fix 2021/02/10
+//        stopService();
         Log.i(TAG, "onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-//        startService();
+        startService();
         Log.i(TAG, "onPause");
     }
 
@@ -1962,7 +1980,7 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
     @Override
     protected void onRestart() {
         super.onRestart();
-//        stopService();
+        stopService();
 
         Log.i(TAG, "onRestart");
     }
@@ -1973,7 +1991,8 @@ public class FailedMapActivity<callStateListener, firebaseHelper> extends AppCom
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        stopService();
+        stopService();
+        finish();
         Log.i(TAG, "onDestroy");
     }
 

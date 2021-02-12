@@ -28,5 +28,8 @@ public class onAppKilled extends Service {
 
         GeoFire geoFire = new GeoFire(ref);
         geoFire.removeLocation(userId);
+        //new bug fix
+
+        stopSelf();
     }
 }

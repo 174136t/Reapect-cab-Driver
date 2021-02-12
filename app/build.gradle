@@ -10,12 +10,12 @@ android {
             keyPassword '0454915962'
         }
     }
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.nexeyotest.respectcab"
         minSdkVersion 16
 //        minSdkVersion 23
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 9
         versionName "8.1.1"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'

@@ -15,7 +15,9 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.os.SystemClock;
 //import android.support.annotation.NonNull;
 //import android.support.annotation.Nullable;
@@ -251,6 +253,10 @@ public class DriverMapActivity<callStateListener, firebaseHelper> extends AppCom
 
     DatabaseReference mRef;
      FirebaseHelper firebaseHelper = new FirebaseHelper("0000");
+    String tag = "com.nexeyotest.respectcab:LOCK";
+
+    public String strservice = "No";
+    public String stpservice = "No";
 
 
     @Override
@@ -258,6 +264,8 @@ public class DriverMapActivity<callStateListener, firebaseHelper> extends AppCom
 
 //        startForegroundService();
         super.onCreate(savedInstanceState);
+
+
         //Configuration config = getResources().getConfiguration();
         //        Display display = getWindowManager().getDefaultDisplay();
         //        int width = display.getWidth();
@@ -1105,6 +1113,7 @@ public class DriverMapActivity<callStateListener, firebaseHelper> extends AppCom
                 });
 
                 AlertDialog dialoglast = builder.create();
+                dialoglast.getWindow().setGravity(Gravity.TOP);
                 dialoglast.show();
             }
         });
@@ -1150,6 +1159,7 @@ public class DriverMapActivity<callStateListener, firebaseHelper> extends AppCom
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             return;
@@ -1168,6 +1178,7 @@ public class DriverMapActivity<callStateListener, firebaseHelper> extends AppCom
         mGoogleApiClient.connect();
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     public void onLocationChanged(Location location) {
         mLastLocation = location;
@@ -1251,9 +1262,16 @@ public class DriverMapActivity<callStateListener, firebaseHelper> extends AppCom
 // updating  current hiring driver data
         SharedPreferences mPrefs = getSharedPreferences("IDvalue",0);
         String tok = FirebaseInstanceId.getInstance().getToken();
+
+
         str = mPrefs.getInt("DriverIDValue", 0);
         firebaseHelper = new FirebaseHelper(str.toString());
         firebaseHelper.updateHiringDriver(new Driver(str,lat1,lon1,tok,"unavailable"));
+// 2021/02/12 startaddress update part
+        SharedPreferences.Editor editor = mPrefs.edit();
+        editor.putString("straddress",address);
+        editor.putString("strtime",tripstarttime);
+        editor.commit();
 
         track_Database.child(String.valueOf(maxid)).child("driverid").setValue(str);
         track_Database.child(String.valueOf(maxid)).child("lat1").setValue(lat1);
@@ -1326,129 +1344,273 @@ public class DriverMapActivity<callStateListener, firebaseHelper> extends AppCom
 
 
             ////
-            if (status == 0) {
-                lat1 = location.getLatitude();
-                lon1 = location.getLongitude();
+//            if (status == 0) {
+//                lat1 = location.getLatitude();
+//                lon1 = location.getLongitude();
+//
+//                geocoder = new Geocoder(this, Locale.getDefault());
+//
+//                try {
+//                    addresses = geocoder.getFromLocation(lat1, lon1, 2); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                if (addresses != null && addresses.size() > 0) {
+//                    address = addresses.get(0).getAddressLine(0);
+//                }
+//
+//                //speed = (double) roundToNDigits(((location.getSpeed() * 3600) / 1000), 2);
+//
+//            } else if ((status % 2) != 0) {
+//                lat2 = location.getLatitude();
+//                lon2 = location.getLongitude();
+//
+//                //waitingCost = Double.valueOf((int) ((startTime2/(60*1000))*4));
+//                //latLng2 = new LatLng(lat2, lon2);
+//                distanceVincenty = distanceVincenty(lat1, lon1, lat2, lon2);
+//                //distanceOld1 = distanceBetweenTwoPoint2(lat1,lon1,lat2,lon2);
+//                if (location.hasSpeed() && location.getSpeed() > 0) {
+//                    distanceOld1 = distanceBetweenTwoPoint2(lat1, lon1, lat2, lon2);
+//                } else {
+//                    distanceOld1 = 0.0;
+//                }
+//                distance = distance + distanceOld1;
+//                distance = Math.round(distance * 1000.0) / 1000.0;
+//                distanceV = distanceV + distanceVincenty;
+//
+//                ////
+//
+//                int dischk1 = Integer.valueOf(distanceV.intValue());
+//                if (dischk1 > s1) {
+//                    distanceV = distanceV + 0.032;
+//                    s1 = s1 + 1;
+//                }
+//
+//
+//                //distanceV = 2.5;
+//                distanceV = Math.round(distanceV * 1000.0) / 1000.0;
+//
+//                costTotalLast = costTotal(costTotalLast);
+//                costTotalLast = Math.round(costTotalLast * 100.0) / 100.0;
+//
+//                geocoder = new Geocoder(this, Locale.getDefault());
+//
+//                try {
+//                    addresses = geocoder.getFromLocation(lat1, lon1, 2); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                if (addresses != null && addresses.size() > 0) {
+//                    address2 = addresses.get(0).getAddressLine(0);
+//                }
+//
+//            } else if ((status % 2) == 0) {
+//                lat1 = location.getLatitude();
+//                lon1 = location.getLongitude();
+//
+//
+//                geocoder = new Geocoder(this, Locale.getDefault());
+//
+//
+//                try {
+//                    addresses = geocoder.getFromLocation(lat1, lon1, 2); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                if (addresses != null && addresses.size() > 0) {
+//                    address3 = addresses.get(0).getAddressLine(0);
+//                }
+//
+//                //latLng3 = new LatLng(lat1, lon1);
+//                distanceVincenty = distanceVincenty(lat1, lon1, lat2, lon2);
+//                //distanceOld1 = distanceBetweenTwoPoint2(lat1,lon1,lat2,lon2);
+//                if (location.hasSpeed() && location.getSpeed() > 0) {
+//                    distanceOld1 = distanceBetweenTwoPoint2(lat1, lon1, lat2, lon2);
+//                } else {
+//                    distanceOld1 = 0.0;
+//                }
+//                //distance = roundToNDigits(distance + distanceOld1,4) ;
+//                distance = distance + distanceOld1;
+//                distance = Math.round(distance * 1000.0) / 1000.0;
+//                distanceV = distanceV + distanceVincenty;
+//
+//                if ((distanceV * 1000) > 1000) {
+//                    int dischk1 = Integer.valueOf(distanceV.intValue());
+//                    if (dischk1 > s1) {
+//                        distanceV = distanceV + 0.032;
+//                        s1 = s1 + 1;
+//                    }
+//                }
+//
+//                //distanceV = 1.9;
+//                distanceV = Math.round(distanceV * 1000.0) / 1000.0;
+//                //distance += SphericalUtil.computeDistanceBetween(latLng1,latLng3);
+//                //speed = (double) roundToNDigits(((location.getSpeed() * 3600) / 1000), 2);
+//                //costtotalfunc = costTotal(costtotalinit);
+//                costTotalLast = costTotal(costTotalLast);
+//                costTotalLast = Math.round(costTotalLast * 100.0) / 100.0;
+//            }
+//
+//
+//            mDistanceVin.setText(distanceV.toString());
+//
+//            Ttotalcost.setText(costTotalLast.toString());
+//            Ttotalcost.setGravity(Gravity.CENTER_HORIZONTAL);
+//
+//            mTripCost.setText(mTripCostV.toString());
+//            mTripCost.setGravity(Gravity.CENTER_HORIZONTAL);
+//
+//            mWaitingCost.setText(String.valueOf(mWaitingCostV));
+//            mWaitingCost.setGravity(Gravity.CENTER_HORIZONTAL);
+//
+//            status++;
+//    }
 
-                geocoder = new Geocoder(this, Locale.getDefault());
+        //new code from live version
+        if (status == 0) {
+            lat1 = location.getLatitude();
+            lon1 = location.getLongitude();
 
-                try {
-                    addresses = geocoder.getFromLocation(lat1, lon1, 2); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            geocoder = new Geocoder(this, Locale.getDefault());
+
+            try {
+                addresses = geocoder.getFromLocation(lat1, lon1, 2);
+                // Here 1 represent max location result to returned, by documents it recommended 1 to 5
 
                 if (addresses != null && addresses.size() > 0) {
                     address = addresses.get(0).getAddressLine(0);
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-                //speed = (double) roundToNDigits(((location.getSpeed() * 3600) / 1000), 2);
+            if (addresses != null && addresses.size() > 0) {
+                address = addresses.get(0).getAddressLine(0);
+            }else if (addresses == null) {
+                Toast.makeText(getApplicationContext(), "GPS signal not found",
+                        3000).show();
+            }
 
-            } else if ((status % 2) != 0) {
-                lat2 = location.getLatitude();
-                lon2 = location.getLongitude();
+            //speed = (double) roundToNDigits(((location.getSpeed() * 3600) / 1000), 2);
 
-                //waitingCost = Double.valueOf((int) ((startTime2/(60*1000))*4));
-                //latLng2 = new LatLng(lat2, lon2);
-                distanceVincenty = distanceVincenty(lat1, lon1, lat2, lon2);
-                //distanceOld1 = distanceBetweenTwoPoint2(lat1,lon1,lat2,lon2);
-                if (location.hasSpeed() && location.getSpeed() > 0) {
-                    distanceOld1 = distanceBetweenTwoPoint2(lat1, lon1, lat2, lon2);
-                } else {
-                    distanceOld1 = 0.0;
+        } else if ((status % 2) != 0) {
+            lat2 = location.getLatitude();
+            lon2 = location.getLongitude();
+
+            //waitingCost = Double.valueOf((int) ((startTime2/(60*1000))*4));
+            //latLng2 = new LatLng(lat2, lon2);
+            distanceVincenty = distanceVincenty(lat1, lon1, lat2, lon2);
+            //distanceOld1 = distanceBetweenTwoPoint2(lat1,lon1,lat2,lon2);
+            if (location.hasSpeed() && location.getSpeed() > 0) {
+                distanceOld1 = distanceBetweenTwoPoint2(lat1, lon1, lat2, lon2);
+            } else {
+                distanceOld1 = 0.0;
+            }
+            distance = distance + distanceOld1;
+            distance = Math.round(distance * 1000.0) / 1000.0;
+            distanceV = distanceV + distanceVincenty;
+
+            ////
+
+            int dischk1 = Integer.valueOf(distanceV.intValue());
+            if (dischk1 > s1) {
+                distanceV = distanceV + 0.032;
+                s1 = s1 + 1;
+            }
+
+
+            //distanceV = 2.5;
+            distanceV = Math.round(distanceV * 1000.0) / 1000.0;
+
+            costTotalLast = costTotal(costTotalLast);
+            costTotalLast = Math.round(costTotalLast * 100.0) / 100.0;
+
+            geocoder = new Geocoder(this, Locale.getDefault());
+
+            try {
+                addresses = geocoder.getFromLocation(lat1, lon1, 2);
+                // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                if (addresses != null && addresses.size() > 0) {
+                    address2 = addresses.get(0).getAddressLine(0);
+                }else if (addresses == null) {
+                    Toast.makeText(getApplicationContext(), "GPS signal not found",
+                            3000).show();
                 }
-                distance = distance + distanceOld1;
-                distance = Math.round(distance * 1000.0) / 1000.0;
-                distanceV = distanceV + distanceVincenty;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-                ////
 
+
+        } else if ((status % 2) == 0) {
+            lat1 = location.getLatitude();
+            lon1 = location.getLongitude();
+
+
+            geocoder = new Geocoder(this, Locale.getDefault());
+
+
+            try {
+                addresses = geocoder.getFromLocation(lat1, lon1, 2);
+                // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                if (addresses != null && addresses.size() > 0) {
+                    address3 = addresses.get(0).getAddressLine(0);
+                }else if (addresses == null) {
+                    Toast.makeText(getApplicationContext(), "GPS signal not found",
+                            3000).show();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+
+            //latLng3 = new LatLng(lat1, lon1);
+            distanceVincenty = distanceVincenty(lat1, lon1, lat2, lon2);
+            //distanceOld1 = distanceBetweenTwoPoint2(lat1,lon1,lat2,lon2);
+            if (location.hasSpeed() && location.getSpeed() > 0) {
+                distanceOld1 = distanceBetweenTwoPoint2(lat1, lon1, lat2, lon2);
+            } else {
+                distanceOld1 = 0.0;
+            }
+            //distance = roundToNDigits(distance + distanceOld1,4) ;
+            distance = distance + distanceOld1;
+            distance = Math.round(distance * 1000.0) / 1000.0;
+            distanceV = distanceV + distanceVincenty;
+
+            if ((distanceV * 1000) > 1000) {
                 int dischk1 = Integer.valueOf(distanceV.intValue());
                 if (dischk1 > s1) {
                     distanceV = distanceV + 0.032;
                     s1 = s1 + 1;
                 }
-
-
-                //distanceV = 2.5;
-                distanceV = Math.round(distanceV * 1000.0) / 1000.0;
-
-                costTotalLast = costTotal(costTotalLast);
-                costTotalLast = Math.round(costTotalLast * 100.0) / 100.0;
-
-                geocoder = new Geocoder(this, Locale.getDefault());
-
-                try {
-                    addresses = geocoder.getFromLocation(lat1, lon1, 2); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                if (addresses != null && addresses.size() > 0) {
-                    address2 = addresses.get(0).getAddressLine(0);
-                }
-
-            } else if ((status % 2) == 0) {
-                lat1 = location.getLatitude();
-                lon1 = location.getLongitude();
-
-
-                geocoder = new Geocoder(this, Locale.getDefault());
-             
-
-                try {
-                    addresses = geocoder.getFromLocation(lat1, lon1, 2); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                if (addresses != null && addresses.size() > 0) {
-                    address3 = addresses.get(0).getAddressLine(0);
-                }
-
-                //latLng3 = new LatLng(lat1, lon1);
-                distanceVincenty = distanceVincenty(lat1, lon1, lat2, lon2);
-                //distanceOld1 = distanceBetweenTwoPoint2(lat1,lon1,lat2,lon2);
-                if (location.hasSpeed() && location.getSpeed() > 0) {
-                    distanceOld1 = distanceBetweenTwoPoint2(lat1, lon1, lat2, lon2);
-                } else {
-                    distanceOld1 = 0.0;
-                }
-                //distance = roundToNDigits(distance + distanceOld1,4) ;
-                distance = distance + distanceOld1;
-                distance = Math.round(distance * 1000.0) / 1000.0;
-                distanceV = distanceV + distanceVincenty;
-
-                if ((distanceV * 1000) > 1000) {
-                    int dischk1 = Integer.valueOf(distanceV.intValue());
-                    if (dischk1 > s1) {
-                        distanceV = distanceV + 0.032;
-                        s1 = s1 + 1;
-                    }
-                }
-
-                //distanceV = 1.9;
-                distanceV = Math.round(distanceV * 1000.0) / 1000.0;
-                //distance += SphericalUtil.computeDistanceBetween(latLng1,latLng3);
-                //speed = (double) roundToNDigits(((location.getSpeed() * 3600) / 1000), 2);
-                //costtotalfunc = costTotal(costtotalinit);
-                costTotalLast = costTotal(costTotalLast);
-                costTotalLast = Math.round(costTotalLast * 100.0) / 100.0;
             }
 
+            //distanceV = 1.9;
+            distanceV = Math.round(distanceV * 1000.0) / 1000.0;
+            //distance += SphericalUtil.computeDistanceBetween(latLng1,latLng3);
+            //speed = (double) roundToNDigits(((location.getSpeed() * 3600) / 1000), 2);
+            //costtotalfunc = costTotal(costtotalinit);
+            costTotalLast = costTotal(costTotalLast);
+            costTotalLast = Math.round(costTotalLast * 100.0) / 100.0;
+        }
 
-            mDistanceVin.setText(distanceV.toString());
 
-            Ttotalcost.setText(costTotalLast.toString());
-            Ttotalcost.setGravity(Gravity.CENTER_HORIZONTAL);
+        mDistanceVin.setText(distanceV.toString());
 
-            mTripCost.setText(mTripCostV.toString());
-            mTripCost.setGravity(Gravity.CENTER_HORIZONTAL);
+        Ttotalcost.setText(costTotalLast.toString());
+        Ttotalcost.setGravity(Gravity.CENTER_HORIZONTAL);
 
-            mWaitingCost.setText(String.valueOf(mWaitingCostV));
-            mWaitingCost.setGravity(Gravity.CENTER_HORIZONTAL);
+        mTripCost.setText(mTripCostV.toString());
+        mTripCost.setGravity(Gravity.CENTER_HORIZONTAL);
 
-            status++;
+        mWaitingCost.setText(String.valueOf(mWaitingCostV));
+        mWaitingCost.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        status++;
     }
 
     public double distanceBetweenTwoPoint2(double lat1, double lon1, double lat2, double lon2) {
@@ -1575,7 +1737,9 @@ public class DriverMapActivity<callStateListener, firebaseHelper> extends AppCom
     }
 
     public void connectDriver(){
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
             return;
 
         }
@@ -1723,17 +1887,26 @@ public class DriverMapActivity<callStateListener, firebaseHelper> extends AppCom
         return true;
     }
 
-//    public void startService() {
+    public void startService() {
 //        Intent serviceIntent = new Intent(this, ForegroundService.class);
-//        serviceIntent.putExtra("inputExtra", "FluTaxi Service is running in background");
+//        serviceIntent.putExtra("inputExtra", "NexRide Service is running in background");
 //
 //        ContextCompat.startForegroundService(this, serviceIntent);
-//    }
-//
-//    public void stopService() {
-//        Intent serviceIntent = new Intent(this, ForegroundService.class);
-//        stopService(serviceIntent);
-//    }
+
+        //new code from live version
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M && Build.MANUFACTURER.equals("Huawei"))
+        { tag = "LocationManagerService"; }
+        PowerManager.WakeLock wakeLock = ((PowerManager) getSystemService(Context.POWER_SERVICE)).newWakeLock(1, tag); wakeLock.acquire();
+
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        serviceIntent.putExtra("inputExtra", "NexRide Service is running in background");
+        ContextCompat.startForegroundService(this, serviceIntent);
+    }
+
+    public void stopService() {
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        stopService(serviceIntent);
+    }
 
 
     @Override
@@ -1744,7 +1917,8 @@ public class DriverMapActivity<callStateListener, firebaseHelper> extends AppCom
     @Override
     protected void onStart() {
         super.onStart();
-
+        //new bug fix 2021/02/10
+//        stopService();
 
         Log.i(TAG, "onStart");
     }
@@ -1752,14 +1926,20 @@ public class DriverMapActivity<callStateListener, firebaseHelper> extends AppCom
     @Override
     protected void onResume() {
         super.onResume();
-
+//new bug fix 2021/02/10
+//        stopService();
         Log.i(TAG, "onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-//        startService();
+        startService();
+//        if (strservice == "No") {
+//            strservice = "Yes";
+//            stpservice = "No";
+//            startService();
+//        }
         Log.i(TAG, "onPause");
     }
 
@@ -1788,8 +1968,12 @@ public class DriverMapActivity<callStateListener, firebaseHelper> extends AppCom
     @Override
     protected void onRestart() {
         super.onRestart();
-//        stopService();
-
+        stopService();
+//        if (stpservice == "No") {
+//            stpservice = "Yes";
+//            strservice = "No";
+//            stopService();
+//        }
         Log.i(TAG, "onRestart");
     }
 
@@ -1799,7 +1983,8 @@ public class DriverMapActivity<callStateListener, firebaseHelper> extends AppCom
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        stopService();
+        stopService();
+        finish();
         Log.i(TAG, "onDestroy");
     }
 

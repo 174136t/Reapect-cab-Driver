@@ -56,6 +56,7 @@
             android:gravity="center"
             android:layout_margin="@dimen/_1sdp"
             android:text=" Trip ID "
+            android:textSize="18sp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_weight="1"/>
 
@@ -63,7 +64,7 @@
             android:id="@+id/trip_id_f"
             android:layout_width="0dp"
             android:layout_height="@dimen/_28sdp"
-
+            android:textSize="18sp"
             android:layout_margin="@dimen/_1sdp"
             android:gravity="center"
             android:text="Earning "
@@ -75,7 +76,7 @@
             android:id="@+id/trip_cost_f"
             android:layout_width="0dp"
             android:layout_height="@dimen/_28sdp"
-
+            android:textSize="18sp"
             android:layout_margin="@dimen/_1sdp"
             android:gravity="center"
             android:text="Commission"
@@ -98,6 +99,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="@dimen/_1sdp"
+        android:textSize="18sp"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="@dimen/_25sdp"

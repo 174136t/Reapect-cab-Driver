@@ -154,7 +154,7 @@ public class PaymentHistoryActivity extends AppCompatActivity {
 //            user_name6.setText(String.valueOf(totalearning));
 
             TextView user_name7 = (TextView) mView.findViewById(R.id.trip_cost_f);
-            user_name7.setText(String.valueOf(paid_amount)+"0");
+            user_name7.setText(String.format("%.2f",paid_amount));
 
         }
     }
@@ -197,13 +197,13 @@ public class PaymentHistoryActivity extends AppCompatActivity {
         @SuppressLint("SetTextI18n")
         public void setDetails4(double balance, double total_commission, double paid_commission) {
             TextView balance_f = (TextView) mView.findViewById(R.id.balance_f);
-            balance_f.setText(String.valueOf(balance));
+            balance_f.setText(String.format("%.2f",balance));
 
             TextView total_commission_f = (TextView) mView.findViewById(R.id.total_commission_f);
-            total_commission_f.setText(String.valueOf(total_commission));
+            total_commission_f.setText(String.format("%.2f",total_commission));
 
             TextView paid_commission_f = (TextView) mView.findViewById(R.id.paid_commission_f);
-            paid_commission_f.setText(String.valueOf(paid_commission));
+            paid_commission_f.setText(String.format("%.2f",paid_commission));
         }
     }
 

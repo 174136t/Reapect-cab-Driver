@@ -242,7 +242,7 @@ public class TripStatusNo extends Activity {
     FirebaseHelper firebaseHelper = new FirebaseHelper("0000");
     public String str_package_id;
 
-
+    int situation =0;
 
 
     @Override
@@ -334,29 +334,50 @@ public class TripStatusNo extends Activity {
                                 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    for(DataSnapshot datas: dataSnapshot.getChildren()){
-                                        String status= Objects.requireNonNull(datas.child("tripstatus").getValue()).toString();
-                                        if(status.equals("Running")){
-                                            Intent intent = new Intent(TripStatusNo.this, FailedDriverPackageActivity.class);
-                                            startActivity(intent);
-                                            finish();
+                                    Log.e("addadddaadddaa", dataSnapshot.toString());
+                                    if(dataSnapshot.exists()){
+
+                                        for(DataSnapshot datas: dataSnapshot.getChildren()){
+                                            String status= Objects.requireNonNull(datas.child("tripstatus").getValue()).toString();
+                                            if(status.equals("Running")){
+                                                situation =1;
+                                                Intent intent = new Intent(TripStatusNo.this, FailedDriverPackageActivity.class);
+                                                startActivity(intent);
+                                                finish();
 //                                            Toast.makeText( TripStatusNo.this, "haamooooooo yantam athi", Toast.LENGTH_LONG).show();
-                                        }else{
-                                            Intent intent = new Intent(TripStatusNo.this, FailedMapActivity.class);
-                                            startActivity(intent);
-                                            finish();
+                                            }else {
+                                                situation =0;
+                                                Intent intent = new Intent(TripStatusNo.this, FailedMapActivity.class);
+                                                startActivity(intent);
+                                                finish();
 //                                            Toast.makeText( TripStatusNo.this, "hari yanne", Toast.LENGTH_LONG).show();
+                                            }
                                         }
+                                    }else{
+                                        Intent intent = new Intent(TripStatusNo.this, FailedMapActivity.class);
+                                        startActivity(intent);
+                                        finish();
                                     }
+
                                 }
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) {
+
                                 }
                             });
+
+
+//                            if(situation==0){
+//
+//                            }else{
+//
+//                            }
+
 
                         }else{
                             Toast.makeText( TripStatusNo.this, "There are no any failed trips!",
                                     Toast.LENGTH_LONG).show();
+                            finish();
                         }
 
                     }
@@ -925,6 +946,7 @@ public class TripStatusNo extends Activity {
                 });
 
                 AlertDialog dialoglast = builder.create();
+                            dialoglast.getWindow().setGravity(Gravity.TOP);
                 dialoglast.show();
 
                         }else{

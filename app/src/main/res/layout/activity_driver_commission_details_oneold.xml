@@ -25,12 +25,15 @@
                 android:layout_height="@dimen/_28sdp"
                 android:layout_column="0"
                 android:layout_margin="@dimen/_1sdp"
-                android:background="#FFFFFF"
+                android:background="@color/themecolor"
+                android:gravity="center_vertical"
                 android:text=" Date "
+                android:textColor="@color/white"
+                android:textSize="18sp"
                 android:textAlignment="center"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="center_horizontal"
-                />
+
+                tools:ignore="RtlCompat" />
 
             <TextView
                 android:id="@+id/trip_id_f_details"
@@ -38,11 +41,13 @@
                 android:layout_height="@dimen/_28sdp"
                 android:layout_column="1"
                 android:layout_margin="1dp"
-                android:background="#FFFFFF"
+                android:background="@color/themecolor"
                 android:text="Miles "
+                android:textSize="18sp"
                 android:textAlignment="center"
+                android:textColor="@color/white"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="end"
+                android:gravity="center_vertical"
                 tools:ignore="RtlCompat" />
 
             <TextView
@@ -51,11 +56,13 @@
                 android:layout_height="@dimen/_28sdp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Calories"
+                android:textSize="18sp"
+                android:background="@color/themecolor"
                 android:layout_column="2"
                 android:layout_margin="1dp"
                 android:textAlignment="center"
-                android:background="#FFFFFF"
-                android:gravity="end"
+                android:textColor="@color/white"
+                android:gravity="center_vertical"
                 tools:ignore="RtlCompat" />
 
 

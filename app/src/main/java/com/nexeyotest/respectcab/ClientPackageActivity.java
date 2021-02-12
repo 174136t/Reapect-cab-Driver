@@ -15,7 +15,9 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.os.SystemClock;
 //import android.support.annotation.NonNull;
 //import android.support.annotation.Nullable;
@@ -276,6 +278,7 @@ public class ClientPackageActivity<callStateListener> extends AppCompatActivity 
     int flag;
     FirebaseHelper firebaseHelper = new FirebaseHelper("0000");
     boolean driverOnlineFlag = false;
+    String tag = "com.nexeyotest.respectcab:LOCK";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1128,6 +1131,7 @@ public class ClientPackageActivity<callStateListener> extends AppCompatActivity 
                 });
 
                 AlertDialog dialoglast = builder.create();
+                dialoglast.getWindow().setGravity(Gravity.TOP);
                 dialoglast.show();
             }
         });
@@ -1173,7 +1177,7 @@ public class ClientPackageActivity<callStateListener> extends AppCompatActivity 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             return;
         }
@@ -1281,6 +1285,11 @@ public class ClientPackageActivity<callStateListener> extends AppCompatActivity 
         firebaseHelper = new FirebaseHelper(str.toString());
         firebaseHelper.updateHiringDriver(new Driver(str,lat1,lon1,tok,"unavailable"));
 
+// 2021/02/12 startaddress update part
+        SharedPreferences.Editor editor = mPrefs.edit();
+        editor.putString("straddress",address);
+        editor.putString("strtime",tripstarttime);
+        editor.commit();
 
 
         track_Database.child(String.valueOf(maxid)).child("driverid").setValue(str);
@@ -1734,7 +1743,7 @@ public class ClientPackageActivity<callStateListener> extends AppCompatActivity 
     }
 
     public void connectDrive(){
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
 
         }
@@ -1892,17 +1901,24 @@ public class ClientPackageActivity<callStateListener> extends AppCompatActivity 
         return true;
     }
 
-//    public void startService() {
+    public void startService() {
 //        Intent serviceIntent = new Intent(this, ForegroundService.class);
 //        serviceIntent.putExtra("inputExtra", "FluTaxi Service is running in background");
 //
 //        ContextCompat.startForegroundService(this, serviceIntent);
-//    }
-//
-//    public void stopService() {
-//        Intent serviceIntent = new Intent(this, ForegroundService.class);
-//        stopService(serviceIntent);
-//    }
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M && Build.MANUFACTURER.equals("Huawei"))
+        { tag = "LocationManagerService"; }
+        PowerManager.WakeLock wakeLock = ((PowerManager) getSystemService(Context.POWER_SERVICE)).newWakeLock(1, tag); wakeLock.acquire();
+
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        serviceIntent.putExtra("inputExtra", "NexRide Service is running in background");
+        ContextCompat.startForegroundService(this, serviceIntent);
+    }
+
+    public void stopService() {
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        stopService(serviceIntent);
+    }
 
 
     @Override
@@ -1913,7 +1929,8 @@ public class ClientPackageActivity<callStateListener> extends AppCompatActivity 
     @Override
     protected void onStart() {
         super.onStart();
-
+        //new bug fix 2021/02/10
+        stopService();
 
         Log.i(TAG, "onStart");
     }
@@ -1928,7 +1945,7 @@ public class ClientPackageActivity<callStateListener> extends AppCompatActivity 
     @Override
     protected void onPause() {
         super.onPause();
-//        startService();
+        startService();
         Log.i(TAG, "onPause");
     }
 
@@ -1957,7 +1974,7 @@ public class ClientPackageActivity<callStateListener> extends AppCompatActivity 
     @Override
     protected void onRestart() {
         super.onRestart();
-//        stopService();
+        stopService();
 
         Log.i(TAG, "onRestart");
     }
@@ -1968,7 +1985,7 @@ public class ClientPackageActivity<callStateListener> extends AppCompatActivity 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        stopService();
+        stopService();
         Log.i(TAG, "onDestroy");
     }
 

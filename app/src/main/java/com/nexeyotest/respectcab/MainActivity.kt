@@ -156,7 +156,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 editor.commit()
                 createLocationCallback()
                 driverStatusTextView.text = resources.getString(R.string.online_driver)
-                requestLocationUpdate()
+//                requestLocationUpdate()
+//new part add 2021/02/08
+                intent1 = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(intent1)
             }
             else {
                 driverOnlineFlag = false
@@ -196,25 +199,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mAvailability = findViewById<View>(R.id.driverStatusSwitch) as SwitchCompat
         mCus_email = findViewById<View>(R.id.cus_email) as EditText
         mCus_mobile = findViewById<View>(R.id.cus_mobile) as EditText
-//        button_next = findViewById<View>(R.id.button_next) as Button
-//        button_next_next = findViewById<View>(R.id.button_next_next) as Button
-//        button_next_next!!.visibility = View.INVISIBLE
-//        button_next!!.visibility = View.INVISIBLE
+        button_next = findViewById<View>(R.id.button_next) as Button
+        button_next_next = findViewById<View>(R.id.button_next_next) as Button
+        button_next_next!!.visibility = View.INVISIBLE
+        button_next!!.visibility = View.INVISIBLE
+
         mRecyclerViewC = findViewById<View>(R.id.customer_email_rv) as RecyclerView
         mRecyclerViewC!!.setHasFixedSize(true)
         mRecyclerViewC!!.layoutManager = LinearLayoutManager(this)
+
         mLayoutManager = LinearLayoutManager(this)
         mLayoutManager!!.reverseLayout = true
         mLayoutManager!!.stackFromEnd = true
         mRecyclerView = findViewById<View>(R.id.vehicle_list3) as RecyclerView
         mRecyclerView!!.setHasFixedSize(true)
         mRecyclerView!!.layoutManager = mLayoutManager
+
         mLayoutManagerB = LinearLayoutManager(this)
         mLayoutManagerB!!.reverseLayout = true
         mLayoutManagerB!!.stackFromEnd = true
         mRecyclerViewB = findViewById<View>(R.id.vehicle_type_list3) as RecyclerView
         mRecyclerViewB!!.setHasFixedSize(true)
         mRecyclerViewB!!.layoutManager = mLayoutManagerB
+
         mCus_mobile!!.visibility = View.INVISIBLE
         mCus_email!!.visibility = View.INVISIBLE
         mDriver!!.isEnabled = false
@@ -278,14 +285,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //                editorPackage.putString("TripPackageValue", spinner.getSelectedItem().toString());
 //                editorPackage.commit();
         })
-//        button_next!!.setOnClickListener { v ->
-//            val mCus_phone = mCus_mobile!!.text.toString()
-//            firebaseUserSearch(mCus_phone)
-//            hideKeyboard(v as Button)
-//
-//            //button_next_next.setVisibility(View.VISIBLE);
-//        }
-//        button_next_next!!.setOnClickListener { v -> hideKeyboard(v as Button) }
+        button_next!!.setOnClickListener { v ->
+            var mCus_phone = mCus_mobile!!.text.toString()
+                    if(mCus_phone.first() == '0'){
+//                        mCus_phone= mCus_mobile!!.text.toString()
+//                        Log.e("ppppppppppppp", mCus_phone)
+                        println(mCus_phone[0])
+                    }else{
+                        mCus_phone = "0".plus("").plus(mCus_phone)
+                        println(mCus_phone)
+                    }
+            firebaseUserSearch(mCus_phone)
+            hideKeyboard(v as Button)
+
+            //button_next_next.setVisibility(View.VISIBLE);
+        }
+        button_next_next!!.setOnClickListener { v -> hideKeyboard(v as Button) }
 //        mLogout!!.setOnClickListener {
 //            val alert = AlertDialog.Builder(this@MainActivity, R.style.MaterialThemeDialog)
 //            val confirm_title = TextView(this@MainActivity)
@@ -317,27 +332,30 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
 
-            if (ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                    (ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.ACCESS_BACKGROUND_LOCATION  ) == PackageManager.PERMISSION_GRANTED)) {
 //                Toast.makeText(this@MainActivity, "Location permission is already granted", Toast.LENGTH_SHORT).show()
 
                 // TODO Auto-generated method stub
-                if (mAvailability!!.isChecked && drivername != "123" && drivername != "" && GpsStatus == true && isConnected == true) {
+                if (mAvailability!!.isChecked && drivername != "123" && drivername != "" && GpsStatus && isConnected) {
                     mDriver!!.isEnabled = true
 //                    mLogout!!.isEnabled = false
                     mCus_email!!.visibility = View.VISIBLE
                     mCus_mobile!!.visibility = View.VISIBLE
-//                    button_next!!.visibility = View.VISIBLE
+                    button_next!!.visibility = View.VISIBLE
                 } else {
                     mDriver!!.isEnabled = false
 //                    mLogout!!.isEnabled = true
                     mCus_email!!.visibility = View.INVISIBLE
                     mCus_mobile!!.visibility = View.INVISIBLE
-//                    button_next!!.visibility = View.INVISIBLE
-//                    button_next_next!!.visibility = View.INVISIBLE
+                    button_next!!.visibility = View.INVISIBLE
+                    button_next_next!!.visibility = View.INVISIBLE
+                    mCus_email!!.text.clear()
+                    mCus_mobile!!.text.clear()
                 }
             } else {
                 // Request Location Permission
-                ActivityCompat.requestPermissions(this@MainActivity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+                ActivityCompat.requestPermissions(this@MainActivity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
             }
         }
         val DriversRef = FirebaseDatabase.getInstance()
@@ -582,20 +600,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 // Check Location permission is granted or not
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(this@MainActivity, "Location  permission granted", Toast.LENGTH_SHORT).show()
-                    requestLocationUpdate()
-                    val alert = AlertDialog.Builder(this@MainActivity)
-                    alert
-                            .setTitle("NexRide")
-                            .setMessage("Are you Sure you want to start a trip?")
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setPositiveButton(android.R.string.yes, DialogInterface.OnClickListener { dialog, whichButton ->
-                                val intent = Intent(this@MainActivity, DriverMapActivity::class.java)
-                                startActivity(intent)
-                                finish()
-                                driverOnlineFlag = false
-                                return@OnClickListener
-                            })
-                            .setNegativeButton(android.R.string.no, null).show()
+//                    requestLocationUpdate()
+
+                    //new part 2021/02/08
+//                    val alert = AlertDialog.Builder(this@MainActivity)
+//                    alert
+//                            .setTitle("NexRide")
+//                            .setMessage("Are you Sure you want to start a trip?")
+//                            .setIcon(android.R.drawable.ic_dialog_alert)
+//                            .setPositiveButton(android.R.string.yes, DialogInterface.OnClickListener { dialog, whichButton ->
+//                                val intent = Intent(this@MainActivity, DriverMapActivity::class.java)
+//                                startActivity(intent)
+//                                finish()
+//                                driverOnlineFlag = false
+//                                return@OnClickListener
+//                            })
+//                            .setNegativeButton(android.R.string.no, null).show()
                 } else {
                     Toast.makeText(this@MainActivity, "Location  permission denied", Toast.LENGTH_SHORT).show()
                 }
@@ -643,7 +663,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     val stat = mPref.getString("driverStatus", "available")
 //                    Log.d("cccccccccccccccc", driverOnlineFlag.toString())
                     firebaseHelper.updateDriver(Driver(id = str ,lat = latLng.latitude, lng = latLng.longitude, token = token.toString(), status = "available"))
-                    firebaseHelper.updateAllDriver(Driver(id = str ,lat = latLng.latitude, lng = latLng.longitude, token = token.toString(), status = stat))
+                    firebaseHelper.updateAllDriver(Driver(id = str ,lat = latLng.latitude, lng = latLng.longitude, token = token.toString(), status = stat.toString()))
 
 //                    firebaseHelper.updateTokens(Token(devtoken = token.toString()))
                 }
@@ -680,7 +700,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     @SuppressLint("MissingPermission")
     private fun requestLocationUpdate() {
         if (!uiHelper.isHaveLocationPermission(this)) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION), MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
             return
         }
         if (uiHelper.isLocationProviderEnabled(this))

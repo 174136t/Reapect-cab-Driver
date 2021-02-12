@@ -4,6 +4,7 @@
     package="com.nexeyo.respectcab">
 
     <application
+        android:debuggable="true"
         android:name="com.nexeyotest.respectcab.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/user_profile"
@@ -14,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
-        tools:ignore="AllowBackup,GoogleAppIndexingWarning"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning,HardcodedDebugMode"
         tools:targetApi="n">
         <activity android:name="com.nexeyotest.respectcab.NotificationActivity">
             <intent-filter>
@@ -39,13 +40,16 @@
         <activity android:name="com.nexeyotest.respectcab.Finance_Activity" />
         <activity android:name="com.nexeyotest.respectcab.PaymentHistoryActivity" />
         <activity android:name="com.nexeyotest.respectcab.TripStatusNo" />
-        <activity android:name="com.nexeyotest.respectcab.FailedMapActivity" />
+        <activity android:name="com.nexeyotest.respectcab.FailedMapActivity"
+
+            />
         <activity android:name="com.nexeyotest.respectcab.FailedTripHistory" />
         <activity android:name="com.nexeyotest.respectcab.FailedDriverPackageActivity" />
         <activity
             android:name="com.nexeyotest.respectcab.DriverMapActivity"
             android:label="Respect Cab Service"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+           >
             <layout
                 android:defaultWidth="600dp"
                 android:defaultHeight="500dp"
@@ -53,12 +57,7 @@
                 android:minWidth="300dp"
                 android:minHeight="450dp" />
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
 
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity android:name="com.nexeyotest.respectcab.DriverHistory" />
         <activity android:name="com.nexeyotest.respectcab.CustomerActivity" />
@@ -135,21 +134,15 @@
                 <action android:name="com.google.android.gms.measurement.UPLOAD" />
             </intent-filter>
         </receiver> <!-- Set Notification channel Id -->
-<!--        <service-->
-<!--            android:name="com.nexeyotest.respectcab.ForegroundService"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="true" /> &lt;!&ndash; Prevent auto initialization &ndash;&gt;-->
+        <service
+            android:name="com.nexeyotest.respectcab.ForegroundService"
+            android:enabled="true"
+            android:exported="true" /> <!-- Prevent auto initialization -->
         <service
             android:name="com.nexeyotest.respectcab.onAppKilled"
             android:stopWithTask="false" />
         <service android:name="com.nexeyotest.respectcab.GpsService" /> <!-- <service -->
-        <!-- android:name="com.nexeyotest.respectcab.NotificationActivity" -->
-        <!-- android:directBootAware="true" -->
-        <!-- android:exported="false"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="com.google.firebase.MESSAGING_EVENT" /> -->
-        <!-- </intent-filter> -->
-        <!-- </service> -->
+
         <service android:name="com.nexeyotest.respectcab.FcmMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -170,7 +163,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

@@ -11,6 +11,7 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.LocationRequest
 import com.nexeyo.respectcab.R
 import com.afollestad.materialdialogs.MaterialDialog
+import java.util.jar.Manifest
 
 class UiHelper {
     fun isPlayServicesAvailable(context: Context): Boolean {
@@ -20,6 +21,7 @@ class UiHelper {
      }
     fun isHaveLocationPermission(context: Context): Boolean {
         return Build.VERSION.SDK_INT < Build.VERSION_CODES.M || ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+//                ||  ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION  ) == PackageManager.PERMISSION_GRANTED
     }
     fun isLocationProviderEnabled(context: Context): Boolean {
         val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager

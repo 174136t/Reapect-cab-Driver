@@ -52,8 +52,8 @@
             android:id="@+id/relativeLayout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_marginRight="@dimen/_5sdp"
+
+
             android:background="@drawable/allcorner_radius"
             android:keepScreenOn="true"
             android:layout_marginBottom="@dimen/_5sdp">
@@ -229,7 +229,7 @@
                 android:layout_height="@dimen/_50sdp"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginLeft="@dimen/_16sdp"
-                android:padding="@dimen/_5sdp"
+
                 android:layout_marginBottom="@dimen/_8sdp"
                 android:background="@drawable/colorful_rounded_corners"
                 android:gravity="center|top"
@@ -259,7 +259,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/forcestart"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints"
-                android:padding="@dimen/_5sdp"/>
+               />
 
             <Button
                 android:id="@+id/start"
@@ -386,7 +386,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/timerValue2"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints"
-                android:padding="@dimen/_5sdp"
+
                 android:textAlignment="center"/>
 
             <TextView
@@ -410,7 +410,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/distanceV"
                 tools:ignore="MissingConstraints"
-                android:padding="@dimen/_5sdp"/>
+              />
 
             <TextView
                 android:id="@+id/Waitingcost"
@@ -434,7 +434,7 @@
                 app:layout_constraintHorizontal_bias="0.52"
                 app:layout_constraintStart_toEndOf="@+id/timerValue2"
                 tools:ignore="MissingConstraints"
-                android:padding="@dimen/_5sdp"/>
+              />
 
 
             <TextView
@@ -450,7 +450,7 @@
                 android:gravity="center_horizontal"
                 android:text="TotalCost"
                 android:textColor="@color/black"
-                android:textSize="30dp"
+                android:textSize="25dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/Tripcost"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -493,7 +493,7 @@
             <TextView
                 android:id="@+id/textViewToc"
                 android:layout_width="@dimen/_140sdp"
-                android:layout_height="27dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:gravity="center_horizontal"
                 android:text="Waiting Cost RS"
@@ -503,7 +503,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/Waitingcost"
                 app:layout_constraintStart_toStartOf="@+id/Waitingcost"
                 app:layout_constraintTop_toTopOf="@+id/Waitingcost"
-                app:layout_constraintVertical_bias="1.0"
+                app:layout_constraintVertical_bias="0.695"
                 tools:ignore="MissingConstraints"
                 android:textAlignment="center"/>
 

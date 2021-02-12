@@ -17,6 +17,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.os.SystemClock;
 //import android.support.annotation.NonNull;
 //import android.support.annotation.Nullable;
@@ -280,6 +281,9 @@ public class FailedDriverPackageActivity<callStateListener> extends AppCompatAct
     static double previousCost = 0.00;
     long prevTime = 0L;
     long prevWaitingtime = 0L;
+    String tag = "com.nexeyotest.respectcab:LOCK";
+    public String straddress;
+    public String strtime;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -316,6 +320,8 @@ public class FailedDriverPackageActivity<callStateListener> extends AppCompatAct
         SharedPreferences mPrefs = getSharedPreferences("IDvalue",0);
         str = mPrefs.getInt("DriverIDValue", 0);
         str_d_name = mPrefs.getString("drivername", "Unknown");
+        straddress=mPrefs.getString("straddress","DEFAULT");
+        strtime=mPrefs.getString("strtime","DEFAULT");
 //        str_d_mobile = mPrefs.getString("drivermobile","");
         maxid =Long.valueOf( mPrefs.getString("tripid","DEFAULT"));
 
@@ -764,9 +770,9 @@ public class FailedDriverPackageActivity<callStateListener> extends AppCompatAct
                                         dataMap.put("customeremail",customer_email.getText().toString().trim());
                                         dataMap.put("tripstartdate",mTripDate.getText().toString());
                                         dataMap.put("tripenddate", tripendDate);
-                                        dataMap.put("tripstarttime", tripstarttime);
+                                        dataMap.put("tripstarttime", strtime);
                                         dataMap.put("tripendtime", tripendtime);
-                                        dataMap.put("startaddress", address);
+                                        dataMap.put("startaddress", straddress);
                                         dataMap.put("endaddress", address2);
                                         dataMap.put("endaddress", address3);
                                         dataMap.put("paymentmethod", payment_method);
@@ -994,7 +1000,7 @@ public class FailedDriverPackageActivity<callStateListener> extends AppCompatAct
                                                             "\n" +
                                                             "      <font style=\"font-size:15px;\">Start time\n" +
                                                             "        <span style=\"float:right;\">\n" +
-                                                            tripstarttime+
+                                                            strtime+
                                                             "        </span>\n" +
                                                             "      </font></br>\n" +
                                                             "      <hr class=\"style-two\">\n" +
@@ -1016,7 +1022,7 @@ public class FailedDriverPackageActivity<callStateListener> extends AppCompatAct
                                                             "\n" +
                                                             "      <font style=\"font-size:15px;\">From\n" +
                                                             "        <span style=\"float:right;\">\n" +
-                                                            address+
+                                                            straddress+
                                                             "        </span>  \n" +
                                                             "      </font><br><br>\n" +
                                                             "      <hr class=\"style-eight\">\n" +
@@ -1170,6 +1176,7 @@ public class FailedDriverPackageActivity<callStateListener> extends AppCompatAct
                 });
 
                 AlertDialog dialoglast = builder.create();
+                dialoglast.getWindow().setGravity(Gravity.TOP);
                 dialoglast.show();
             }
         });
@@ -1215,7 +1222,7 @@ public class FailedDriverPackageActivity<callStateListener> extends AppCompatAct
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             return;
         }
@@ -1326,7 +1333,7 @@ public class FailedDriverPackageActivity<callStateListener> extends AppCompatAct
         track_Database.child(String.valueOf(maxid)).child("lon1").setValue(lon1);
         track_Database.child(String.valueOf(maxid)).child("lat2").setValue(lat2);
         track_Database.child(String.valueOf(maxid)).child("lon2").setValue(lon2);
-        track_Database.child(String.valueOf(maxid)).child("startaddress").setValue(address);
+        track_Database.child(String.valueOf(maxid)).child("startaddress").setValue(straddress);
         track_Database.child(String.valueOf(maxid)).child("endaddress").setValue(address2);
         track_Database.child(String.valueOf(maxid)).child("endaddress").setValue(address3);
         track_Database.child(String.valueOf(maxid)).child("waitingcost").setValue(String.valueOf(mWaitingCostV));
@@ -1334,7 +1341,7 @@ public class FailedDriverPackageActivity<callStateListener> extends AppCompatAct
         track_Database.child(String.valueOf(maxid)).child("triptime").setValue(mTimer1.getText().toString().trim());
         track_Database.child(String.valueOf(maxid)).child("totaldistance").setValue(String.valueOf(distanceV));
         track_Database.child(String.valueOf(maxid)).child("date").setValue(mTripDate.getText().toString());
-        track_Database.child(String.valueOf(maxid)).child("starttime").setValue(tripstarttime);
+        track_Database.child(String.valueOf(maxid)).child("starttime").setValue(strtime);
         track_Database.child(String.valueOf(maxid)).child("tripcost").setValue(costTotalLast = Math.round(costTotalLast * 100.0) / 100.0);
         track_Database.child(String.valueOf(maxid)).child("status").setValue(track_status);
         track_Database.child(String.valueOf(maxid)).child("tripid").setValue(maxid);
@@ -1344,7 +1351,7 @@ public class FailedDriverPackageActivity<callStateListener> extends AppCompatAct
         unFinished_Database.child(String.valueOf(str)).child("lon1").setValue(lon1);
         unFinished_Database.child(String.valueOf(str)).child("lat2").setValue(lat2);
         unFinished_Database.child(String.valueOf(str)).child("lon2").setValue(lon2);
-        unFinished_Database.child(String.valueOf(str)).child("startaddress").setValue(address);
+//        unFinished_Database.child(String.valueOf(str)).child("startaddress").setValue(address);
         unFinished_Database.child(String.valueOf(str)).child("endaddress").setValue(address2);
         unFinished_Database.child(String.valueOf(str)).child("endaddress").setValue(address3);
         unFinished_Database.child(String.valueOf(str)).child("waitingcost").setValue(String.valueOf(mWaitingCostV));
@@ -1352,12 +1359,12 @@ public class FailedDriverPackageActivity<callStateListener> extends AppCompatAct
         unFinished_Database.child(String.valueOf(str)).child("triptime").setValue(mTimer1.getText().toString().trim());
         unFinished_Database.child(String.valueOf(str)).child("totaldistance").setValue(String.valueOf(distanceV));
         unFinished_Database.child(String.valueOf(str)).child("date").setValue(mTripDate.getText().toString());
-        unFinished_Database.child(String.valueOf(str)).child("starttime").setValue(tripstarttime);
+//        unFinished_Database.child(String.valueOf(str)).child("starttime").setValue(tripstarttime);
         unFinished_Database.child(String.valueOf(str)).child("tripcost").setValue(costTotalLast = Math.round(costTotalLast * 100.0) / 100.0);
         unFinished_Database.child(String.valueOf(str)).child("status").setValue(track_status);
         unFinished_Database.child(String.valueOf(str)).child("tripid").setValue(maxid);
 
-        pDatabase.child(String.valueOf(str)).child("tripstatus").setValue("Running");
+//        pDatabase.child(String.valueOf(str)).child("tripstatus").setValue("Running");
         ////
         if (status == 0) {
 
@@ -1754,7 +1761,7 @@ public class FailedDriverPackageActivity<callStateListener> extends AppCompatAct
     }
 
     public void connectDriver(){
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
 
         }
@@ -1813,8 +1820,8 @@ public class FailedDriverPackageActivity<callStateListener> extends AppCompatAct
                             ref2.child(String.valueOf(maxid)).child("tripstatus").setValue("Completed");
                             ref2.child(String.valueOf(maxid)).child("driverid").setValue(str+"-Completed");
 
-                            ref4.child(String.valueOf(str)).child("tripstatus").setValue("Completed");
-                            ref4.child(String.valueOf(str)).child("pkgid").setValue(str_package_id+" - Completed");
+                            datas.getRef().child("tripstatus").setValue("Completed");
+                            datas.getRef().child("pkgid").setValue(str_package_id+" - Completed");
                         }
 
                     }
@@ -1938,17 +1945,24 @@ public class FailedDriverPackageActivity<callStateListener> extends AppCompatAct
         return true;
     }
 
-//    public void startService() {
+    public void startService() {
 //        Intent serviceIntent = new Intent(this, ForegroundService.class);
 //        serviceIntent.putExtra("inputExtra", "FluTaxi Service is running in background");
 //
 //        ContextCompat.startForegroundService(this, serviceIntent);
-//    }
-//
-//    public void stopService() {
-//        Intent serviceIntent = new Intent(this, ForegroundService.class);
-//        stopService(serviceIntent);
-//    }
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M && Build.MANUFACTURER.equals("Huawei"))
+        { tag = "LocationManagerService"; }
+        PowerManager.WakeLock wakeLock = ((PowerManager) getSystemService(Context.POWER_SERVICE)).newWakeLock(1, tag); wakeLock.acquire();
+
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        serviceIntent.putExtra("inputExtra", "NexRide Service is running in background");
+        ContextCompat.startForegroundService(this, serviceIntent);
+    }
+
+    public void stopService() {
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        stopService(serviceIntent);
+    }
 
 
     @Override
@@ -1959,7 +1973,8 @@ public class FailedDriverPackageActivity<callStateListener> extends AppCompatAct
     @Override
     protected void onStart() {
         super.onStart();
-
+        //new bug fix 2021/02/10
+        stopService();
 
         Log.i(TAG, "onStart");
     }
@@ -1974,7 +1989,7 @@ public class FailedDriverPackageActivity<callStateListener> extends AppCompatAct
     @Override
     protected void onPause() {
         super.onPause();
-//        startService();
+        startService();
         Log.i(TAG, "onPause");
     }
 
@@ -2003,7 +2018,7 @@ public class FailedDriverPackageActivity<callStateListener> extends AppCompatAct
     @Override
     protected void onRestart() {
         super.onRestart();
-//        stopService();
+        stopService();
 
         Log.i(TAG, "onRestart");
     }
@@ -2014,7 +2029,7 @@ public class FailedDriverPackageActivity<callStateListener> extends AppCompatAct
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        stopService();
+        stopService();
         Log.i(TAG, "onDestroy");
     }
 

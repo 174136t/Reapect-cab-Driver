@@ -14,14 +14,114 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 
+//public class GMailSender {
+//
+////    private static final String SMTP_HOST_NAME = "smtp.gmail.com"; //can be your host server smtp.yourdomain.com
+//private static final String SMTP_HOST_NAME = "smtp.emailsrvr.com";
+//    private static final String SMTP_AUTH_USER = "support@respectcab.com"; //your login username/email
+//    private static final String SMTP_AUTH_PWD  = "UQfOD3N)aVNd"; //password/secret
+////    private static final String SMTP_AUTH_USER = "info.nexride@gmail.com"; //your login username/email
+////    private static final String SMTP_AUTH_PWD  = "Nexeyo688"; //
+//
+//    private static Message message;
+//
+//
+//    public static void sendEmail(String to, String subject, String msg){
+//        // Recipient's email ID needs to be mentioned.
+//
+//        // Sender's email ID needs to be mentioned
+//        String from = "RespectCabService@respectcab.com"; //from
+////        String from = "info.nexride@gmail.com";
+//
+//        // Assuming you are sending email through relay.jangosmtp.net
+//
+//        Properties props = new Properties();
+//        props.put("mail.smtp.auth", "true");
+//        props.put("mail.smtp.starttls.enable", "true");
+//        props.put("mail.smtp.host", SMTP_HOST_NAME);
+//        props.put("mail.smtp.port", "587");
+////        props.put("mail.smtp.port", "465");
+//
+//
+//        // Get the Session object.
+//        Session session = Session.getInstance(props,
+//                new javax.mail.Authenticator() {
+//                    protected PasswordAuthentication getPasswordAuthentication() {
+//                        return new PasswordAuthentication(SMTP_AUTH_USER, SMTP_AUTH_PWD);
+//                    }
+//                });
+//
+//
+//        try {
+//            // Create a default MimeMessage object.
+//            message = new MimeMessage(session);
+//
+//            // Set From: header field of the header.
+//            message.setFrom(new InternetAddress(from));
+//
+//            // Set To: header field of the header.
+//            message.setRecipients(Message.RecipientType.TO,
+//                    InternetAddress.parse(to));
+//
+//            // Set Subject: header field
+//            message.setSubject(subject);
+//
+//            // Create the message part
+//            BodyPart messageBodyPart = new MimeBodyPart();
+//
+//            // Now set the actual message
+//            messageBodyPart.setContent(msg, "text/html");
+//
+//            // Create a multipar message
+//            Multipart multipart = new MimeMultipart();
+//
+//            // Set text message part
+//            multipart.addBodyPart(messageBodyPart);
+//
+////            // Part two is attachment
+////            messageBodyPart = new MimeBodyPart();
+////            String filename = Context.;
+////            DataSource source = new FileDataSource(filename);
+////            messageBodyPart.setDataHandler(new DataHandler(source));
+////            messageBodyPart.setFileName(filename);
+////            multipart.addBodyPart(messageBodyPart);
+//
+//            // Send the complete message parts
+//            message.setContent(multipart);
+//
+//            Thread thread = new Thread(new Runnable() {
+//
+//                @Override
+//                public void run() {
+//                    try  {
+//
+//                        // Send message
+//                        Transport.send(message);
+//                        System.out.println("Sent message successfully....");
+//                    } catch (Exception e) {
+//                        System.out.println("error is "+e );
+//                        e.printStackTrace();
+//
+//                    }
+//                }
+//            });
+//
+//            thread.start();
+//
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//}
+
 public class GMailSender {
 
-//    private static final String SMTP_HOST_NAME = "smtp.gmail.com"; //can be your host server smtp.yourdomain.com
-private static final String SMTP_HOST_NAME = "smtp.emailsrvr.com";
+    private static final String SMTP_HOST_NAME = "smtp.emailsrvr.com"; //can be your host server smtp.yourdomain.com
     private static final String SMTP_AUTH_USER = "support@respectcab.com"; //your login username/email
-    private static final String SMTP_AUTH_PWD  = "Cab#2019"; //password/secret
-//    private static final String SMTP_AUTH_USER = "info.nexride@gmail.com"; //your login username/email
-//    private static final String SMTP_AUTH_PWD  = "Nexeyo688"; //
+    private static final String SMTP_AUTH_PWD  =  "UQfOD3N)aVNd";
+//            "Cab#2019";
+//        "UQfOD3N)aVNd"; //password/secret
+    //
 
     private static Message message;
 
@@ -31,7 +131,6 @@ private static final String SMTP_HOST_NAME = "smtp.emailsrvr.com";
 
         // Sender's email ID needs to be mentioned
         String from = "RespectCabService@respectcab.com"; //from
-//        String from = "info.nexride@gmail.com";
 
         final String username = SMTP_AUTH_USER;
         final String password = SMTP_AUTH_PWD;
@@ -44,7 +143,6 @@ private static final String SMTP_HOST_NAME = "smtp.emailsrvr.com";
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", host);
         props.put("mail.smtp.port", "587");
-
 
         // Get the Session object.
         Session session = Session.getInstance(props,
@@ -102,6 +200,7 @@ private static final String SMTP_HOST_NAME = "smtp.emailsrvr.com";
                         System.out.println("Sent message successfully....");
                     } catch (Exception e) {
                         e.printStackTrace();
+
 
                     }
                 }
