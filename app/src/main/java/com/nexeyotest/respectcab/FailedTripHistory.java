@@ -122,7 +122,7 @@ public class FailedTripHistory extends AppCompatActivity {
             user_name3.setText("Trip ID " + tripid);
 
             TextView user_name6 = (TextView) mView.findViewById(R.id.trip_total_cost);
-            user_name6.setText("Rs " + triptotalcost+"0");
+            user_name6.setText("Rs " + String.format("%.2f",triptotalcost));
 
 //            TextView user_name7 = (TextView) mView.findViewById(R.id.driver_id);
 //            user_name7.setText("Driver ID " + driverid);

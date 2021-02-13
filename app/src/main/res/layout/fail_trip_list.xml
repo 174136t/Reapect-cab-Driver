@@ -38,7 +38,7 @@
                     android:text="driverID"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-
+                    android:textSize="12sp"
                     tools:text="@tools:sample/cities" />
 <!--                <TextView-->
 <!--                    android:id="@+id/payment_method"-->
@@ -58,7 +58,7 @@
                     android:layout_marginTop="8dp"
                     android:textAlignment="textEnd"
                     android:text="driverID"
-                    android:textSize="18sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     android:padding="10dp"
                     tools:ignore="MissingConstraints"
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="driverID"
-                    android:textSize="15sp"
+                    android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="@tools:sample/cities"
@@ -112,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="driverID"
-                    android:textSize="15sp"
+                    android:textSize="12sp"
                     android:padding="10dp"
                     tools:text="@tools:sample/cities"
                     android:textColor="@color/black"
